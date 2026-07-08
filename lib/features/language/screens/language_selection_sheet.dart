@@ -20,6 +20,8 @@ class LanguageSelectionSheet extends ConsumerStatefulWidget {
       isDismissible: false,
       enableDrag: false,
       isScrollControlled: true,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      elevation: 0,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),

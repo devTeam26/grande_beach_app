@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../../core/errors/failure.dart';
 import '../../../core/network/dio_failure_mapper.dart';
+import '../../../core/network/exception_mapper.dart';
 import '../../../core/network/network_info.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/secure_storage_service.dart';
@@ -41,7 +42,8 @@ class AuthRepositoryImpl implements AuthRepository {
     }
 
     try {
-      final session = await _authService.login(email: email, password: password);
+      final session =
+          await _authService.login(email: email, password: password);
 
       await _secureStorage.saveSession(
         accessToken: session.accessToken,
@@ -55,6 +57,8 @@ class AuthRepositoryImpl implements AuthRepository {
       return ResultFailure(UnauthorizedFailure(e.message));
     } on DioException catch (e) {
       return ResultFailure(DioFailureMapper.map(e));
+    } catch (e) {
+      return ResultFailure(ExceptionMapper.map(e));
     }
   }
 
@@ -92,9 +96,58 @@ class AuthRepositoryImpl implements AuthRepository {
       return ResultFailure(ValidationFailure(e.message));
     } on DioException catch (e) {
       return ResultFailure(DioFailureMapper.map(e));
+    } catch (e) {
+      return ResultFailure(ExceptionMapper.map(e));
+    }
+  }
+
+  @override
+  Future<Result<void>> resetPassword({
+    required String email,
+    required String token,
+    required String newPassword,
+  }) async {
+    if (!await _networkInfo.isConnected) {
+      return const ResultFailure(
+        NoInternetFailure(
+          'No internet connection. Please check your network and try again.',
+        ),
+      );
+    }
+
+    try {
+      await _authService.resetPassword(
+        email: email,
+        token: token,
+        newPassword: newPassword,
+      );
+      return const Success(null);
+    } on AuthApiException catch (e) {
+      return ResultFailure(ValidationFailure(e.message));
+    } on DioException catch (e) {
+      return ResultFailure(DioFailureMapper.map(e));
+    } catch (e) {
+      return ResultFailure(ExceptionMapper.map(e));
     }
   }
 
   @override
   Future<bool> hasActiveSession() => _secureStorage.hasValidSession();
+
+  @override
+  Future<Result<void>> logout() async {
+    // Best-effort: call the server but always clear local state regardless.
+    try {
+      final token = await _secureStorage.getAccessToken();
+      if (token != null && token.isNotEmpty) {
+        await _authService.logout(accessToken: token);
+      }
+    } catch (_) {
+      // Server invalidation failure is non-fatal; local session is cleared below.
+    }
+
+    await _secureStorage.clearSession();
+    await _localStorage.clearUserProfile();
+    return const Success(null);
+  }
 }

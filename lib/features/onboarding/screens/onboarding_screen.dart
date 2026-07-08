@@ -66,10 +66,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final currentIndex = ref.watch(onboardingPageIndexProvider);
 
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: [
-          Positioned.fill(
-            bottom: MediaQuery.of(context).size.height * 0.32,
+          Expanded(
             child: PageView.builder(
               controller: _pageController,
               itemCount: pages.length,
@@ -83,16 +82,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               },
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: OnboardingContentCard(
-              page: pages[currentIndex],
-              pageCount: pages.length,
-              currentIndex: currentIndex,
-              isLastPage: currentIndex == pages.length - 1,
-              onNext: () => _goToNext(pages.length),
-              onSkip: _finishOnboarding,
-            ),
+          OnboardingContentCard(
+            page: pages[currentIndex],
+            pageCount: pages.length,
+            currentIndex: currentIndex,
+            isLastPage: currentIndex == pages.length - 1,
+            onNext: () => _goToNext(pages.length),
+            onSkip: _finishOnboarding,
           ),
         ],
       ),

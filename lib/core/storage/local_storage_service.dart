@@ -10,6 +10,8 @@ class LocalStorageService {
   static const languageCodeKey = 'language_code';
   static const onboardingCompleteKey = 'onboarding_complete';
   static const userProfileKey = 'user_profile';
+  static const notificationsEnabledKey = 'notifications_enabled';
+  static const darkModeEnabledKey = 'dark_mode_enabled';
 
   final Box _box;
 
@@ -36,4 +38,16 @@ class LocalStorageService {
   }
 
   Future<void> clearUserProfile() => _box.delete(userProfileKey);
+
+  bool isNotificationsEnabled() =>
+      (_box.get(notificationsEnabledKey) as bool?) ?? true;
+
+  Future<void> setNotificationsEnabled(bool value) =>
+      _box.put(notificationsEnabledKey, value);
+
+  bool isDarkModeEnabled() =>
+      (_box.get(darkModeEnabledKey) as bool?) ?? false;
+
+  Future<void> setDarkModeEnabled(bool value) =>
+      _box.put(darkModeEnabledKey, value);
 }

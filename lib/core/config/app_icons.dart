@@ -1,0 +1,19 @@
+import 'package:flutter/widgets.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
+/// Icons used across the app, sourced from the `lucide_icons` package.
+abstract class AppIcons {
+  static const IconData email = LucideIcons.mail;
+  static const IconData lock = LucideIcons.lock;
+  static const IconData eye = LucideIcons.eye;
+  static const IconData eyeOff = LucideIcons.eyeOff;
+
+  static const IconData home = LucideIcons.home;
+  static const IconData discover = LucideIcons.compass;
+  static const IconData booking = LucideIcons.receipt;
+  static const IconData profile = LucideIcons.user;
+
+  static const IconData masterRoom = LucideIcons.bedDouble;
+  static const IconData singleRoom = LucideIcons.bedSingle;
+  static const IconData guest = LucideIcons.users;
+}

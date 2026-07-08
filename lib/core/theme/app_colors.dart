@@ -16,6 +16,19 @@ abstract class AppColors {
   static const Color lightInputFill = Color(0xFFF1F1F1);
   static const Color darkInputFill = Color(0xFF2C2C2C);
 
+  /// Warm dark gold used for the premium header across all main screens.
+  static const Color headerGold = Color(0xFFA07800);
+
+  /// Slightly deeper gold for the avatar circle inside the profile header.
+  static const Color headerAvatarGold = Color(0xFF8A6510);
+
+  // Booking status badge colors.
+  static const Color statusPending = Color(0xFFF59E0B);
+  static const Color statusConfirmed = Color(0xFF2563EB);
+  static const Color statusCheckedIn = Color(0xFF16A34A);
+  static const Color statusCompleted = Color(0xFF16A34A);
+  static const Color statusCancelled = Color(0xFFDC2626);
+
   static Color inputFill(Brightness brightness) =>
       brightness == Brightness.dark ? darkInputFill : lightInputFill;
 }

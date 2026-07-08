@@ -46,6 +46,7 @@ dependencies:
   # Network
   dio: ^5.7.0
   connectivity_plus: ^6.1.0
+  internet_connection_checker_plus: ^2.5.2
 
   # Local storage
   hive: ^2.2.3
@@ -62,6 +63,7 @@ dependencies:
   # Utilities
   intl: any
   path_provider: ^2.1.5
+  lucide_icons: ^0.257.0
 
 dev_dependencies:
   flutter_test:

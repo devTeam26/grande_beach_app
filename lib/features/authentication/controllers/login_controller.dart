@@ -27,7 +27,13 @@ class LoginController extends AsyncNotifier<void> {
 
     state = result.fold(
       (failure) => AsyncError(failure, StackTrace.current),
-      (_) => const AsyncData(null),
+      (_) {
+        // Set sync flag first so the router redirect sees the new session state
+        // on the very next frame, before any async re-read completes.
+        ref.read(sessionActiveProvider.notifier).state = true;
+        ref.invalidate(currentUserProvider);
+        return const AsyncData(null);
+      },
     );
   }
 
