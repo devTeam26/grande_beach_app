@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/widgets/network_or_asset_image.dart';
 import '../controllers/home_providers.dart';
 import '../models/chalet.dart';
-import 'image_carousel.dart';
 import 'price_widget.dart';
 import 'rating_row.dart';
 
@@ -31,7 +31,7 @@ class ChaletCard extends StatelessWidget {
     final name = isArabic ? chalet.nameAr : chalet.name;
     final location = (isArabic ? chalet.locationAr : chalet.location) ??
         chalet.location;
-    final imageUrls = chalet.images.map((e) => e.imageUrl).toList();
+    final imageUrl = chalet.primaryImageUrl;
     final carouselHeight =
         isFullWidth ? _carouselHeightFull : _carouselHeightNarrow;
 
@@ -58,9 +58,18 @@ class ChaletCard extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  ImageCarousel(
-                    imageUrls: imageUrls,
+                  SizedBox(
                     height: carouselHeight,
+                    width: double.infinity,
+                    child: imageUrl == null
+                        ? ColoredBox(
+                            color: theme.colorScheme.surfaceContainerHighest,
+                          )
+                        : NetworkOrAssetImage(
+                            url: imageUrl,
+                            width: double.infinity,
+                            height: carouselHeight,
+                          ),
                   ),
                   Positioned(
                     top: 10,
@@ -94,7 +103,7 @@ class ChaletCard extends StatelessWidget {
                           rating: chalet.averageRating,
                           totalReviews: chalet.totalReviews,
                         ),
-                        PriceWidget(price: chalet.currentDynamicPrice),
+                        PriceWidget(price: chalet.basePrice),
                       ],
                     ),
                   ],

@@ -18,7 +18,7 @@ class BookingHeaderCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric( vertical: 16),
       decoration: BoxDecoration(
-        color: isDark ? theme.colorScheme.surfaceContainerHigh : theme.colorScheme.surface,
+        // color: isDark ? theme.colorScheme.surfaceContainerHigh : theme.colorScheme.surface,
         // borderRadius: BorderRadius.circular(16),
         // boxShadow: isDark
         //     ? null

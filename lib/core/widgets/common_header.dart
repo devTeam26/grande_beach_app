@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import 'whatsapp_header_button.dart';
 
 /// Premium gold header shared across the main navigation screens.
 ///
@@ -8,24 +9,21 @@ import '../theme/app_colors.dart';
 /// full control over the rounded bottom corners. Pass an optional [bottom]
 /// widget to add extra content below the title row (used by Profile).
 class CommonHeader extends StatelessWidget {
-  final bool showNotification;
   const CommonHeader({
     super.key,
     required this.title,
     this.trailing,
-    this.onNotificationTap,
     this.bottom,
     this.bottomHeight = 0,
-    this.showNotification = false,
+    this.showBackButton = false,
+    this.onBackPressed,
   });
 
   final Widget title;
 
   /// Optional custom widget for the right side (e.g. edit icon on sub-screens).
-  /// When provided, replaces the notification bell regardless of [showNotification].
+  /// When provided, replaces the WhatsApp button.
   final Widget? trailing;
-
-  final VoidCallback? onNotificationTap;
 
   /// Extra content rendered below the title row (e.g. avatar + name).
   final Widget? bottom;
@@ -34,16 +32,21 @@ class CommonHeader extends StatelessWidget {
   /// header can size itself correctly.
   final double bottomHeight;
 
+  /// Shows a platform-appropriate back button before [title] — a chevron on
+  /// iOS, a Material arrow on Android — instead of every sub-screen building
+  /// its own.
+  final bool showBackButton;
+
+  /// Defaults to popping the current route.
+  final VoidCallback? onBackPressed;
+
   static const double _titleRowHeight = 70;
   static const double _borderRadius = 15;
 
   @override
   Widget build(BuildContext context) {
-    final totalHeight = _titleRowHeight + bottomHeight;
-
     return Container(
       width: double.infinity,
-      // height: totalHeight,
       decoration: const BoxDecoration(
         color: AppColors.headerGold,
         borderRadius: BorderRadius.only(
@@ -62,11 +65,18 @@ class CommonHeader extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 child: Row(
                   children: [
+                    if (showBackButton) ...[
+                      _BackButton(
+                        onPressed: onBackPressed ??
+                            () => Navigator.of(context).maybePop(),
+                      ),
+                      const SizedBox(width: 12),
+                    ],
                     Expanded(child: title),
                    if (trailing != null)
                       trailing!
-                    else if (showNotification)
-                      _NotificationButton(onTap: onNotificationTap),
+                    else
+                      const WhatsAppHeaderButton(),
                   ],
                 ),
               ),
@@ -79,27 +89,21 @@ class CommonHeader extends StatelessWidget {
   }
 }
 
-class _NotificationButton extends StatelessWidget {
-  const _NotificationButton({this.onTap});
+class _BackButton extends StatelessWidget {
+  const _BackButton({required this.onPressed});
 
-  final VoidCallback? onTap;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
+    final isAndroid = Theme.of(context).platform == TargetPlatform.android;
+
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
-        child: const Icon(
-          Icons.notifications_outlined,
-          color: AppColors.headerGold,
-          size: 20,
-        ),
+      onTap: onPressed,
+      child: Icon(
+        isAndroid ? Icons.arrow_back : Icons.arrow_back_ios_new,
+        color: Colors.white,
+        size: 20,
       ),
     );
   }

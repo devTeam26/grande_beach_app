@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Grande Beach uses your camera to capture your ID card and a personal photo for identity verification.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Grande Beach needs access to your photo library to upload your ID card and a personal photo for identity verification.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

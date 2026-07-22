@@ -61,46 +61,59 @@ class _DiscoverChaletListState extends ConsumerState<DiscoverChaletList> {
         onRetry: () => ref.read(discoverChaletsProvider.notifier).retry(),
       ),
       data: (state) {
-        if (state.chalets.isEmpty) {
-          return EmptyState(
-            title: l10n.noChaletsFound,
-            subtitle: l10n.noChaletsFoundSubtitle,
-          );
-        }
+        return RefreshIndicator(
+          onRefresh: () => ref.read(discoverChaletsProvider.notifier).refresh(),
+          child: state.chalets.isEmpty
+              ? LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints(minHeight: constraints.maxHeight),
+                      child: Center(
+                        child: EmptyState(
+                          title: l10n.noChaletsFound,
+                          subtitle: l10n.noChaletsFoundSubtitle,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  controller: _scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                  itemCount: state.chalets.length + 2,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: SectionHeader(title: l10n.discoverChaletsTitle),
+                      );
+                    }
 
-        return ListView.builder(
-          controller: _scrollController,
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-          itemCount: state.chalets.length + 2,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 14),
-                child: SectionHeader(title: l10n.discoverChaletsTitle),
-              );
-            }
+                    final chaletIndex = index - 1;
+                    if (chaletIndex == state.chalets.length) {
+                      return state.isLoadingMore
+                          ? const Padding(
+                              padding: EdgeInsets.only(top: 4),
+                              child: VerticalChaletListSkeleton(itemCount: 1),
+                            )
+                          : const SizedBox.shrink();
+                    }
 
-            final chaletIndex = index - 1;
-            if (chaletIndex == state.chalets.length) {
-              return state.isLoadingMore
-                  ? const Padding(
-                      padding: EdgeInsets.only(top: 4),
-                      child: VerticalChaletListSkeleton(itemCount: 1),
-                    )
-                  : const SizedBox.shrink();
-            }
-
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: ChaletCard(
-                chalet: state.chalets[chaletIndex],
-                isArabic: widget.isArabic,
-                isFullWidth: true,
-                onTap: () => context
-                    .push('/chalet-details/${state.chalets[chaletIndex].id}'),
-              ),
-            );
-          },
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: ChaletCard(
+                        chalet: state.chalets[chaletIndex],
+                        isArabic: widget.isArabic,
+                        isFullWidth: true,
+                        onTap: () => context.push(
+                            '/chalet-details/${state.chalets[chaletIndex].id}'),
+                      ),
+                    );
+                  },
+                ),
         );
       },
     );

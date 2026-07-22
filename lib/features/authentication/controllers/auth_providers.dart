@@ -26,6 +26,15 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
 /// to wait for an async re-read.
 final sessionActiveProvider = StateProvider<bool>((ref) => false);
 
+/// Whether the launch-time session bootstrap has finished.
+///
+/// On cold start the app calls the refresh endpoint (see
+/// [AuthRepository.refreshSession]) before deciding whether to route to /home
+/// or /login. Until this flips to `true`, the router keeps the user on the
+/// splash screen so we never route with a stale token nor bounce to /login
+/// before the refresh has had a chance to run.
+final appBootstrapDoneProvider = StateProvider<bool>((ref) => false);
+
 /// Whether the user currently has a persisted, valid session.
 /// Still used for the initial async check on cold start.
 final hasActiveSessionProvider = FutureProvider<bool>((ref) {

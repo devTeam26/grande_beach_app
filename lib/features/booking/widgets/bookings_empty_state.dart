@@ -17,6 +17,7 @@ class BookingsEmptyState extends StatelessWidget {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+   
       children: [
         EmptyState(
           title: l10n.noBookingsYet,

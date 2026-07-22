@@ -140,7 +140,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String greeting(String firstName) {
-    return 'Hi, $firstName!';
+    return 'Hey, $firstName👋';
   }
 
   @override
@@ -371,6 +371,23 @@ class AppLocalizationsEn extends AppLocalizations {
       'We couldn\'t load the chalets. Please try again.';
 
   @override
+  String get reviewsTitle => 'Reviews';
+
+  @override
+  String get allReviewsFilter => 'All';
+
+  @override
+  String get noReviewsTitle => 'No Reviews Yet';
+
+  @override
+  String get noReviewsSubtitle =>
+      'This chalet hasn\'t received any reviews yet.';
+
+  @override
+  String get errorLoadingReviews =>
+      'We couldn\'t load the reviews. Please try again.';
+
+  @override
   String get searchSheetTitle => 'Find Your Perfect Chalet';
 
   @override
@@ -457,13 +474,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get maxGuestsLabel => 'Max Guests';
 
   @override
+  String get bathroomsLabel => 'Bathrooms';
+
+  @override
+  String get servantRoomLabel => 'Servant Room';
+
+  @override
   String get bookingsOngoingTab => 'Ongoing';
 
   @override
   String get bookingsCompletedTab => 'Completed';
 
   @override
-  String get bookingsCancelledTab => 'Canceled';
+  String get bookingsCancelledTab => 'Cancelled';
+
+  @override
+  String get bookingsRejectedTab => 'Rejected';
 
   @override
   String get bookingStatusPending => 'Pending';
@@ -481,7 +507,101 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingStatusCancelled => 'Cancelled';
 
   @override
+  String get bookingStatusRejected => 'Rejected';
+
+  @override
   String get viewTicket => 'View Ticket';
+
+  @override
+  String get verifyButton => 'Verify';
+
+  @override
+  String get verificationScreenTitle => 'Booking Verification';
+
+  @override
+  String get verificationSubtitle =>
+      'Upload the required documents so we can confirm your booking.';
+
+  @override
+  String get verificationUnderReviewMessage =>
+      'Your verification request is currently under review.';
+
+  @override
+  String verificationRejectedMessage(String reason) {
+    return 'Your previous verification request was rejected.\nReason: \"$reason\"\n\nPlease review the reason above, update your documents if necessary, and submit them again.';
+  }
+
+  @override
+  String get idCardTitle => 'ID Card';
+
+  @override
+  String get idCardSubtitle =>
+      'Upload one image that clearly contains both the front and back sides of your ID card.';
+
+  @override
+  String get personalPhotoTitle => 'Personal Photo';
+
+  @override
+  String get personalPhotoSubtitle =>
+      'Upload a clear selfie for identity verification.';
+
+  @override
+  String get digitalSignatureTitle => 'Digital Signature';
+
+  @override
+  String get digitalSignatureSubtitle => 'Sign using your finger below.';
+
+  @override
+  String get uploadImageButton => 'Upload Image';
+
+  @override
+  String get replaceImageButton => 'Replace';
+
+  @override
+  String get removeImageButton => 'Remove';
+
+  @override
+  String get clearSignatureButton => 'Clear';
+
+  @override
+  String get undoSignatureButton => 'Undo';
+
+  @override
+  String get takePhotoOption => 'Take Photo';
+
+  @override
+  String get chooseFromGalleryOption => 'Choose from Gallery';
+
+  @override
+  String get cameraPermissionDeniedTitle => 'Camera Access Needed';
+
+  @override
+  String get cameraPermissionDeniedMessage =>
+      'Grande Beach needs camera access to take this photo. Please allow it in your device settings.';
+
+  @override
+  String get openSettingsButton => 'Open Settings';
+
+  @override
+  String get submitVerificationButton => 'Submit for Review';
+
+  @override
+  String get verificationIncompleteMessage =>
+      'Please upload your ID card, personal photo, and signature to continue.';
+
+  @override
+  String get verificationSubmittedTitle => 'Verification Submitted';
+
+  @override
+  String get verificationSubmittedMessage =>
+      'Thank you! Your documents have been submitted successfully. Our team is reviewing them and will confirm your booking as soon as it\'s approved.';
+
+  @override
+  String get verificationErrorTitle => 'Submission Failed';
+
+  @override
+  String get errorSubmittingVerification =>
+      'We couldn\'t submit your verification. Please try again.';
 
   @override
   String get noBookingsYet => 'No bookings yet';
@@ -530,7 +650,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get guestCountLabel => 'Guests';
 
   @override
-  String get baseAmountLabel => 'Base Amount';
+  String get baseAmountLabel => 'Base Amount (per night)';
 
   @override
   String get taxAmountLabel => 'Tax';
@@ -585,9 +705,172 @@ class AppLocalizationsEn extends AppLocalizations {
       'We couldn\'t cancel this booking. Please try again.';
 
   @override
+  String get cancellationReasonTitle => 'Cancellation Reason';
+
+  @override
+  String get writeReviewButton => 'Write a Review';
+
+  @override
+  String get submitReviewTitle => 'Rate Your Stay';
+
+  @override
+  String get submitReviewSubtitle =>
+      'Share your experience to help other guests.';
+
+  @override
+  String get reviewCommentLabel => 'Your Review';
+
+  @override
+  String get reviewCommentHint => 'Tell us about your stay...';
+
+  @override
+  String get submitReviewButton => 'Submit Review';
+
+  @override
+  String get ratingRequiredError => 'Please select a rating.';
+
+  @override
+  String get reviewCommentRequiredError => 'Please write a comment.';
+
+  @override
+  String get reviewSubmittedMessage =>
+      'Thank you! Your review has been submitted.';
+
+  @override
+  String get errorSubmittingReview =>
+      'We couldn\'t submit your review. Please try again.';
+
+  @override
   String get wishlistEmptyTitle => 'Your wishlist is empty';
 
   @override
   String get wishlistEmptySubtitle =>
       'Tap the heart icon on any chalet to save it here.';
+
+  @override
+  String get reservationTitle => 'Reserve';
+
+  @override
+  String get errorLoadingAvailability =>
+      'We couldn\'t load availability for this month. Please try again.';
+
+  @override
+  String get selectedRangeUnavailable =>
+      'These dates aren\'t available. Please choose an available range.';
+
+  @override
+  String get reservationStep1Title => 'Select Dates';
+
+  @override
+  String get reservationStep2Title => 'Choose Add-ons';
+
+  @override
+  String get reservationStep3Title => 'Price Preview';
+
+  @override
+  String guestCountMaxError(String max) {
+    return 'Maximum guests allowed is $max.';
+  }
+
+  @override
+  String addOnPerNightBadge(String price) {
+    return '$price/night';
+  }
+
+  @override
+  String addOnFlatPriceBadge(String price) {
+    return '$price';
+  }
+
+  @override
+  String get weekendPricingNote =>
+      'Weekend nights may be priced differently from weekdays.';
+
+  @override
+  String get addOnsListSubtitle =>
+      'Enhance your stay with these optional extras.';
+
+  @override
+  String get noAddOnsTitle => 'No Add-ons Available';
+
+  @override
+  String get noAddOnsSubtitle =>
+      'This chalet has no optional add-ons to choose from.';
+
+  @override
+  String get errorLoadingAddOns =>
+      'We couldn\'t load the add-ons. Please try again.';
+
+  @override
+  String get errorLoadingPricePreview =>
+      'We couldn\'t load the price preview. Please try again.';
+
+  @override
+  String get priceBreakdownTitle => 'Price Breakdown';
+
+  @override
+  String get backToHomeButton => 'Back to Home';
+
+  @override
+  String get nextButton => 'Next';
+
+  @override
+  String get backButton => 'Back';
+
+  @override
+  String get bookingSuccessTitle => 'Reservation Submitted';
+
+  @override
+  String get bookingSuccessMessage =>
+      'We are looking into your reservation. Our customer support will contact you once the reservation is confirmed.';
+
+  @override
+  String get bookingErrorTitle => 'Reservation Failed';
+
+  @override
+  String get errorSubmittingBooking =>
+      'We couldn\'t submit your reservation. Please try again.';
+
+  @override
+  String get tryAgainButton => 'Try Again';
+
+  @override
+  String get whatsappSupportMessage =>
+      'Hello, I need assistance with GrandeBeach Khairan.';
+
+  @override
+  String whatsappChaletInquiryMessage(String chaletName) {
+    return 'Hello,\nI\'d like to ask about this chalet\'s details.\n\nChalet:\n$chaletName\n\nThank you.';
+  }
+
+  @override
+  String whatsappChaletCancelationPolicyInquiryMessage(String chaletName) {
+    return 'Hello,\nI\'d like to ask about this chalet\'s cancellation policy.\n\nChalet:\n$chaletName\n\nThank you.';
+  }
+
+  @override
+  String get whatsappBookingSupportMessage =>
+      'Hello,\nI need help with my booking at GrandeBeach Khairan.\n\nThank you.';
+
+  @override
+  String whatsappBookingSupportMessageWithNumber(String bookingNumber) {
+    return 'Hello,\nI need help with my booking at GrandeBeach Khairan.\n\nBooking Number:\n$bookingNumber\n\nMy inquiry:\n____________________\n\nThank you.';
+  }
+
+  @override
+  String get specialRequestLabel => 'Special Request (optional)';
+
+  @override
+  String get specialRequestHint =>
+      'Anything you\'d like us to know? (e.g. early check-in)';
+
+  @override
+  String get cancellationPolicyTitle => 'Cancellation Policy';
+
+  @override
+  String get cancellationPolicyContactMessage =>
+      'If you\'d like to ask about the cancellation policy for this chalet, please contact us on WhatsApp.';
+
+  @override
+  String get contactUsOnWhatsapp => 'Contact us on WhatsApp';
 }

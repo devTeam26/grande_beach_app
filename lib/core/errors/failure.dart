@@ -1,12 +1,16 @@
 /// Base type for all domain/network failures returned through [Result].
 sealed class Failure {
-  const Failure(this.message);
+  const Failure(this.message, {this.errors});
 
   final String message;
+
+  /// Individual error strings from the backend's error envelope (e.g. its
+  /// `errors` array), shown alongside [message] when present.
+  final List<String>? errors;
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure(super.message);
+  const ServerFailure(super.message, {super.errors});
 }
 
 class NetworkFailure extends Failure {
@@ -22,7 +26,7 @@ class UnauthorizedFailure extends Failure {
 }
 
 class ValidationFailure extends Failure {
-  const ValidationFailure(super.message, {this.fieldErrors});
+  const ValidationFailure(super.message, {this.fieldErrors, super.errors});
 
   final Map<String, List<String>>? fieldErrors;
 }

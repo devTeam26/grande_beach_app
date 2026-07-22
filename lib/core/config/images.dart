@@ -10,4 +10,8 @@ abstract class AppImages {
   // static const String onboarding4 = '$_base/onboarding_4.jpeg';
   static const String banner = '$_base/banner.jpg';
   static const String chaletPlaceholder = '$_base/chalets_placeholder.jpg';
+
+  static const String _icon = 'assets/icons';
+  static const String check = '$_icon/check.gif';
+  static const String cancel = '$_icon/cancel.gif';
 }

@@ -10,6 +10,7 @@ import '../network/interceptors/auth_interceptor.dart';
 import '../network/interceptors/localization_interceptor.dart';
 import '../network/interceptors/refresh_token_interceptor.dart';
 import '../network/network_info.dart';
+import '../services/whatsapp_service.dart';
 import '../storage/local_storage_service.dart';
 import '../storage/secure_storage_service.dart';
 import 'locale_provider.dart';
@@ -42,6 +43,10 @@ final connectivityServiceProvider = Provider<ConnectivityService>((ref) {
     ref.watch(connectivityProvider),
     ref.watch(internetConnectionCheckerProvider),
   );
+});
+
+final whatsAppServiceProvider = Provider<WhatsAppService>((ref) {
+  return const WhatsAppService();
 });
 
 final apiClientProvider = Provider<ApiClient>((ref) {

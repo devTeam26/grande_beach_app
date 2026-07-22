@@ -67,6 +67,24 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
+  Future<AuthSessionModel> refresh({required String refreshToken}) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      ApiStrings.refresh,
+      data: {'refreshToken': refreshToken},
+    );
+
+    final body = response.data!;
+    final success = body['success'] as bool? ?? false;
+    if (!success) {
+      throw AuthApiException(
+        body['message'] as String? ?? 'Session expired. Please sign in again.',
+      );
+    }
+
+    return AuthSessionModel.fromJson(body['data'] as Map<String, dynamic>);
+  }
+
+  @override
   Future<void> resetPassword({
     required String email,
     required String token,

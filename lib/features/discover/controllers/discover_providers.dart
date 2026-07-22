@@ -104,6 +104,28 @@ class DiscoverChaletsNotifier extends AsyncNotifier<DiscoverState> {
     state = const AsyncLoading();
     state = await AsyncValue.guard(build);
   }
+
+  /// Reloads the first page for pull-to-refresh, keeping the current list
+  /// visible (rather than switching to the loading skeleton).
+  Future<void> refresh() async {
+    final current = state.valueOrNull;
+    _page = 1;
+
+    final result = await ref
+        .read(discoverRepositoryProvider)
+        .fetchChalets(pageNumber: _page, pageSize: _pageSize, filters: _filters);
+
+    result.fold(
+      (failure) {
+        if (current == null) state = AsyncError(failure, StackTrace.current);
+      },
+      (page) {
+        state = AsyncData(
+          DiscoverState(chalets: page.chalets, hasMore: page.hasMore),
+        );
+      },
+    );
+  }
 }
 
 final discoverChaletsProvider =

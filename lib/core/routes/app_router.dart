@@ -7,12 +7,17 @@ import '../../features/authentication/screens/forgot_password_screen.dart';
 import '../../features/authentication/screens/login_screen.dart';
 import '../../features/authentication/screens/register_screen.dart';
 import '../../features/booking/screens/booking_details_screen.dart';
+import '../../features/booking/screens/verification_screen.dart';
 import '../../features/chalet_details/screens/chalet_details_screen.dart';
 import '../../features/onboarding/screens/onboarding_screen.dart';
 import '../../features/profile/screens/account_info_screen.dart';
 import '../../features/profile/screens/change_password_screen.dart';
 import '../../features/profile/screens/privacy_policy_screen.dart';
+import '../../features/reservation/screens/reservation_wizard_screen.dart';
+import '../../features/reviews/screens/reviews_screen.dart';
+import '../../features/shared/models/result_screen_args.dart';
 import '../../features/shared/screens/main_shell.dart';
+import '../../features/shared/screens/result_screen.dart';
 import '../../features/wishlist/screens/wishlist_screen.dart';
 import '../providers/onboarding_provider.dart';
 import 'startup_screen.dart';
@@ -25,6 +30,8 @@ class _RouterRefreshNotifier extends ChangeNotifier {
     ref.listen(onboardingProvider, (_, _) => notifyListeners());
     // sessionActiveProvider is synchronous — reacts instantly on login/logout.
     ref.listen(sessionActiveProvider, (_, _) => notifyListeners());
+    // Re-run the redirect once the launch-time token refresh resolves.
+    ref.listen(appBootstrapDoneProvider, (_, _) => notifyListeners());
   }
 }
 
@@ -42,6 +49,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     redirect: (context, state) {
       final languageSelected = ref.read(languageSelectedProvider);
       final onboardingDone = ref.read(onboardingProvider);
+      final bootstrapDone = ref.read(appBootstrapDoneProvider);
       final hasSession = ref.read(sessionActiveProvider);
       final path = state.matchedLocation;
 
@@ -50,6 +58,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
       if (!onboardingDone) {
         return path == '/onboarding' ? null : '/onboarding';
+      }
+      // Language + onboarding done: hold on the splash until the launch-time
+      // token refresh has resolved, so we route to the correct destination.
+      if (!bootstrapDone) {
+        return path == '/' ? null : '/';
       }
       if (path == '/' || path == '/onboarding') {
         return hasSession ? '/home' : '/login';
@@ -112,6 +125,30 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/booking-details/:id',
         builder: (context, state) => BookingDetailsScreen(
           bookingId: state.pathParameters['id']!,
+        ),
+      ),
+      GoRoute(
+        path: '/booking-verification/:id',
+        builder: (context, state) => VerificationScreen(
+          bookingId: state.pathParameters['id']!,
+        ),
+      ),
+      GoRoute(
+        path: '/chalet-details/:id/reviews',
+        builder: (context, state) => ReviewsScreen(
+          chaletId: state.pathParameters['id']!,
+        ),
+      ),
+      GoRoute(
+        path: '/chalet-details/:id/reserve',
+        builder: (context, state) => ReservationWizardScreen(
+          chaletId: state.pathParameters['id']!,
+        ),
+      ),
+      GoRoute(
+        path: '/result',
+        builder: (context, state) => ResultScreen(
+          args: state.extra as ResultScreenArgs,
         ),
       ),
     ],

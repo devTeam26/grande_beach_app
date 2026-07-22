@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../core/errors/failure.dart';
 import '../../../core/network/dio_failure_mapper.dart';
@@ -43,10 +44,13 @@ class DiscoverRepositoryImpl implements DiscoverRepository {
       );
       return Success(page);
     } on DiscoverApiException catch (e) {
+      debugPrint('DiscoverRepository.fetchChalets DiscoverApiException: ${e.message}');
       return ResultFailure(ServerFailure(e.message));
     } on DioException catch (e) {
+      debugPrint('DiscoverRepository.fetchChalets DioException: ${e.message}\n${e.response?.data}');
       return ResultFailure(DioFailureMapper.map(e));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      debugPrint('DiscoverRepository.fetchChalets error: $e\n$stackTrace');
       return ResultFailure(ExceptionMapper.map(e));
     }
   }

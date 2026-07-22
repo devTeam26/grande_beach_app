@@ -34,9 +34,7 @@ class ProfileScreen extends ConsumerWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
-          ProfileHeader(
-            onNotificationTap: () {}, // TODO: navigate to notifications
-          ),
+          const ProfileHeader(),
 
           Expanded(
             child: ListView(
@@ -91,13 +89,13 @@ class ProfileScreen extends ConsumerWidget {
                         onConfirmed: () {},
                       ),
                     ),
-                    SettingRow.withSwitch(
-                      icon: const Icon(Icons.notifications_outlined),
-                      title: l10n.notifications,
-                      switchValue: notificationsEnabled,
-                      onSwitchChanged: (_) =>
-                          ref.read(notificationsProvider.notifier).toggle(),
-                    ),
+                    // SettingRow.withSwitch(
+                    //   icon: const Icon(Icons.notifications_outlined),
+                    //   title: l10n.notifications,
+                    //   switchValue: notificationsEnabled,
+                    //   onSwitchChanged: (_) =>
+                    //       ref.read(notificationsProvider.notifier).toggle(),
+                    // ),
                     SettingRow.withSwitch(
                       icon: const Icon(Icons.dark_mode_outlined),
                       title: l10n.darkMode,
@@ -139,8 +137,10 @@ class ProfileScreen extends ConsumerWidget {
     AppLocalizations l10n,
   ) async {
     final confirmed = await showDialog<bool>(
+      
       context: context,
       builder: (ctx) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(l10n.logoutConfirmTitle),
         content: Text(l10n.logoutConfirmMessage),
         actions: [

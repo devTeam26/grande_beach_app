@@ -13,6 +13,8 @@ class Chalet {
     required this.masterBedrooms,
     required this.singleBedrooms,
     required this.bedsPerSingleBedroom,
+    required this.bathrooms,
+    required this.hasServantRoom,
     required this.maxGuests,
     required this.basePrice,
     required this.weekendPrice,
@@ -40,6 +42,8 @@ class Chalet {
   final int masterBedrooms;
   final int singleBedrooms;
   final int bedsPerSingleBedroom;
+  final int bathrooms;
+  final bool hasServantRoom;
   final int maxGuests;
   final double basePrice;
   final double weekendPrice;
@@ -56,6 +60,14 @@ class Chalet {
   final List<ChaletImage> images;
   final List<Amenity> amenities;
 
+  /// The image to use for single-image contexts (cards, list tiles): the
+  /// image flagged `isPrimary`, or the first image if none is flagged.
+  String? get primaryImageUrl {
+    if (images.isEmpty) return null;
+    return images.firstWhere((e) => e.isPrimary, orElse: () => images.first)
+        .imageUrl;
+  }
+
   factory Chalet.fromJson(Map<String, dynamic> json) => Chalet(
         id: json['id'] as String,
         name: json['name'] as String,
@@ -67,6 +79,8 @@ class Chalet {
         masterBedrooms: json['masterBedrooms'] as int,
         singleBedrooms: json['singleBedrooms'] as int,
         bedsPerSingleBedroom: json['bedsPerSingleBedroom'] as int,
+        bathrooms: json['bathrooms'] as int? ?? 0,
+        hasServantRoom: json['hasServantRoom'] as bool? ?? false,
         maxGuests: json['maxGuests'] as int,
         basePrice: (json['basePrice'] as num).toDouble(),
         weekendPrice: (json['weekendPrice'] as num).toDouble(),
@@ -99,6 +113,8 @@ class Chalet {
         'masterBedrooms': masterBedrooms,
         'singleBedrooms': singleBedrooms,
         'bedsPerSingleBedroom': bedsPerSingleBedroom,
+        'bathrooms': bathrooms,
+        'hasServantRoom': hasServantRoom,
         'maxGuests': maxGuests,
         'basePrice': basePrice,
         'weekendPrice': weekendPrice,

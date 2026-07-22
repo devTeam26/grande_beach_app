@@ -15,23 +15,15 @@ class PrivacyPolicyScreen extends StatelessWidget {
       body: Column(
         children: [
           CommonHeader(
-            title: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => context.pop(),
-                  child: const Icon(Icons.arrow_back_ios_new,
-                      color: Colors.white, size: 20),
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  l10n.privacyPolicyTitle,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+            showBackButton: true,
+            onBackPressed: () => context.pop(),
+            title: Text(
+              l10n.privacyPolicyTitle,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           const Expanded(

@@ -23,7 +23,7 @@ class Booking {
     required this.totalAmount,
     required this.status,
     this.chaletImageUrl,
-    this.chaletLocation,
+    this.cancellationReason,
   });
 
   final String id;
@@ -47,10 +47,11 @@ class Booking {
   final BookingStatus status;
 
   /// Not returned by the current API payload; kept nullable so a future
-  /// backend addition (chalet image/location) is picked up without a model
-  /// change.
+  /// backend addition (chalet image) is picked up without a model change.
   final String? chaletImageUrl;
-  final String? chaletLocation;
+
+  /// Set when [status] is cancelled or rejected.
+  final String? cancellationReason;
 
   factory Booking.fromJson(Map<String, dynamic> json) => Booking(
         id: json['id'] as String,
@@ -73,7 +74,7 @@ class Booking {
         totalAmount: (json['totalAmount'] as num).toDouble(),
         status: BookingStatusX.fromApi(json['status'] as String),
         chaletImageUrl: json['chaletImageUrl'] as String?,
-        chaletLocation: json['chaletLocation'] as String?,
+        cancellationReason: json['cancellationReason'] as String?,
       );
 
   @override

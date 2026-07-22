@@ -23,7 +23,7 @@ class BookingStatusTabs extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        // color: theme.colorScheme.surfaceContainerHighest,
+        color: AppColors.inputFill(theme.brightness),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Row(
@@ -37,7 +37,12 @@ class BookingStatusTabs extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.primaryGold : Colors.transparent,
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(8),
+                  // border: isSelected
+                  //     ? null
+                  //     : Border.all(
+                  //         color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                  //       ),
                 ),
                 child: Text(
                   tab.label(l10n),

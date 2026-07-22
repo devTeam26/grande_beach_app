@@ -16,4 +16,6 @@ abstract class AppIcons {
   static const IconData masterRoom = LucideIcons.bedDouble;
   static const IconData singleRoom = LucideIcons.bedSingle;
   static const IconData guest = LucideIcons.users;
+  static const IconData bathroom = LucideIcons.bath;
+  static const IconData servantRoom = LucideIcons.conciergeBell;
 }

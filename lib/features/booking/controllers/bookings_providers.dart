@@ -7,6 +7,7 @@ import '../repositories/bookings_repository.dart';
 import '../repositories/bookings_repository_impl.dart';
 import '../services/bookings_service.dart';
 import '../services/bookings_service_impl.dart';
+import 'verification_providers.dart';
 
 const _pageSize = 20;
 
@@ -105,6 +106,35 @@ class BookingsNotifier extends AsyncNotifier<BookingsState> {
   Future<void> retry() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(build);
+  }
+
+  /// Reloads the first page for pull-to-refresh, keeping the current list
+  /// visible (rather than switching to the loading skeleton) so newly
+  /// created bookings surface without an intrusive UI flash. Also refreshes
+  /// the cached verification status alongside the bookings data.
+  Future<void> refresh() async {
+    final current = state.valueOrNull;
+    _page = 1;
+
+    final bookingsFuture = ref
+        .read(bookingsRepositoryProvider)
+        .fetchMyBookings(pageNumber: _page, pageSize: _pageSize);
+    final verificationFuture =
+        ref.read(verificationStatusProvider.notifier).refresh();
+
+    final result = await bookingsFuture;
+    await verificationFuture;
+
+    result.fold(
+      (failure) {
+        if (current == null) state = AsyncError(failure, StackTrace.current);
+      },
+      (page) {
+        state = AsyncData(
+          BookingsState(bookings: page.bookings, hasMore: page.hasMore),
+        );
+      },
+    );
   }
 }
 

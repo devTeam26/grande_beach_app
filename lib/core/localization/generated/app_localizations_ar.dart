@@ -139,7 +139,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String greeting(String firstName) {
-    return 'مرحبًا، $firstName!';
+    return 'مرحبًا، $firstName👋';
   }
 
   @override
@@ -369,6 +369,22 @@ class AppLocalizationsAr extends AppLocalizations {
       'تعذر تحميل الشاليهات. يرجى المحاولة مرة أخرى.';
 
   @override
+  String get reviewsTitle => 'التقييمات';
+
+  @override
+  String get allReviewsFilter => 'الكل';
+
+  @override
+  String get noReviewsTitle => 'لا توجد تقييمات بعد';
+
+  @override
+  String get noReviewsSubtitle => 'لم يحصل هذا الشاليه على أي تقييمات بعد.';
+
+  @override
+  String get errorLoadingReviews =>
+      'تعذر تحميل التقييمات. يرجى المحاولة مرة أخرى.';
+
+  @override
   String get searchSheetTitle => 'ابحث عن شاليهك المثالي';
 
   @override
@@ -455,6 +471,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get maxGuestsLabel => 'الحد الأقصى للضيوف';
 
   @override
+  String get bathroomsLabel => 'حمامات';
+
+  @override
+  String get servantRoomLabel => 'غرفة خادمة';
+
+  @override
   String get bookingsOngoingTab => 'جارية';
 
   @override
@@ -462,6 +484,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingsCancelledTab => 'ملغاة';
+
+  @override
+  String get bookingsRejectedTab => 'مرفوضة';
 
   @override
   String get bookingStatusPending => 'قيد الانتظار';
@@ -479,7 +504,99 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingStatusCancelled => 'ملغى';
 
   @override
+  String get bookingStatusRejected => 'مرفوض';
+
+  @override
   String get viewTicket => 'عرض التذكرة';
+
+  @override
+  String get verifyButton => 'توثيق';
+
+  @override
+  String get verificationScreenTitle => 'توثيق الحجز';
+
+  @override
+  String get verificationSubtitle => 'يرجى رفع المستندات المطلوبة لتأكيد حجزك.';
+
+  @override
+  String get verificationUnderReviewMessage =>
+      'طلب التوثيق الخاص بك قيد المراجعة حاليًا.';
+
+  @override
+  String verificationRejectedMessage(String reason) {
+    return 'تم رفض طلب التوثيق السابق الخاص بك.\nالسبب: \"$reason\"\n\nيرجى مراجعة السبب أعلاه، وتحديث مستنداتك إذا لزم الأمر، ثم إعادة إرسالها.';
+  }
+
+  @override
+  String get idCardTitle => 'بطاقة الهوية';
+
+  @override
+  String get idCardSubtitle =>
+      'ارفع صورة واحدة توضح بوضوح الوجهين الأمامي والخلفي لبطاقة هويتك.';
+
+  @override
+  String get personalPhotoTitle => 'صورة شخصية';
+
+  @override
+  String get personalPhotoSubtitle => 'ارفع صورة شخصية واضحة للتحقق من الهوية.';
+
+  @override
+  String get digitalSignatureTitle => 'التوقيع الرقمي';
+
+  @override
+  String get digitalSignatureSubtitle => 'وقّع باستخدام إصبعك أدناه.';
+
+  @override
+  String get uploadImageButton => 'رفع صورة';
+
+  @override
+  String get replaceImageButton => 'استبدال';
+
+  @override
+  String get removeImageButton => 'إزالة';
+
+  @override
+  String get clearSignatureButton => 'مسح';
+
+  @override
+  String get undoSignatureButton => 'تراجع';
+
+  @override
+  String get takePhotoOption => 'التقاط صورة';
+
+  @override
+  String get chooseFromGalleryOption => 'اختيار من المعرض';
+
+  @override
+  String get cameraPermissionDeniedTitle => 'الوصول إلى الكاميرا مطلوب';
+
+  @override
+  String get cameraPermissionDeniedMessage =>
+      'يحتاج تطبيق Grande Beach إلى الوصول إلى الكاميرا لالتقاط هذه الصورة. يرجى السماح بذلك من إعدادات جهازك.';
+
+  @override
+  String get openSettingsButton => 'فتح الإعدادات';
+
+  @override
+  String get submitVerificationButton => 'إرسال للمراجعة';
+
+  @override
+  String get verificationIncompleteMessage =>
+      'يرجى رفع بطاقة الهوية والصورة الشخصية والتوقيع للمتابعة.';
+
+  @override
+  String get verificationSubmittedTitle => 'تم إرسال التوثيق';
+
+  @override
+  String get verificationSubmittedMessage =>
+      'شكرًا لك! تم إرسال مستنداتك بنجاح. يقوم فريقنا بمراجعتها وسنؤكد حجزك فور الموافقة عليها.';
+
+  @override
+  String get verificationErrorTitle => 'فشل الإرسال';
+
+  @override
+  String get errorSubmittingVerification =>
+      'تعذر إرسال توثيقك. يرجى المحاولة مرة أخرى.';
 
   @override
   String get noBookingsYet => 'لا توجد حجوزات بعد';
@@ -527,7 +644,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get guestCountLabel => 'عدد الضيوف';
 
   @override
-  String get baseAmountLabel => 'المبلغ الأساسي';
+  String get baseAmountLabel => 'المبلغ الاساسي (في الليلة)';
 
   @override
   String get taxAmountLabel => 'الضريبة';
@@ -582,9 +699,169 @@ class AppLocalizationsAr extends AppLocalizations {
       'تعذر إلغاء هذا الحجز. يرجى المحاولة مرة أخرى.';
 
   @override
+  String get cancellationReasonTitle => 'سبب الإلغاء';
+
+  @override
+  String get writeReviewButton => 'اكتب تقييمًا';
+
+  @override
+  String get submitReviewTitle => 'قيّم إقامتك';
+
+  @override
+  String get submitReviewSubtitle => 'شارك تجربتك لمساعدة الضيوف الآخرين.';
+
+  @override
+  String get reviewCommentLabel => 'تقييمك';
+
+  @override
+  String get reviewCommentHint => 'أخبرنا عن إقامتك...';
+
+  @override
+  String get submitReviewButton => 'إرسال التقييم';
+
+  @override
+  String get ratingRequiredError => 'يرجى اختيار تقييم.';
+
+  @override
+  String get reviewCommentRequiredError => 'يرجى كتابة تعليق.';
+
+  @override
+  String get reviewSubmittedMessage => 'شكرًا لك! تم إرسال تقييمك.';
+
+  @override
+  String get errorSubmittingReview =>
+      'تعذر إرسال تقييمك. يرجى المحاولة مرة أخرى.';
+
+  @override
   String get wishlistEmptyTitle => 'قائمة رغباتك فارغة';
 
   @override
   String get wishlistEmptySubtitle =>
       'اضغط على أيقونة القلب في أي شاليه لحفظه هنا.';
+
+  @override
+  String get reservationTitle => 'احجز';
+
+  @override
+  String get errorLoadingAvailability =>
+      'تعذّر تحميل التوفر لهذا الشهر. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get selectedRangeUnavailable =>
+      'هذه التواريخ غير متاحة. يرجى اختيار فترة متاحة.';
+
+  @override
+  String get reservationStep1Title => 'اختر التواريخ';
+
+  @override
+  String get reservationStep2Title => 'اختر الإضافات';
+
+  @override
+  String get reservationStep3Title => 'معاينة السعر';
+
+  @override
+  String guestCountMaxError(String max) {
+    return 'الحد الأقصى المسموح به للضيوف هو $max.';
+  }
+
+  @override
+  String addOnPerNightBadge(String price) {
+    return '$price/الليلة';
+  }
+
+  @override
+  String addOnFlatPriceBadge(String price) {
+    return '$price';
+  }
+
+  @override
+  String get weekendPricingNote =>
+      'قد تختلف أسعار ليالي نهاية الأسبوع عن أيام الأسبوع.';
+
+  @override
+  String get addOnsListSubtitle =>
+      'أضف لمسة مميزة على إقامتك مع هذه الإضافات الاختيارية.';
+
+  @override
+  String get noAddOnsTitle => 'لا توجد إضافات متاحة';
+
+  @override
+  String get noAddOnsSubtitle => 'لا توجد إضافات اختيارية متاحة لهذا الشاليه.';
+
+  @override
+  String get errorLoadingAddOns =>
+      'تعذر تحميل الإضافات. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get errorLoadingPricePreview =>
+      'تعذر تحميل معاينة السعر. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get priceBreakdownTitle => 'تفاصيل السعر';
+
+  @override
+  String get backToHomeButton => 'العودة إلى الرئيسية';
+
+  @override
+  String get nextButton => 'التالي';
+
+  @override
+  String get backButton => 'رجوع';
+
+  @override
+  String get bookingSuccessTitle => 'تم إرسال الحجز';
+
+  @override
+  String get bookingSuccessMessage =>
+      'نحن ننظر في حجزك. سيتواصل معك فريق خدمة العملاء بمجرد تأكيد الحجز.';
+
+  @override
+  String get bookingErrorTitle => 'فشل الحجز';
+
+  @override
+  String get errorSubmittingBooking =>
+      'تعذر إرسال حجزك. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get tryAgainButton => 'حاول مرة أخرى';
+
+  @override
+  String get whatsappSupportMessage =>
+      'مرحبًا، أحتاج إلى مساعدة بخصوص GrandeBeach Khairan.';
+
+  @override
+  String whatsappChaletInquiryMessage(String chaletName) {
+    return 'مرحبًا،\nأود الاستفسار عن سياسة الالغاء الخاصة  بهذا الشاليه .\n\nالشاليه:\n$chaletName\n\nشكرًا لكم.';
+  }
+
+  @override
+  String whatsappChaletCancelationPolicyInquiryMessage(String chaletName) {
+    return 'مرحبًا،\nأود الاستفسار عن تفاصيل هذا الشاليه .\n\nالشاليه:\n$chaletName\n\nشكرًا لكم.';
+  }
+
+  @override
+  String get whatsappBookingSupportMessage =>
+      'مرحبًا،\nأحتاج إلى مساعدة بخصوص حجزي في GrandeBeach Khairan.\n\nشكرًا لكم.';
+
+  @override
+  String whatsappBookingSupportMessageWithNumber(String bookingNumber) {
+    return 'مرحبًا،\nأحتاج إلى مساعدة بخصوص حجزي في GrandeBeach Khairan.\n\nرقم الحجز:\n$bookingNumber\n\nشكرًا لكم.';
+  }
+
+  @override
+  String get specialRequestLabel => 'طلب خاص (اختياري)';
+
+  @override
+  String get specialRequestHint =>
+      'هل تريد إخبارنا بأي شيء؟ (مثال: تسجيل وصول مبكر)';
+
+  @override
+  String get cancellationPolicyTitle => 'سياسة الإلغاء';
+
+  @override
+  String get cancellationPolicyContactMessage =>
+      'إذا كنت تريد الاستفسار عن سياسة الإلغاء لهذا الشاليه، يرجى التواصل معنا عبر واتساب.';
+
+  @override
+  String get contactUsOnWhatsapp => 'تواصل معنا عبر واتساب';
 }

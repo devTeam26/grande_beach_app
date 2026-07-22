@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:grande_beach/core/config/app_icons.dart';
 
 import '../../../core/localization/generated/app_localizations.dart';
 import '../../../core/providers/locale_provider.dart';
@@ -20,22 +21,26 @@ class DiscoverScreen extends ConsumerWidget {
         children: [
           CommonHeader(
             bottomHeight: 68,
-            title: Text(
-              l10n.discoverTitle,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.w700,
-              ),
+            title: Row(
+              children: [
+                const Icon(AppIcons.discover, size: 22, color: Colors.white),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.discoverTitle,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
             ),
-            onNotificationTap: () {},
-            
           ),
 
           const Padding(
-              padding: EdgeInsets.only(bottom: 8, top:16),
-              child: DiscoverSearchBar(),
-            ),
+            padding: EdgeInsets.only(bottom: 8, top: 16),
+            child: DiscoverSearchBar(),
+          ),
           Expanded(child: DiscoverChaletList(isArabic: isArabic)),
         ],
       ),

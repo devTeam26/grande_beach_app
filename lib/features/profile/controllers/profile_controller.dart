@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../features/authentication/controllers/auth_providers.dart';
+import '../../booking/controllers/verification_providers.dart';
 
 class ProfileController extends AsyncNotifier<void> {
   @override
@@ -14,6 +15,8 @@ class ProfileController extends AsyncNotifier<void> {
       (_) {
         ref.read(sessionActiveProvider.notifier).state = false;
         ref.invalidate(currentUserProvider);
+        ref.read(verificationRepositoryProvider).clearCache();
+        ref.invalidate(verificationStatusProvider);
         return const AsyncData(null);
       },
     );

@@ -29,6 +29,7 @@ class DioFailureMapper {
     final statusCode = exception.response?.statusCode ?? 0;
     final data = exception.response?.data;
     final message = _extractMessage(data);
+    final errors = _extractErrors(data);
 
     if (statusCode == 401) {
       return UnauthorizedFailure(message ?? 'Invalid credentials.');
@@ -37,11 +38,13 @@ class DioFailureMapper {
       return ValidationFailure(
         message ?? 'Please check your input and try again.',
         fieldErrors: _extractFieldErrors(data),
+        errors: errors,
       );
     }
     if (statusCode >= 500) {
       return ServerFailure(
         message ?? 'Something went wrong on our end. Please try again later.',
+        errors: errors,
       );
     }
     return UnknownFailure(message ?? 'An unexpected error occurred.');
@@ -55,6 +58,16 @@ class DioFailureMapper {
       final errors = data['errors'];
       if (errors is List && errors.isNotEmpty) {
         return errors.first.toString();
+      }
+    }
+    return null;
+  }
+
+  static List<String>? _extractErrors(dynamic data) {
+    if (data is Map<String, dynamic>) {
+      final errors = data['errors'];
+      if (errors is List && errors.isNotEmpty) {
+        return errors.map((e) => e.toString()).toList();
       }
     }
     return null;

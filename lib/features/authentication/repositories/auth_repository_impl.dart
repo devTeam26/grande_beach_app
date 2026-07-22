@@ -45,14 +45,21 @@ class AuthRepositoryImpl implements AuthRepository {
       final session =
           await _authService.login(email: email, password: password);
 
+      final user = session.user;
+      if (user == null) {
+        return const ResultFailure(
+          ServerFailure('Login failed. Please try again.'),
+        );
+      }
+
       await _secureStorage.saveSession(
         accessToken: session.accessToken,
         refreshToken: session.refreshToken,
         expiresAt: session.expiresAt,
       );
-      await _localStorage.saveUserProfile(session.user.toJson());
+      await _localStorage.saveUserProfile(user.toJson());
 
-      return Success(session.user);
+      return Success(user);
     } on AuthApiException catch (e) {
       return ResultFailure(UnauthorizedFailure(e.message));
     } on DioException catch (e) {
@@ -89,9 +96,16 @@ class AuthRepositoryImpl implements AuthRepository {
         preferredLanguage: preferredLanguage,
       );
 
+      final user = session.user;
+      if (user == null) {
+        return const ResultFailure(
+          ValidationFailure('Registration failed. Please try again.'),
+        );
+      }
+
       // Registration must not auto-login: tokens are intentionally discarded
       // here so the user is forced to sign in with their new credentials.
-      return Success(session.user);
+      return Success(user);
     } on AuthApiException catch (e) {
       return ResultFailure(ValidationFailure(e.message));
     } on DioException catch (e) {
@@ -133,6 +147,59 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<bool> hasActiveSession() => _secureStorage.hasValidSession();
+
+  @override
+  Future<Result<void>> refreshSession() async {
+    final refreshToken = await _secureStorage.getRefreshToken();
+    if (refreshToken == null || refreshToken.isEmpty) {
+      // No stored session at all — nothing to refresh.
+      await _clearLocalSession();
+      return const ResultFailure(UnauthorizedFailure('No active session.'));
+    }
+
+    // Offline: don't force a re-login the user can't complete. Keep the
+    // stored session; the 401 interceptor handles expiry once back online.
+    if (!await _networkInfo.isConnected) {
+      return const Success(null);
+    }
+
+    try {
+      final session = await _authService.refresh(refreshToken: refreshToken);
+
+      await _secureStorage.saveSession(
+        accessToken: session.accessToken,
+        refreshToken: session.refreshToken,
+        expiresAt: session.expiresAt,
+      );
+      if (session.user != null) {
+        await _localStorage.saveUserProfile(session.user!.toJson());
+      }
+      return const Success(null);
+    } on AuthApiException catch (e) {
+      // Backend rejected the refresh token (invalid/expired) — force login.
+      await _clearLocalSession();
+      return ResultFailure(UnauthorizedFailure(e.message));
+    } on DioException catch (e) {
+      // A 401 means the refresh token is no longer valid — force login.
+      if (e.response?.statusCode == 401) {
+        await _clearLocalSession();
+        return const ResultFailure(
+          UnauthorizedFailure('Session expired. Please sign in again.'),
+        );
+      }
+      // Transient network/server error: keep the session and let the user in;
+      // they can retry authenticated requests once connectivity recovers.
+      return const Success(null);
+    } catch (_) {
+      // Unexpected error: fail safe by keeping the existing session.
+      return const Success(null);
+    }
+  }
+
+  Future<void> _clearLocalSession() async {
+    await _secureStorage.clearSession();
+    await _localStorage.clearUserProfile();
+  }
 
   @override
   Future<Result<void>> logout() async {

@@ -18,7 +18,7 @@ class BookingsServiceImpl implements BookingsService {
   }) async {
     final response = await _dio.get<Map<String, dynamic>>(
       ApiStrings.myBookings,
-      queryParameters: {'page': pageNumber, 'pageSize': pageSize},
+      queryParameters: {'pageNumber': pageNumber, 'pageSize': pageSize},
     );
 
     final body = response.data!;

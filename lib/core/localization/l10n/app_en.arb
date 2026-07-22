@@ -47,7 +47,7 @@
   "resetPasswordSuccess": "Password reset successfully. Please sign in.",
   "errorTokenInvalid": "The reset token is invalid or has expired.",
 
-  "greeting": "Hi, {firstName}!",
+  "greeting": "Hey, {firstName}👋",
   "@greeting": {
     "description": "Greeting shown on the home screen using the user first name",
     "placeholders": {
@@ -147,6 +147,12 @@
   "noChaletsFoundSubtitle": "There are currently no chalets available.",
   "errorLoadingChalets": "We couldn't load the chalets. Please try again.",
 
+  "reviewsTitle": "Reviews",
+  "allReviewsFilter": "All",
+  "noReviewsTitle": "No Reviews Yet",
+  "noReviewsSubtitle": "This chalet hasn't received any reviews yet.",
+  "errorLoadingReviews": "We couldn't load the reviews. Please try again.",
+
   "searchSheetTitle": "Find Your Perfect Chalet",
   "searchSheetSubtitle": "Choose one or more filters to discover the perfect stay.",
   "filterWhenTitle": "When",
@@ -177,16 +183,55 @@
   "masterRoomsLabel": "Master Rooms",
   "singleRoomsLabel": "Single Rooms",
   "maxGuestsLabel": "Max Guests",
+  "bathroomsLabel": "Bathrooms",
+  "servantRoomLabel": "Servant Room",
 
   "bookingsOngoingTab": "Ongoing",
   "bookingsCompletedTab": "Completed",
-  "bookingsCancelledTab": "Canceled",
+  "bookingsCancelledTab": "Cancelled",
+  "bookingsRejectedTab": "Rejected",
   "bookingStatusPending": "Pending",
   "bookingStatusConfirmed": "Confirmed",
   "bookingStatusCheckedIn": "Checked In",
   "bookingStatusCompleted": "Completed",
   "bookingStatusCancelled": "Cancelled",
+  "bookingStatusRejected": "Rejected",
   "viewTicket": "View Ticket",
+  "verifyButton": "Verify",
+  "verificationScreenTitle": "Booking Verification",
+  "verificationSubtitle": "Upload the required documents so we can confirm your booking.",
+  "verificationUnderReviewMessage": "Your verification request is currently under review.",
+  "verificationRejectedMessage": "Your previous verification request was rejected.\nReason: \"{reason}\"\n\nPlease review the reason above, update your documents if necessary, and submit them again.",
+  "@verificationRejectedMessage": {
+    "description": "Warning shown before the upload form when the user's previous verification was rejected",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "idCardTitle": "ID Card",
+  "idCardSubtitle": "Upload one image that clearly contains both the front and back sides of your ID card.",
+  "personalPhotoTitle": "Personal Photo",
+  "personalPhotoSubtitle": "Upload a clear selfie for identity verification.",
+  "digitalSignatureTitle": "Digital Signature",
+  "digitalSignatureSubtitle": "Sign using your finger below.",
+  "uploadImageButton": "Upload Image",
+  "replaceImageButton": "Replace",
+  "removeImageButton": "Remove",
+  "clearSignatureButton": "Clear",
+  "undoSignatureButton": "Undo",
+  "takePhotoOption": "Take Photo",
+  "chooseFromGalleryOption": "Choose from Gallery",
+  "cameraPermissionDeniedTitle": "Camera Access Needed",
+  "cameraPermissionDeniedMessage": "Grande Beach needs camera access to take this photo. Please allow it in your device settings.",
+  "openSettingsButton": "Open Settings",
+  "submitVerificationButton": "Submit for Review",
+  "verificationIncompleteMessage": "Please upload your ID card, personal photo, and signature to continue.",
+  "verificationSubmittedTitle": "Verification Submitted",
+  "verificationSubmittedMessage": "Thank you! Your documents have been submitted successfully. Our team is reviewing them and will confirm your booking as soon as it's approved.",
+  "verificationErrorTitle": "Submission Failed",
+  "errorSubmittingVerification": "We couldn't submit your verification. Please try again.",
   "noBookingsYet": "No bookings yet",
   "noBookingsYetSubtitle": "You haven't made any bookings yet.",
   "exploreChalets": "Explore Chalets",
@@ -203,7 +248,7 @@
   "checkoutSummaryTitle": "Checkout Summary",
   "nightsLabel": "Nights",
   "guestCountLabel": "Guests",
-  "baseAmountLabel": "Base Amount",
+  "baseAmountLabel": "Base Amount (per night)",
   "taxAmountLabel": "Tax",
   "addOnAmountLabel": "Add-ons",
   "discountAmountLabel": "Discount",
@@ -221,7 +266,107 @@
   "confirmCancellation": "Confirm Cancellation",
   "bookingPendingCancellationMessage": "Your cancellation request is pending review.",
   "errorCancelBooking": "We couldn't cancel this booking. Please try again.",
+  "cancellationReasonTitle": "Cancellation Reason",
+
+  "writeReviewButton": "Write a Review",
+  "submitReviewTitle": "Rate Your Stay",
+  "submitReviewSubtitle": "Share your experience to help other guests.",
+  "reviewCommentLabel": "Your Review",
+  "reviewCommentHint": "Tell us about your stay...",
+  "submitReviewButton": "Submit Review",
+  "ratingRequiredError": "Please select a rating.",
+  "reviewCommentRequiredError": "Please write a comment.",
+  "reviewSubmittedMessage": "Thank you! Your review has been submitted.",
+  "errorSubmittingReview": "We couldn't submit your review. Please try again.",
 
   "wishlistEmptyTitle": "Your wishlist is empty",
-  "wishlistEmptySubtitle": "Tap the heart icon on any chalet to save it here."
+  "wishlistEmptySubtitle": "Tap the heart icon on any chalet to save it here.",
+
+  "reservationTitle": "Reserve",
+  "errorLoadingAvailability": "We couldn't load availability for this month. Please try again.",
+  "selectedRangeUnavailable": "These dates aren't available. Please choose an available range.",
+  "reservationStep1Title": "Select Dates",
+  "reservationStep2Title": "Choose Add-ons",
+  "reservationStep3Title": "Price Preview",
+  "guestCountMaxError": "Maximum guests allowed is {max}.",
+  "@guestCountMaxError": {
+    "description": "Shown when the guest count exceeds a chalet's maxGuests",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "addOnPerNightBadge": "{price}/night",
+  "@addOnPerNightBadge": {
+    "description": "Price badge for an add-on billed per night",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "addOnFlatPriceBadge": "{price}",
+  "@addOnFlatPriceBadge": {
+    "description": "Price badge for a one-time add-on",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "weekendPricingNote": "Weekend nights may be priced differently from weekdays.",
+  "addOnsListSubtitle": "Enhance your stay with these optional extras.",
+  "noAddOnsTitle": "No Add-ons Available",
+  "noAddOnsSubtitle": "This chalet has no optional add-ons to choose from.",
+  "errorLoadingAddOns": "We couldn't load the add-ons. Please try again.",
+  "errorLoadingPricePreview": "We couldn't load the price preview. Please try again.",
+  "priceBreakdownTitle": "Price Breakdown",
+  "backToHomeButton": "Back to Home",
+  "nextButton": "Next",
+  "backButton": "Back",
+
+  "bookingSuccessTitle": "Reservation Submitted",
+  "bookingSuccessMessage": "We are looking into your reservation. Our customer support will contact you once the reservation is confirmed.",
+  "bookingErrorTitle": "Reservation Failed",
+  "errorSubmittingBooking": "We couldn't submit your reservation. Please try again.",
+  "tryAgainButton": "Try Again",
+
+  "whatsappSupportMessage": "Hello, I need assistance with GrandeBeach Khairan.",
+  "whatsappChaletInquiryMessage": "Hello,\nI'd like to ask about this chalet's details.\n\nChalet:\n{chaletName}\n\nThank you.",
+  "@whatsappChaletInquiryMessage": {
+    "description": "WhatsApp prefilled message for a chalet inquiry from the Chalet Details screen",
+    "placeholders": {
+      "chaletName": {
+        "type": "String"
+      }
+    }
+  },
+
+    "whatsappChaletCancelationPolicyInquiryMessage": "Hello,\nI'd like to ask about this chalet's cancellation policy.\n\nChalet:\n{chaletName}\n\nThank you.",
+  "@whatsappChaletCancelationPolicyInquiryMessage": {
+    "description": "WhatsApp prefilled message for a chalet inquiry from the Chalet Details screen",
+    "placeholders": {
+      "chaletName": {
+        "type": "String"
+      }
+    }
+  },
+  "whatsappBookingSupportMessage": "Hello,\nI need help with my booking at GrandeBeach Khairan.\n\nThank you.",
+  "whatsappBookingSupportMessageWithNumber": "Hello,\nI need help with my booking at GrandeBeach Khairan.\n\nBooking Number:\n{bookingNumber}\n\nMy inquiry:\n____________________\n\nThank you.",
+  "@whatsappBookingSupportMessageWithNumber": {
+    "description": "WhatsApp prefilled message for a booking inquiry, including the booking number",
+    "placeholders": {
+      "bookingNumber": {
+        "type": "String"
+      }
+    }
+  },
+
+  "specialRequestLabel": "Special Request (optional)",
+  "specialRequestHint": "Anything you'd like us to know? (e.g. early check-in)",
+
+  "cancellationPolicyTitle": "Cancellation Policy",
+  "cancellationPolicyContactMessage": "If you'd like to ask about the cancellation policy for this chalet, please contact us on WhatsApp.",
+  "contactUsOnWhatsapp": "Contact us on WhatsApp"
 }

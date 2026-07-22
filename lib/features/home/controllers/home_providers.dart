@@ -5,26 +5,53 @@ import '../../../core/providers/core_providers.dart';
 import '../data/home_mock_data.dart';
 import '../models/chalet.dart';
 import '../models/home_banner.dart';
+import '../repositories/home_repository.dart';
+import '../repositories/home_repository_impl.dart';
+import '../services/home_service.dart';
+import '../services/home_service_impl.dart';
 
 const _favoritesKey = 'favorite_chalet_ids';
 
 // ---------------------------------------------------------------------------
-// Data providers — swap Future.value(mock) for an API call when backend ready
+// Dependency injection
 // ---------------------------------------------------------------------------
 
+final homeServiceProvider = Provider<HomeService>((ref) {
+  return HomeServiceImpl(ref.watch(apiClientProvider).dio);
+});
+
+final homeRepositoryProvider = Provider<HomeRepository>((ref) {
+  return HomeRepositoryImpl(
+    homeService: ref.watch(homeServiceProvider),
+    networkInfo: ref.watch(networkInfoProvider),
+  );
+});
+
+// ---------------------------------------------------------------------------
+// Data providers
+// ---------------------------------------------------------------------------
+
+// TODO(backend): replace with a banners endpoint when available.
 final homeBannersProvider = FutureProvider<List<HomeBanner>>((ref) async {
   await Future.delayed(const Duration(milliseconds: 800));
   return HomeMockData.getBanners();
 });
 
 final popularChaletsProvider = FutureProvider<List<Chalet>>((ref) async {
-  await Future.delayed(const Duration(milliseconds: 900));
-  return HomeMockData.getPopularChalets();
+  final result = await ref.watch(homeRepositoryProvider).fetchPopularChalets();
+  return result.fold(
+    (failure) => throw Exception(failure.message),
+    (chalets) => chalets,
+  );
 });
 
 final recentlyAddedProvider = FutureProvider<List<Chalet>>((ref) async {
-  await Future.delayed(const Duration(milliseconds: 900));
-  return HomeMockData.getRecentlyAdded();
+  final result =
+      await ref.watch(homeRepositoryProvider).fetchRecentlyAddedChalets();
+  return result.fold(
+    (failure) => throw Exception(failure.message),
+    (chalets) => chalets,
+  );
 });
 
 // ---------------------------------------------------------------------------

@@ -28,6 +28,10 @@ abstract class AppColors {
   static const Color statusCheckedIn = Color(0xFF16A34A);
   static const Color statusCompleted = Color(0xFF16A34A);
   static const Color statusCancelled = Color(0xFFDC2626);
+  static const Color statusRejected = Color(0xFF991B1B);
+
+  /// Official WhatsApp brand green, used for WhatsApp deep-link actions.
+  static const Color whatsappGreen = Color(0xFF25D366);
 
   static Color inputFill(Brightness brightness) =>
       brightness == Brightness.dark ? darkInputFill : lightInputFill;

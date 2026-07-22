@@ -347,7 +347,7 @@ abstract class AppLocalizations {
   /// Greeting shown on the home screen using the user first name
   ///
   /// In en, this message translates to:
-  /// **'Hi, {firstName}!'**
+  /// **'Hey, {firstName}👋'**
   String greeting(String firstName);
 
   /// No description provided for @navHome.
@@ -788,6 +788,36 @@ abstract class AppLocalizations {
   /// **'We couldn\'t load the chalets. Please try again.'**
   String get errorLoadingChalets;
 
+  /// No description provided for @reviewsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get reviewsTitle;
+
+  /// No description provided for @allReviewsFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allReviewsFilter;
+
+  /// No description provided for @noReviewsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Reviews Yet'**
+  String get noReviewsTitle;
+
+  /// No description provided for @noReviewsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This chalet hasn\'t received any reviews yet.'**
+  String get noReviewsSubtitle;
+
+  /// No description provided for @errorLoadingReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t load the reviews. Please try again.'**
+  String get errorLoadingReviews;
+
   /// No description provided for @searchSheetTitle.
   ///
   /// In en, this message translates to:
@@ -956,6 +986,18 @@ abstract class AppLocalizations {
   /// **'Max Guests'**
   String get maxGuestsLabel;
 
+  /// No description provided for @bathroomsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bathrooms'**
+  String get bathroomsLabel;
+
+  /// No description provided for @servantRoomLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Servant Room'**
+  String get servantRoomLabel;
+
   /// No description provided for @bookingsOngoingTab.
   ///
   /// In en, this message translates to:
@@ -971,8 +1013,14 @@ abstract class AppLocalizations {
   /// No description provided for @bookingsCancelledTab.
   ///
   /// In en, this message translates to:
-  /// **'Canceled'**
+  /// **'Cancelled'**
   String get bookingsCancelledTab;
+
+  /// No description provided for @bookingsRejectedTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get bookingsRejectedTab;
 
   /// No description provided for @bookingStatusPending.
   ///
@@ -1004,11 +1052,179 @@ abstract class AppLocalizations {
   /// **'Cancelled'**
   String get bookingStatusCancelled;
 
+  /// No description provided for @bookingStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get bookingStatusRejected;
+
   /// No description provided for @viewTicket.
   ///
   /// In en, this message translates to:
   /// **'View Ticket'**
   String get viewTicket;
+
+  /// No description provided for @verifyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verifyButton;
+
+  /// No description provided for @verificationScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Verification'**
+  String get verificationScreenTitle;
+
+  /// No description provided for @verificationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload the required documents so we can confirm your booking.'**
+  String get verificationSubtitle;
+
+  /// No description provided for @verificationUnderReviewMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your verification request is currently under review.'**
+  String get verificationUnderReviewMessage;
+
+  /// Warning shown before the upload form when the user's previous verification was rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Your previous verification request was rejected.\nReason: \"{reason}\"\n\nPlease review the reason above, update your documents if necessary, and submit them again.'**
+  String verificationRejectedMessage(String reason);
+
+  /// No description provided for @idCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ID Card'**
+  String get idCardTitle;
+
+  /// No description provided for @idCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload one image that clearly contains both the front and back sides of your ID card.'**
+  String get idCardSubtitle;
+
+  /// No description provided for @personalPhotoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Photo'**
+  String get personalPhotoTitle;
+
+  /// No description provided for @personalPhotoSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a clear selfie for identity verification.'**
+  String get personalPhotoSubtitle;
+
+  /// No description provided for @digitalSignatureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital Signature'**
+  String get digitalSignatureTitle;
+
+  /// No description provided for @digitalSignatureSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign using your finger below.'**
+  String get digitalSignatureSubtitle;
+
+  /// No description provided for @uploadImageButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Image'**
+  String get uploadImageButton;
+
+  /// No description provided for @replaceImageButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace'**
+  String get replaceImageButton;
+
+  /// No description provided for @removeImageButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeImageButton;
+
+  /// No description provided for @clearSignatureButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clearSignatureButton;
+
+  /// No description provided for @undoSignatureButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undoSignatureButton;
+
+  /// No description provided for @takePhotoOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get takePhotoOption;
+
+  /// No description provided for @chooseFromGalleryOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get chooseFromGalleryOption;
+
+  /// No description provided for @cameraPermissionDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera Access Needed'**
+  String get cameraPermissionDeniedTitle;
+
+  /// No description provided for @cameraPermissionDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Grande Beach needs camera access to take this photo. Please allow it in your device settings.'**
+  String get cameraPermissionDeniedMessage;
+
+  /// No description provided for @openSettingsButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get openSettingsButton;
+
+  /// No description provided for @submitVerificationButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit for Review'**
+  String get submitVerificationButton;
+
+  /// No description provided for @verificationIncompleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload your ID card, personal photo, and signature to continue.'**
+  String get verificationIncompleteMessage;
+
+  /// No description provided for @verificationSubmittedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification Submitted'**
+  String get verificationSubmittedTitle;
+
+  /// No description provided for @verificationSubmittedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you! Your documents have been submitted successfully. Our team is reviewing them and will confirm your booking as soon as it\'s approved.'**
+  String get verificationSubmittedMessage;
+
+  /// No description provided for @verificationErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submission Failed'**
+  String get verificationErrorTitle;
+
+  /// No description provided for @errorSubmittingVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t submit your verification. Please try again.'**
+  String get errorSubmittingVerification;
 
   /// No description provided for @noBookingsYet.
   ///
@@ -1103,7 +1319,7 @@ abstract class AppLocalizations {
   /// No description provided for @baseAmountLabel.
   ///
   /// In en, this message translates to:
-  /// **'Base Amount'**
+  /// **'Base Amount (per night)'**
   String get baseAmountLabel;
 
   /// No description provided for @taxAmountLabel.
@@ -1202,6 +1418,72 @@ abstract class AppLocalizations {
   /// **'We couldn\'t cancel this booking. Please try again.'**
   String get errorCancelBooking;
 
+  /// No description provided for @cancellationReasonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation Reason'**
+  String get cancellationReasonTitle;
+
+  /// No description provided for @writeReviewButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a Review'**
+  String get writeReviewButton;
+
+  /// No description provided for @submitReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Your Stay'**
+  String get submitReviewTitle;
+
+  /// No description provided for @submitReviewSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your experience to help other guests.'**
+  String get submitReviewSubtitle;
+
+  /// No description provided for @reviewCommentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Review'**
+  String get reviewCommentLabel;
+
+  /// No description provided for @reviewCommentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about your stay...'**
+  String get reviewCommentHint;
+
+  /// No description provided for @submitReviewButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Review'**
+  String get submitReviewButton;
+
+  /// No description provided for @ratingRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a rating.'**
+  String get ratingRequiredError;
+
+  /// No description provided for @reviewCommentRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write a comment.'**
+  String get reviewCommentRequiredError;
+
+  /// No description provided for @reviewSubmittedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you! Your review has been submitted.'**
+  String get reviewSubmittedMessage;
+
+  /// No description provided for @errorSubmittingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t submit your review. Please try again.'**
+  String get errorSubmittingReview;
+
   /// No description provided for @wishlistEmptyTitle.
   ///
   /// In en, this message translates to:
@@ -1213,6 +1495,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap the heart icon on any chalet to save it here.'**
   String get wishlistEmptySubtitle;
+
+  /// No description provided for @reservationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve'**
+  String get reservationTitle;
+
+  /// No description provided for @errorLoadingAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t load availability for this month. Please try again.'**
+  String get errorLoadingAvailability;
+
+  /// No description provided for @selectedRangeUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'These dates aren\'t available. Please choose an available range.'**
+  String get selectedRangeUnavailable;
+
+  /// No description provided for @reservationStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Dates'**
+  String get reservationStep1Title;
+
+  /// No description provided for @reservationStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Add-ons'**
+  String get reservationStep2Title;
+
+  /// No description provided for @reservationStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Preview'**
+  String get reservationStep3Title;
+
+  /// Shown when the guest count exceeds a chalet's maxGuests
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum guests allowed is {max}.'**
+  String guestCountMaxError(String max);
+
+  /// Price badge for an add-on billed per night
+  ///
+  /// In en, this message translates to:
+  /// **'{price}/night'**
+  String addOnPerNightBadge(String price);
+
+  /// Price badge for a one-time add-on
+  ///
+  /// In en, this message translates to:
+  /// **'{price}'**
+  String addOnFlatPriceBadge(String price);
+
+  /// No description provided for @weekendPricingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekend nights may be priced differently from weekdays.'**
+  String get weekendPricingNote;
+
+  /// No description provided for @addOnsListSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enhance your stay with these optional extras.'**
+  String get addOnsListSubtitle;
+
+  /// No description provided for @noAddOnsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Add-ons Available'**
+  String get noAddOnsTitle;
+
+  /// No description provided for @noAddOnsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This chalet has no optional add-ons to choose from.'**
+  String get noAddOnsSubtitle;
+
+  /// No description provided for @errorLoadingAddOns.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t load the add-ons. Please try again.'**
+  String get errorLoadingAddOns;
+
+  /// No description provided for @errorLoadingPricePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t load the price preview. Please try again.'**
+  String get errorLoadingPricePreview;
+
+  /// No description provided for @priceBreakdownTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Breakdown'**
+  String get priceBreakdownTitle;
+
+  /// No description provided for @backToHomeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Home'**
+  String get backToHomeButton;
+
+  /// No description provided for @nextButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get nextButton;
+
+  /// No description provided for @backButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get backButton;
+
+  /// No description provided for @bookingSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation Submitted'**
+  String get bookingSuccessTitle;
+
+  /// No description provided for @bookingSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We are looking into your reservation. Our customer support will contact you once the reservation is confirmed.'**
+  String get bookingSuccessMessage;
+
+  /// No description provided for @bookingErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation Failed'**
+  String get bookingErrorTitle;
+
+  /// No description provided for @errorSubmittingBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t submit your reservation. Please try again.'**
+  String get errorSubmittingBooking;
+
+  /// No description provided for @tryAgainButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgainButton;
+
+  /// No description provided for @whatsappSupportMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, I need assistance with GrandeBeach Khairan.'**
+  String get whatsappSupportMessage;
+
+  /// WhatsApp prefilled message for a chalet inquiry from the Chalet Details screen
+  ///
+  /// In en, this message translates to:
+  /// **'Hello,\nI\'d like to ask about this chalet\'s details.\n\nChalet:\n{chaletName}\n\nThank you.'**
+  String whatsappChaletInquiryMessage(String chaletName);
+
+  /// WhatsApp prefilled message for a chalet inquiry from the Chalet Details screen
+  ///
+  /// In en, this message translates to:
+  /// **'Hello,\nI\'d like to ask about this chalet\'s cancellation policy.\n\nChalet:\n{chaletName}\n\nThank you.'**
+  String whatsappChaletCancelationPolicyInquiryMessage(String chaletName);
+
+  /// No description provided for @whatsappBookingSupportMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello,\nI need help with my booking at GrandeBeach Khairan.\n\nThank you.'**
+  String get whatsappBookingSupportMessage;
+
+  /// WhatsApp prefilled message for a booking inquiry, including the booking number
+  ///
+  /// In en, this message translates to:
+  /// **'Hello,\nI need help with my booking at GrandeBeach Khairan.\n\nBooking Number:\n{bookingNumber}\n\nMy inquiry:\n____________________\n\nThank you.'**
+  String whatsappBookingSupportMessageWithNumber(String bookingNumber);
+
+  /// No description provided for @specialRequestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Request (optional)'**
+  String get specialRequestLabel;
+
+  /// No description provided for @specialRequestHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything you\'d like us to know? (e.g. early check-in)'**
+  String get specialRequestHint;
+
+  /// No description provided for @cancellationPolicyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation Policy'**
+  String get cancellationPolicyTitle;
+
+  /// No description provided for @cancellationPolicyContactMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'If you\'d like to ask about the cancellation policy for this chalet, please contact us on WhatsApp.'**
+  String get cancellationPolicyContactMessage;
+
+  /// No description provided for @contactUsOnWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact us on WhatsApp'**
+  String get contactUsOnWhatsapp;
 }
 
 class _AppLocalizationsDelegate
