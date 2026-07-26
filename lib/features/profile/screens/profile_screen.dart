@@ -103,11 +103,11 @@ class ProfileScreen extends ConsumerWidget {
                       onSwitchChanged: (_) =>
                           ref.read(themeModeProvider.notifier).toggle(),
                     ),
-                    SettingRow(
-                      icon: const Icon(Icons.privacy_tip_outlined),
-                      title: l10n.privacyPolicy,
-                      onTap: () => context.push('/privacy-policy'),
-                    ),
+                    // SettingRow(
+                    //   icon: const Icon(Icons.privacy_tip_outlined),
+                    //   title: l10n.privacyPolicy,
+                    //   onTap: () => context.push('/privacy-policy'),
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 20),
