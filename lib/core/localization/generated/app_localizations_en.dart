@@ -374,6 +374,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reviewsTitle => 'Reviews';
 
   @override
+  String get guestReviewsTitle => 'Guest Reviews';
+
+  @override
   String get allReviewsFilter => 'All';
 
   @override
@@ -527,6 +530,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your verification request is currently under review.';
 
   @override
+  String get bookingRequestUnderReviewMessage =>
+      'Your request is under review by our team.';
+
+  @override
   String verificationRejectedMessage(String reason) {
     return 'Your previous verification request was rejected.\nReason: \"$reason\"\n\nPlease review the reason above, update your documents if necessary, and submit them again.';
   }
@@ -659,6 +666,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addOnAmountLabel => 'Add-ons';
 
   @override
+  String get addOnsSubtotalLabel => 'Add-ons Total';
+
+  @override
   String get discountAmountLabel => 'Discount';
 
   @override
@@ -785,6 +795,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get weekendPricingNote =>
       'Weekend nights may be priced differently from weekdays.';
+
+  @override
+  String get basePriceNoteTitle => 'Base price • ';
+
+  @override
+  String get basePriceNote => 'weekend/seasonal rates apply';
 
   @override
   String get addOnsListSubtitle =>

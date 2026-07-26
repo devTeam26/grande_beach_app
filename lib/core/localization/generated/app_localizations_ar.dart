@@ -372,6 +372,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reviewsTitle => 'التقييمات';
 
   @override
+  String get guestReviewsTitle => 'تقييمات الضيوف';
+
+  @override
   String get allReviewsFilter => 'الكل';
 
   @override
@@ -523,6 +526,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'طلب التوثيق الخاص بك قيد المراجعة حاليًا.';
 
   @override
+  String get bookingRequestUnderReviewMessage =>
+      'طلبك قيد المراجعة من قبل فريقنا.';
+
+  @override
   String verificationRejectedMessage(String reason) {
     return 'تم رفض طلب التوثيق السابق الخاص بك.\nالسبب: \"$reason\"\n\nيرجى مراجعة السبب أعلاه، وتحديث مستنداتك إذا لزم الأمر، ثم إعادة إرسالها.';
   }
@@ -653,6 +660,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get addOnAmountLabel => 'الإضافات';
 
   @override
+  String get addOnsSubtotalLabel => 'إجمالي الإضافات';
+
+  @override
   String get discountAmountLabel => 'الخصم';
 
   @override
@@ -777,6 +787,12 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get weekendPricingNote =>
       'قد تختلف أسعار ليالي نهاية الأسبوع عن أيام الأسبوع.';
+
+  @override
+  String get basePriceNoteTitle => 'السعر الأساسي • ';
+
+  @override
+  String get basePriceNote => ' تُطبَّق أسعار نهاية الأسبوع/المواسم';
 
   @override
   String get addOnsListSubtitle =>

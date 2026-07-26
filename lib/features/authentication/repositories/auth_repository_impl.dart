@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
+import '../../../core/config/api_strings.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/network/dio_failure_mapper.dart';
 import '../../../core/network/exception_mapper.dart';
@@ -150,9 +152,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Result<void>> refreshSession() async {
+    debugPrint('[AUTH] refreshSession(): calling ${ApiStrings.refresh}');
     final refreshToken = await _secureStorage.getRefreshToken();
     if (refreshToken == null || refreshToken.isEmpty) {
       // No stored session at all — nothing to refresh.
+      debugPrint('[AUTH] refreshSession(): no stored refresh token found');
       await _clearLocalSession();
       return const ResultFailure(UnauthorizedFailure('No active session.'));
     }
@@ -160,6 +164,7 @@ class AuthRepositoryImpl implements AuthRepository {
     // Offline: don't force a re-login the user can't complete. Keep the
     // stored session; the 401 interceptor handles expiry once back online.
     if (!await _networkInfo.isConnected) {
+      debugPrint('[AUTH] refreshSession(): offline, keeping stored session');
       return const Success(null);
     }
 
@@ -174,14 +179,23 @@ class AuthRepositoryImpl implements AuthRepository {
       if (session.user != null) {
         await _localStorage.saveUserProfile(session.user!.toJson());
       }
+      debugPrint(
+        '[AUTH] refreshSession(): success, new tokens saved '
+        '(expiresAt=${session.expiresAt})',
+      );
       return const Success(null);
     } on AuthApiException catch (e) {
       // Backend rejected the refresh token (invalid/expired) — force login.
+      debugPrint('[AUTH] refreshSession(): rejected by backend -> ${e.message}');
       await _clearLocalSession();
       return ResultFailure(UnauthorizedFailure(e.message));
     } on DioException catch (e) {
       // A 401 means the refresh token is no longer valid — force login.
       if (e.response?.statusCode == 401) {
+        debugPrint(
+          '[AUTH] refreshSession(): 401 from ${ApiStrings.refresh}, '
+          'refresh token invalid/expired -> clearing session',
+        );
         await _clearLocalSession();
         return const ResultFailure(
           UnauthorizedFailure('Session expired. Please sign in again.'),
@@ -189,9 +203,14 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       // Transient network/server error: keep the session and let the user in;
       // they can retry authenticated requests once connectivity recovers.
+      debugPrint(
+        '[AUTH] refreshSession(): transient error (${e.response?.statusCode}, '
+        '${e.message}), keeping stored session',
+      );
       return const Success(null);
-    } catch (_) {
+    } catch (e) {
       // Unexpected error: fail safe by keeping the existing session.
+      debugPrint('[AUTH] refreshSession(): unexpected error -> $e');
       return const Success(null);
     }
   }

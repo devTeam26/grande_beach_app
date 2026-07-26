@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../storage/secure_storage_service.dart';
 
@@ -20,6 +21,10 @@ class RefreshTokenInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
+      debugPrint(
+        '[AUTH] 401 on ${err.requestOptions.path} mid-session -> clearing '
+        'local session',
+      );
       await _secureStorage.clearSession();
     }
     handler.next(err);

@@ -29,21 +29,21 @@ class SectionHeader extends StatelessWidget {
             ),
           ),
         ),
-        if (onSeeAll != null)
-          GestureDetector(
-            onTap: onSeeAll,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text(
-                l10n.seeAll,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.primaryGold,
-                ),
-              ),
-            ),
-          ),
+        // if (onSeeAll != null)
+        //   GestureDetector(
+        //     onTap: onSeeAll,
+        //     child: Padding(
+        //       padding: const EdgeInsets.only(left: 8),
+        //       child: Text(
+        //         l10n.seeAll,
+        //         style: const TextStyle(
+        //           fontSize: 14,
+        //           fontWeight: FontWeight.w500,
+        //           color: AppColors.primaryGold,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
       ],
     );
   }

@@ -19,7 +19,7 @@ class WhatsAppHeaderButton extends ConsumerWidget {
       child: const Icon(
         FontAwesomeIcons.whatsapp,
         color: Colors.white,
-        size: 20,
+        size: 22,
       ),
     );
   }

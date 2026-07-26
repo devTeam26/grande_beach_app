@@ -794,6 +794,12 @@ abstract class AppLocalizations {
   /// **'Reviews'**
   String get reviewsTitle;
 
+  /// No description provided for @guestReviewsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest Reviews'**
+  String get guestReviewsTitle;
+
   /// No description provided for @allReviewsFilter.
   ///
   /// In en, this message translates to:
@@ -1088,6 +1094,12 @@ abstract class AppLocalizations {
   /// **'Your verification request is currently under review.'**
   String get verificationUnderReviewMessage;
 
+  /// No description provided for @bookingRequestUnderReviewMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your request is under review by our team.'**
+  String get bookingRequestUnderReviewMessage;
+
   /// Warning shown before the upload form when the user's previous verification was rejected
   ///
   /// In en, this message translates to:
@@ -1334,6 +1346,12 @@ abstract class AppLocalizations {
   /// **'Add-ons'**
   String get addOnAmountLabel;
 
+  /// No description provided for @addOnsSubtotalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Add-ons Total'**
+  String get addOnsSubtotalLabel;
+
   /// No description provided for @discountAmountLabel.
   ///
   /// In en, this message translates to:
@@ -1555,6 +1573,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Weekend nights may be priced differently from weekdays.'**
   String get weekendPricingNote;
+
+  /// No description provided for @basePriceNoteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Base price • '**
+  String get basePriceNoteTitle;
+
+  /// No description provided for @basePriceNote.
+  ///
+  /// In en, this message translates to:
+  /// **'weekend/seasonal rates apply'**
+  String get basePriceNote;
 
   /// No description provided for @addOnsListSubtitle.
   ///

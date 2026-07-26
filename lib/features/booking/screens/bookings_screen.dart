@@ -6,8 +6,13 @@ import '../../../core/localization/generated/app_localizations.dart';
 import '../../../core/navigation/nav_controller.dart';
 import '../../../core/widgets/common_header.dart';
 import '../controllers/bookings_providers.dart';
+import '../controllers/verification_providers.dart';
+import '../models/booking_status.dart';
+import '../models/verification_status.dart';
+import '../widgets/booking_request_under_review_banner.dart';
 import '../widgets/booking_status_tabs.dart';
 import '../widgets/bookings_list.dart';
+import '../widgets/verification_under_review_banner.dart';
 
 /// Index of the Bookings tab in [MainShell]'s [IndexedStack].
 const _bookingsTabIndex = 2;
@@ -19,6 +24,20 @@ class BookingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final selectedTab = ref.watch(bookingTabProvider);
+
+    final hasPendingBooking = ref.watch(bookingsProvider).valueOrNull?.bookings
+            .any((b) => b.status == BookingStatus.pending) ??
+        false;
+    final verificationStatus =
+        ref.watch(verificationStatusProvider).valueOrNull ??
+            VerificationStatus.unknown;
+    // Mutually exclusive: unverified/pending-review guests see the
+    // verification banner; already-verified guests see the booking-review
+    // banner instead. Never both at once.
+    final showVerificationBanner =
+        hasPendingBooking && verificationStatus == VerificationStatus.pending;
+    final showBookingReviewBanner =
+        hasPendingBooking && verificationStatus == VerificationStatus.approved;
 
     // MainShell keeps every tab alive in an IndexedStack, so this screen is
     // built once and never again on its own — watch the active tab and
@@ -51,6 +70,17 @@ class BookingsScreen extends ConsumerWidget {
               ],
             ),
           ),
+          if (showVerificationBanner)
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: VerificationUnderReviewBanner(),
+            )
+          // else if (showBookingReviewBanner)
+          //   const Padding(
+          //     padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+          //     child: BookingRequestUnderReviewBanner(),
+          //   ),
+          ,
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 16, 8, 4),
             child: BookingStatusTabs(

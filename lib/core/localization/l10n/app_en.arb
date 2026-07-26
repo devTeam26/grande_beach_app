@@ -148,6 +148,7 @@
   "errorLoadingChalets": "We couldn't load the chalets. Please try again.",
 
   "reviewsTitle": "Reviews",
+  "guestReviewsTitle": "Guest Reviews",
   "allReviewsFilter": "All",
   "noReviewsTitle": "No Reviews Yet",
   "noReviewsSubtitle": "This chalet hasn't received any reviews yet.",
@@ -201,6 +202,7 @@
   "verificationScreenTitle": "Booking Verification",
   "verificationSubtitle": "Upload the required documents so we can confirm your booking.",
   "verificationUnderReviewMessage": "Your verification request is currently under review.",
+  "bookingRequestUnderReviewMessage": "Your request is under review by our team.",
   "verificationRejectedMessage": "Your previous verification request was rejected.\nReason: \"{reason}\"\n\nPlease review the reason above, update your documents if necessary, and submit them again.",
   "@verificationRejectedMessage": {
     "description": "Warning shown before the upload form when the user's previous verification was rejected",
@@ -251,6 +253,7 @@
   "baseAmountLabel": "Base Amount (per night)",
   "taxAmountLabel": "Tax",
   "addOnAmountLabel": "Add-ons",
+  "addOnsSubtotalLabel": "Add-ons Total",
   "discountAmountLabel": "Discount",
   "totalAmountLabel": "Total",
   "cancelReservation": "Cancel Reservation",
@@ -316,6 +319,8 @@
     }
   },
   "weekendPricingNote": "Weekend nights may be priced differently from weekdays.",
+  "basePriceNoteTitle": "Base price • ",
+  "basePriceNote": "weekend/seasonal rates apply",
   "addOnsListSubtitle": "Enhance your stay with these optional extras.",
   "noAddOnsTitle": "No Add-ons Available",
   "noAddOnsSubtitle": "This chalet has no optional add-ons to choose from.",

@@ -25,6 +25,9 @@ Future<void> main() async {
   final hasSession = await SecureStorageService(
     const FlutterSecureStorage(),
   ).hasValidSession();
+  debugPrint(
+    '[AUTH] main(): stored session present at launch = $hasSession',
+  );
 
   runApp(
     ProviderScope(

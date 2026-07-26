@@ -12,6 +12,7 @@ import '../models/verification_status.dart';
 import '../widgets/booking_details_skeleton.dart';
 import '../widgets/booking_header_card.dart';
 import '../widgets/booking_info_section.dart';
+import '../widgets/booking_request_under_review_banner.dart';
 import '../widgets/cancel_reservation_button.dart';
 import '../widgets/cancellation_reason_section.dart';
 import '../widgets/customer_info_section.dart';
@@ -29,14 +30,16 @@ class BookingDetailsScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final bookingAsync = ref.watch(bookingDetailsProvider(bookingId));
     final theme = Theme.of(context);
-    final isVerificationPending =
-        ref.watch(verificationStatusProvider).valueOrNull ==
-            VerificationStatus.pending;
-
+    final verificationStatus =
+        ref.watch(verificationStatusProvider).valueOrNull ??
+        VerificationStatus.unknown;
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      appBar: AppBar(title: Text(l10n.bookingDetailsTitle),forceMaterialTransparency: true,),
+      appBar: AppBar(
+        title: Text(l10n.bookingDetailsTitle),
+        forceMaterialTransparency: true,
+      ),
       floatingActionButton: bookingAsync.maybeWhen(
         data: (booking) => WhatsAppFab(
           onPressed: () => ref
@@ -76,6 +79,13 @@ class BookingDetailsScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                if (booking.status == BookingStatus.pending &&
+                    verificationStatus == VerificationStatus.pending) ...[
+                  const VerificationUnderReviewBanner(),
+                ] else if (booking.status == BookingStatus.pending &&
+                    verificationStatus == VerificationStatus.approved) ...[
+                  const BookingRequestUnderReviewBanner(),
+                ],
                 BookingHeaderCard(booking: booking),
                 const SizedBox(height: 20),
                 BookingInfoSection(booking: booking),
@@ -88,10 +98,6 @@ class BookingDetailsScreen extends ConsumerWidget {
                   CancellationReasonSection(
                     reason: booking.cancellationReason!,
                   ),
-                ],
-                if (isVerificationPending) ...[
-                  const SizedBox(height: 24),
-                  const VerificationUnderReviewBanner(),
                 ],
               ],
             ),

@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 
 import '../../../core/errors/failure.dart';
 import '../../../core/providers/core_providers.dart';
+import '../models/rating_summary.dart';
 import '../models/review.dart';
 import '../repositories/reviews_repository.dart';
 import '../repositories/reviews_repository_impl.dart';
@@ -179,6 +180,42 @@ final chaletReviewedBookingIdsProvider =
     page++;
   }
   return bookingIds;
+});
+
+/// Star-rating breakdown for a chalet, computed by paginating through every
+/// review (the backend exposes no dedicated summary endpoint). Shown at the
+/// top of the Reviews screen, above the rating filter tabs.
+final chaletRatingSummaryProvider =
+    FutureProvider.family<RatingSummary, String>((ref, chaletId) async {
+  final repository = ref.watch(reviewsRepositoryProvider);
+  final starCounts = {for (var star = 1; star <= 5; star++) star: 0};
+  var totalCount = 0;
+  var ratingSum = 0;
+  var page = 1;
+  while (true) {
+    final result = await repository.fetchReviews(
+      chaletId: chaletId,
+      pageNumber: page,
+      pageSize: 50,
+    );
+    final reviewsPage = result.fold((failure) => null, (page) => page);
+    if (reviewsPage == null) break;
+
+    for (final review in reviewsPage.reviews) {
+      final star = review.rating.clamp(1, 5);
+      starCounts[star] = (starCounts[star] ?? 0) + 1;
+      ratingSum += review.rating;
+      totalCount++;
+    }
+    if (!reviewsPage.hasMore) break;
+    page++;
+  }
+
+  return RatingSummary(
+    totalCount: totalCount,
+    averageRating: totalCount == 0 ? 0 : ratingSum / totalCount,
+    starCounts: starCounts,
+  );
 });
 
 /// Whether [bookingId] (for [chaletId]) already has a review — checked

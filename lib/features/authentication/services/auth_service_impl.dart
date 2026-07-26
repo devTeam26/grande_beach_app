@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../core/config/api_strings.dart';
 import '../models/auth_session_model.dart';
@@ -68,6 +69,10 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<AuthSessionModel> refresh({required String refreshToken}) async {
+    debugPrint(
+      '[AUTH] POST ${ApiStrings.refresh} '
+      '(refreshToken=${_truncate(refreshToken)})',
+    );
     final response = await _dio.post<Map<String, dynamic>>(
       ApiStrings.refresh,
       data: {'refreshToken': refreshToken},
@@ -75,6 +80,10 @@ class AuthServiceImpl implements AuthService {
 
     final body = response.data!;
     final success = body['success'] as bool? ?? false;
+    debugPrint(
+      '[AUTH] ${ApiStrings.refresh} responded ${response.statusCode}, '
+      'success=$success',
+    );
     if (!success) {
       throw AuthApiException(
         body['message'] as String? ?? 'Session expired. Please sign in again.',
@@ -82,6 +91,13 @@ class AuthServiceImpl implements AuthService {
     }
 
     return AuthSessionModel.fromJson(body['data'] as Map<String, dynamic>);
+  }
+
+  /// Shows only the first/last few characters so tokens never appear in full
+  /// in terminal/log output.
+  String _truncate(String token) {
+    if (token.length <= 12) return '***';
+    return '${token.substring(0, 6)}…${token.substring(token.length - 4)}';
   }
 
   @override

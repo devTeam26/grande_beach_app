@@ -58,7 +58,7 @@ class _ChaletImageGalleryState extends State<ChaletImageGallery> {
   Widget build(BuildContext context) {
     final hasImages = widget.imageUrls.isNotEmpty;
     final topPadding = MediaQuery.of(context).padding.top + 12;
-
+    final isAndroid = Theme.of(context).platform == TargetPlatform.android;
     return SizedBox(
       height: ChaletImageGallery.height,
       width: double.infinity,
@@ -84,17 +84,19 @@ class _ChaletImageGalleryState extends State<ChaletImageGallery> {
                 ),
               ),
             ),
-          Positioned(
+          Positioned.directional(
+            textDirection: Directionality.of(context),
             top: topPadding,
-            left: 16,
+            start: 16,
             child: _CircleIconButton(
-              icon: Icons.arrow_back_ios_new_rounded,
+              icon: isAndroid ? Icons.arrow_back : Icons.arrow_back_ios_new,
               onTap: () => Navigator.of(context).pop(),
             ),
           ),
-          Positioned(
+          Positioned.directional(
+            textDirection: Directionality.of(context),
             top: topPadding,
-            right: 16,
+            end: 16,
             child: _FavoriteButton(chaletId: widget.chaletId),
           ),
           if (widget.imageUrls.length > 1)

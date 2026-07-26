@@ -35,7 +35,11 @@ class ReservationStep3PricePreview extends ConsumerWidget {
       data: (preview) {
         if (preview == null) return const PriceBreakdownSkeleton();
         return SingleChildScrollView(
-          child: PriceBreakdownCard(preview: preview),
+          child: PriceBreakdownCard(
+            preview: preview,
+            checkIn: draft.checkIn!,
+            checkOut: draft.checkOut!,
+          ),
         );
       },
     );

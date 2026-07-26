@@ -49,18 +49,37 @@ class _StartupScreenState extends ConsumerState<StartupScreen> {
     final languageSelected = ref.read(languageSelectedProvider);
     final onboardingDone = ref.read(onboardingProvider);
     final bootstrapDone = ref.read(appBootstrapDoneProvider);
-    if (!languageSelected || !onboardingDone || bootstrapDone) return;
+    if (!languageSelected || !onboardingDone || bootstrapDone) {
+      debugPrint(
+        '[AUTH] StartupScreen: bootstrap skipped '
+        '(languageSelected=$languageSelected, onboardingDone=$onboardingDone, '
+        'bootstrapDone=$bootstrapDone)',
+      );
+      return;
+    }
 
     _bootstrapStarted = true;
+    debugPrint('[AUTH] StartupScreen: starting launch-time session bootstrap');
     WidgetsBinding.instance.addPostFrameCallback((_) => _runBootstrap());
   }
 
   Future<void> _runBootstrap() async {
     // Attempt to refresh the stored session. On success the rotated tokens are
     // persisted; on an invalid/expired token the local session is cleared.
-    await ref.read(authRepositoryProvider).refreshSession();
+    final result = await ref.read(authRepositoryProvider).refreshSession();
+    result.fold(
+      (failure) => debugPrint(
+        '[AUTH] StartupScreen: refreshSession failed -> ${failure.message}',
+      ),
+      (_) => debugPrint('[AUTH] StartupScreen: refreshSession succeeded'),
+    );
+
     final active =
         await ref.read(secureStorageServiceProvider).hasValidSession();
+    debugPrint(
+      '[AUTH] StartupScreen: bootstrap complete, hasValidSession=$active -> '
+      'routing to ${active ? '/home' : '/login'}',
+    );
 
     if (!mounted) return;
     ref.read(sessionActiveProvider.notifier).state = active;

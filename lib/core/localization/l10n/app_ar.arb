@@ -148,6 +148,7 @@
   "errorLoadingChalets": "تعذر تحميل الشاليهات. يرجى المحاولة مرة أخرى.",
 
   "reviewsTitle": "التقييمات",
+  "guestReviewsTitle": "تقييمات الضيوف",
   "allReviewsFilter": "الكل",
   "noReviewsTitle": "لا توجد تقييمات بعد",
   "noReviewsSubtitle": "لم يحصل هذا الشاليه على أي تقييمات بعد.",
@@ -201,6 +202,7 @@
   "verificationScreenTitle": "توثيق الحجز",
   "verificationSubtitle": "يرجى رفع المستندات المطلوبة لتأكيد حجزك.",
   "verificationUnderReviewMessage": "طلب التوثيق الخاص بك قيد المراجعة حاليًا.",
+  "bookingRequestUnderReviewMessage": "طلبك قيد المراجعة من قبل فريقنا.",
   "verificationRejectedMessage": "تم رفض طلب التوثيق السابق الخاص بك.\nالسبب: \"{reason}\"\n\nيرجى مراجعة السبب أعلاه، وتحديث مستنداتك إذا لزم الأمر، ثم إعادة إرسالها.",
   "idCardTitle": "بطاقة الهوية",
   "idCardSubtitle": "ارفع صورة واحدة توضح بوضوح الوجهين الأمامي والخلفي لبطاقة هويتك.",
@@ -243,6 +245,7 @@
   "baseAmountLabel": "المبلغ الاساسي (في الليلة)",
   "taxAmountLabel": "الضريبة",
   "addOnAmountLabel": "الإضافات",
+  "addOnsSubtotalLabel": "إجمالي الإضافات",
   "discountAmountLabel": "الخصم",
   "totalAmountLabel": "الإجمالي",
   "cancelReservation": "إلغاء الحجز",
@@ -308,6 +311,9 @@
     }
   },
   "weekendPricingNote": "قد تختلف أسعار ليالي نهاية الأسبوع عن أيام الأسبوع.",
+  "basePriceNoteTitle": "السعر الأساسي • ",
+  "basePriceNote": " تُطبَّق أسعار نهاية الأسبوع/المواسم",
+
   "addOnsListSubtitle": "أضف لمسة مميزة على إقامتك مع هذه الإضافات الاختيارية.",
   "noAddOnsTitle": "لا توجد إضافات متاحة",
   "noAddOnsSubtitle": "لا توجد إضافات اختيارية متاحة لهذا الشاليه.",
