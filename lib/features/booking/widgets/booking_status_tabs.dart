@@ -34,7 +34,7 @@ class BookingStatusTabs extends StatelessWidget {
               onTap: () => onChanged(tab),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.primaryGold : Colors.transparent,
                   borderRadius: BorderRadius.circular(8),
@@ -44,15 +44,20 @@ class BookingStatusTabs extends StatelessWidget {
                   //         color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
                   //       ),
                 ),
-                child: Text(
-                  tab.label(l10n),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: isSelected
-                        ? Colors.white
-                        : theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    tab.label(l10n),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: isSelected
+                          ? Colors.white
+                          : theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
                   ),
                 ),
               ),

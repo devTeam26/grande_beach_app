@@ -125,7 +125,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   errorText: fieldErrors?['password']?.first,
                   onSubmitted: _submit,
                 ),
-                LoginForgotPasswordLink(onPressed: _goToForgotPassword),
+                // LoginForgotPasswordLink(onPressed: _goToForgotPassword),
                 const SizedBox(height: 48),
                 AppButton(
                   label: l10n.signIn,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/config/images.dart';
 import '../../../core/widgets/network_or_asset_image.dart';
 import '../controllers/home_providers.dart';
 import '../models/chalet.dart';
@@ -61,15 +62,13 @@ class ChaletCard extends StatelessWidget {
                   SizedBox(
                     height: carouselHeight,
                     width: double.infinity,
-                    child: imageUrl == null
-                        ? ColoredBox(
-                            color: theme.colorScheme.surfaceContainerHighest,
-                          )
-                        : NetworkOrAssetImage(
-                            url: imageUrl,
-                            width: double.infinity,
-                            height: carouselHeight,
-                          ),
+                    child: NetworkOrAssetImage(
+                      url: (imageUrl == null || imageUrl.isEmpty)
+                          ? AppImages.chaletPlaceholder
+                          : imageUrl,
+                      width: double.infinity,
+                      height: carouselHeight,
+                    ),
                   ),
                   Positioned(
                     top: 10,

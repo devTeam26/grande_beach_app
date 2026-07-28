@@ -62,8 +62,12 @@ class UploadCard extends StatelessWidget {
     }
 
     try {
-      final picked =
-          await ImagePicker().pickImage(source: source, imageQuality: 85);
+      final picked = await ImagePicker().pickImage(
+        source: source,
+        imageQuality: 85,
+        maxWidth: 1920,
+        maxHeight: 1920,
+      );
       if (picked != null) onPicked(File(picked.path));
     } on PlatformException catch (e) {
       // image_picker still throws this on some devices even after a
