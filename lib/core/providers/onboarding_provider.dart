@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core_providers.dart';
@@ -6,11 +7,14 @@ import 'core_providers.dart';
 class OnboardingNotifier extends Notifier<bool> {
   @override
   bool build() {
-    return ref.watch(localStorageServiceProvider).isOnboardingComplete();
+    final done = ref.watch(localStorageServiceProvider).isOnboardingComplete();
+    debugPrint('[AUTH] onboardingProvider: initial state = $done');
+    return done;
   }
 
   Future<void> complete() async {
     await ref.read(localStorageServiceProvider).setOnboardingComplete();
+    debugPrint('[AUTH] onboardingProvider: marked complete');
     state = true;
   }
 }
@@ -23,10 +27,15 @@ final onboardingProvider = NotifierProvider<OnboardingNotifier, bool>(
 class LanguageSelectedNotifier extends Notifier<bool> {
   @override
   bool build() {
-    return ref.watch(localStorageServiceProvider).hasSelectedLanguage();
+    final done = ref.watch(localStorageServiceProvider).hasSelectedLanguage();
+    debugPrint('[AUTH] languageSelectedProvider: initial state = $done');
+    return done;
   }
 
-  void markSelected() => state = true;
+  void markSelected() {
+    debugPrint('[AUTH] languageSelectedProvider: marked selected');
+    state = true;
+  }
 }
 
 final languageSelectedProvider = NotifierProvider<LanguageSelectedNotifier, bool>(

@@ -38,20 +38,21 @@ class OnboardingContentCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            page.title,
-            textAlign: TextAlign.center,
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            page.description,
-            textAlign: TextAlign.center,
-            style: theme.textTheme.bodyMedium,
-          ),
-          const SizedBox(height: 20),
+          // Title/description are already baked into the onboarding
+          // images, so the text overlay is disabled here.
+          // Text(
+          //   page.title,
+          //   textAlign: TextAlign.center,
+          //   style: theme.textTheme.headlineSmall?.copyWith(
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+          // const SizedBox(height: 12),
+          // Text(
+          //   page.description,
+          //   textAlign: TextAlign.center,
+          //   style: theme.textTheme.bodyMedium,
+          // ),
           OnboardingPageIndicator(
             pageCount: pageCount,
             currentIndex: currentIndex,

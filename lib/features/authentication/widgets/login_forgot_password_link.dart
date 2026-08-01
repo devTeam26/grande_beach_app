@@ -9,6 +9,8 @@ class LoginForgotPasswordLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      final theme = Theme.of(context);
+
     final l10n = AppLocalizations.of(context);
     return Align(
       alignment: Alignment.centerRight,
@@ -16,8 +18,8 @@ class LoginForgotPasswordLink extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           l10n.forgotPassword,
-          style: const TextStyle(
-            color: Colors.black,
+          style:  TextStyle(
+            color:theme.colorScheme.onSurface,
             fontWeight: FontWeight.bold,
           ),
         ),

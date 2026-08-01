@@ -6,15 +6,11 @@ import '../../../core/extensions/failure_localization_extension.dart';
 import '../../../core/localization/generated/app_localizations.dart';
 import '../../../core/widgets/app_button.dart';
 import '../controllers/register_controller.dart';
-import '../widgets/login_email_field.dart';
-import '../widgets/login_password_field.dart';
-import '../widgets/register_confirm_password_field.dart';
-import '../widgets/register_first_name_field.dart';
+import '../widgets/auth_password_field.dart';
+import '../widgets/auth_text_field.dart';
+import '../widgets/password_requirements_checklist.dart';
 import '../widgets/register_footer_link.dart';
 import '../widgets/register_header.dart';
-import '../widgets/register_last_name_field.dart';
-import '../widgets/register_phone_field.dart';
-import '../widgets/password_requirements_checklist.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -32,6 +28,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+  // Prevents the provider's initial AsyncLoading→AsyncData transition from
+  // being treated as a successful user submission.
+  bool _submitted = false;
+
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -44,9 +44,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   }
 
   void _submit() {
-    ref
-        .read(registerControllerProvider.notifier)
-        .register(
+    _submitted = true;
+    ref.read(registerControllerProvider.notifier).register(
           firstName: _firstNameController.text,
           lastName: _lastNameController.text,
           email: _emailController.text,
@@ -58,20 +57,25 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final state = ref.watch(registerControllerProvider);
 
     ref.listen<AsyncValue<void>>(registerControllerProvider, (previous, next) {
-      if (next is AsyncData && !next.isLoading && previous?.isLoading == true) {
+      if (_submitted &&
+          next is AsyncData &&
+          !next.isLoading &&
+          previous?.isLoading == true) {
+        _submitted = false;
         Navigator.of(context).pop(_emailController.text.trim());
       }
       if (next.hasError) {
+        _submitted = false;
         final error = next.error;
         final message = error is Failure
             ? error.localizedMessage(context)
             : error.toString();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(message)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(message)));
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _formKey.currentState?.validate();
         });
@@ -83,7 +87,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         : null;
 
     return Scaffold(
-      appBar: AppBar(leading: const BackButton()),
+      appBar: AppBar(
+        leading: const BackButton(),
+        forceMaterialTransparency: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -94,38 +101,42 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const RegisterHeader(),
-                RegisterFirstNameField(
+                AuthTextField(
                   controller: _firstNameController,
+                  label: l10n.firstName,
+                  hint: l10n.firstNameHint,
                   errorText: fieldErrors?['firstName']?.first,
                 ),
                 const SizedBox(height: 16),
-                RegisterLastNameField(
+                AuthTextField(
                   controller: _lastNameController,
+                  label: l10n.lastName,
+                  hint: l10n.lastNameHint,
                   errorText: fieldErrors?['lastName']?.first,
                 ),
                 const SizedBox(height: 16),
-                LoginEmailField(
+                AuthTextField(
                   controller: _emailController,
+                  label: l10n.email,
+                  hint: l10n.emailHint,
+                  keyboardType: TextInputType.emailAddress,
                   errorText: fieldErrors?['email']?.first,
-                  showIcon: false,
                 ),
                 const SizedBox(height: 16),
-                RegisterPhoneField(
+                AuthTextField(
                   controller: _phoneController,
+                  label: l10n.phoneNumber,
+                  hint: l10n.phoneNumberHint,
+                  keyboardType: TextInputType.phone,
                   errorText: fieldErrors?['phoneNumber']?.first,
                 ),
                 const SizedBox(height: 16),
-                LoginPasswordField(
+                AuthPasswordField(
                   controller: _passwordController,
+                  label: l10n.password,
+                  hint: l10n.passwordHint,
+                  textInputAction: TextInputAction.next,
                   errorText: fieldErrors?['password']?.first,
-                  showIcon: false,
-                ),
-
-                const SizedBox(height: 16),
-                RegisterConfirmPasswordField(
-                  controller: _confirmPasswordController,
-                  errorText: fieldErrors?['confirmPassword']?.first,
-                  onSubmitted: _submit,
                 ),
                 const SizedBox(height: 12),
                 ValueListenableBuilder<TextEditingValue>(
@@ -134,9 +145,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     return PasswordRequirementsChecklist(password: value.text);
                   },
                 ),
+                const SizedBox(height: 16),
+                AuthPasswordField(
+                  controller: _confirmPasswordController,
+                  label: l10n.confirmPassword,
+                  hint: l10n.confirmPasswordHint,
+                  errorText: fieldErrors?['confirmPassword']?.first,
+                  onSubmitted: _submit,
+                ),
                 const SizedBox(height: 24),
                 AppButton(
-                  label: AppLocalizations.of(context).signUp,
+                  label: l10n.signUp,
                   isLoading: state.isLoading,
                   onPressed: _submit,
                 ),

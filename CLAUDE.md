@@ -139,6 +139,16 @@ instead of throwing exceptions.
 
 Never create private widget methods inside screen files.
 
+make the repeated widgets to be global as much as possible 
+
+❌
+last name field widget 
+first name field widget 
+email widget 
+
+☑️ instead do this 
+register field -> and apply your specifications on it and use it for all fields 
+
 ❌
 
 Widget _buildHeader()

@@ -14,4 +14,21 @@ abstract class AuthService {
     required String phoneNumber,
     required String preferredLanguage,
   });
+
+  /// Exchanges a [refreshToken] for a fresh access/refresh token pair.
+  /// Throws [AuthApiException] when the refresh token is invalid or expired.
+  Future<AuthSessionModel> refresh({required String refreshToken});
+
+  /// Sends a password-reset request. The [token] is a one-time token issued
+  /// by the backend reset flow; pass an empty string to simulate until the
+  /// full backend flow is wired.
+  Future<void> resetPassword({
+    required String email,
+    required String token,
+    required String newPassword,
+  });
+
+  /// Invalidates the current session on the server side.
+  /// The caller must clear local tokens regardless of the result.
+  Future<void> logout({required String accessToken});
 }

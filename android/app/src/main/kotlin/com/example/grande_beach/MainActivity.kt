@@ -1,4 +1,4 @@
-package com.example.grande_beach
+package com.user.grande_beach
 
 import io.flutter.embedding.android.FlutterActivity
 

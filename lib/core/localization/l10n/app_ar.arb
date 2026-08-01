@@ -39,6 +39,32 @@
   "alreadyHaveAccount": "هل لديك حساب؟",
   "registrationSuccess": "تم إنشاء الحساب بنجاح. يرجى تسجيل الدخول.",
 
+  "forgotPasswordTitle": "إعادة تعيين كلمة المرور",
+  "forgotPasswordSubtitle": "أدخل بريدك الإلكتروني واختر كلمة مرور جديدة.",
+  "newPassword": "كلمة المرور الجديدة",
+  "newPasswordHint": "أدخل كلمة المرور الجديدة",
+  "confirm": "تأكيد",
+  "resetPasswordSuccess": "تم إعادة تعيين كلمة المرور بنجاح. يرجى تسجيل الدخول.",
+  "errorTokenInvalid": "رمز إعادة التعيين غير صالح أو منتهي الصلاحية.",
+
+  "greeting": "مرحبًا، {firstName}👋",
+  "@greeting": {
+    "description": "Greeting shown on the home screen using the user first name",
+    "placeholders": {
+      "firstName": {
+        "type": "String"
+      }
+    }
+  },
+  "navHome": "الرئيسية",
+  "navDiscover": "استكشاف",
+  "navBookings": "الحجوزات",
+  "navProfile": "الملف الشخصي",
+  "discoverTitle": "استكشاف",
+  "bookingsTitle": "الحجوزات",
+  "profileTitle": "الملف الشخصي",
+  "notifications": "الإشعارات",
+
   "passwordRequirementsTitle": "يجب أن تحتوي كلمة المرور على",
   "passwordReqMinLength": "8 أحرف على الأقل",
   "passwordReqUppercase": "حرف كبير واحد",
@@ -62,7 +88,258 @@
   "errorServer": "حدث خطأ من جانبنا. يرجى المحاولة مرة أخرى لاحقًا.",
   "errorUnknown": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
   "errorNetwork": "تعذر الوصول إلى الخادم. يرجى المحاولة مرة أخرى.",
+  "noInternetTitle": "لا يوجد اتصال بالإنترنت",
+  "noInternetMessage": "يرجى التحقق من شبكة الواي فاي أو بيانات الجوال والمحاولة مرة أخرى.",
 
   "retry": "إعادة المحاولة",
-  "comingSoon": "قريبًا"
+  "comingSoon": "قريبًا",
+
+  "personalInformation": "المعلومات الشخصية",
+  "accountInformation": "معلومات الحساب",
+  "loyaltyPoints": "نقاط الولاء",
+  "loyaltyPointsValue": "{points} نقطة",
+  "@loyaltyPointsValue": {
+    "description": "Formatted loyalty points value displayed in the profile",
+    "placeholders": {
+      "points": {
+        "type": "String"
+      }
+    }
+  },
+  "wishlist": "قائمة الرغبات",
+  "paymentMethods": "طرق الدفع",
+  "changePassword": "تغيير كلمة المرور",
+  "generalSettings": "الإعدادات العامة",
+  "language": "اللغة",
+  "darkMode": "الوضع الداكن",
+  "privacyPolicy": "سياسة الخصوصية",
+  "logout": "تسجيل الخروج",
+  "logoutConfirmTitle": "تسجيل الخروج",
+  "logoutConfirmMessage": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "logoutConfirm": "تسجيل الخروج",
+  "cancel": "إلغاء",
+
+  "edit": "تعديل",
+  "save": "حفظ",
+  "profileUpdatedSuccess": "تم تحديث الملف الشخصي بنجاح.",
+  "currentPassword": "كلمة المرور الحالية",
+  "currentPasswordHint": "أدخل كلمة المرور الحالية",
+  "passwordChangedSuccess": "تم تغيير كلمة المرور بنجاح.",
+  "errorCurrentPasswordRequired": "كلمة المرور الحالية مطلوبة.",
+  "emailNotEditable": "لا يمكن تغيير عنوان البريد الإلكتروني.",
+  "privacyPolicyTitle": "سياسة الخصوصية",
+
+  "popularChalets": "الشاليهات الشهيرة",
+  "recentlyAdded": "المضافة حديثاً",
+  "seeAll": "عرض الكل",
+  "exploreMore": "استكشف المزيد",
+  "perNight": "/ليلة",
+  "reviews": "تقييم",
+  "kwdCurrency": "د.ك",
+
+  
+  "from": "من",
+  "to": "إلى",
+
+  "discoverSearchHint": " اعثر على إقامتك  المثالية",
+  "discoverChaletsTitle": "اكتشف شاليهاتنا",
+  "noChaletsFound": "لا توجد شاليهات",
+  "noChaletsFoundSubtitle": "لا توجد شاليهات متاحة حالياً.",
+  "errorLoadingChalets": "تعذر تحميل الشاليهات. يرجى المحاولة مرة أخرى.",
+
+  "reviewsTitle": "التقييمات",
+  "guestReviewsTitle": "تقييمات الضيوف",
+  "allReviewsFilter": "الكل",
+  "noReviewsTitle": "لا توجد تقييمات بعد",
+  "noReviewsSubtitle": "لم يحصل هذا الشاليه على أي تقييمات بعد.",
+  "errorLoadingReviews": "تعذر تحميل التقييمات. يرجى المحاولة مرة أخرى.",
+
+  "searchSheetTitle": "ابحث عن شاليهك المثالي",
+  "searchSheetSubtitle": "اختر فلترًا واحدًا أو أكثر لاكتشاف الإقامة المثالية.",
+  "filterWhenTitle": "التاريخ",
+  "checkInLabel": "تسجيل الوصول",
+  "checkOutLabel": "تسجيل المغادرة",
+  "filterChaletTypeTitle": "نوع الشاليه",
+  "chaletTypeStandard": "عادي",
+  "chaletTypeSuperior": "متميز",
+  "chaletTypeVip": "VIP",
+  "filterGuestsTitle": "الضيوف",
+  "guestsLabel": "الضيوف",
+  "guestsHint": "عدد الضيوف",
+  "guestsMinError": "يجب أن يكون عدد الضيوف 1 على الأقل.",
+  "filterPriceRangeTitle": "نطاق السعر",
+  "minPriceLabel": "الحد الأدنى للسعر",
+  "maxPriceLabel": "الحد الأقصى للسعر",
+  "priceRangeInvalid": "يجب أن يكون الحد الأدنى للسعر أقل من أو يساوي الحد الأقصى.",
+  "reset": "إعادة تعيين",
+  "search": "بحث",
+
+  "aboutThisChalet": "عن هذا الشاليه",
+  "showMore": "عرض المزيد",
+  "showLess": "عرض أقل",
+  "amenities": "المرافق",
+  "reserve": "احجز الآن",
+
+  "detailsTitle": "التفاصيل",
+  "masterRoomsLabel": "غرف رئيسية",
+  "singleRoomsLabel": "غرف فردية",
+  "maxGuestsLabel": "الحد الأقصى للضيوف",
+  "bathroomsLabel": "حمامات",
+  "servantRoomLabel": "غرفة خادمة",
+
+  "bookingsOngoingTab": "جارية",
+  "bookingsCompletedTab": "مكتملة",
+  "bookingsCancelledTab": "ملغاة",
+  "bookingsRejectedTab": "مرفوضة",
+  "bookingStatusPending": "قيد الانتظار",
+  "bookingStatusConfirmed": "مؤكد",
+  "bookingStatusCheckedIn": "تم تسجيل الوصول",
+  "bookingStatusCompleted": "مكتمل",
+  "bookingStatusCancelled": "ملغى",
+  "bookingStatusRejected": "مرفوض",
+  "viewTicket": "عرض التذكرة",
+  "verifyButton": "توثيق",
+  "verificationScreenTitle": "توثيق الحجز",
+  "verificationSubtitle": "يرجى رفع المستندات المطلوبة لتأكيد حجزك.",
+  "verificationUnderReviewMessage": "طلب التوثيق الخاص بك قيد المراجعة حاليًا.",
+  "bookingRequestUnderReviewMessage": "طلبك قيد المراجعة من قبل فريقنا.",
+  "verificationRejectedMessage": "تم رفض طلب التوثيق السابق الخاص بك.\nالسبب: \"{reason}\"\n\nيرجى مراجعة السبب أعلاه، وتحديث مستنداتك إذا لزم الأمر، ثم إعادة إرسالها.",
+  "idCardTitle": "بطاقة الهوية",
+  "idCardSubtitle": "ارفع صورة واحدة توضح بوضوح الوجهين الأمامي والخلفي لبطاقة هويتك.",
+  "personalPhotoTitle": "صورة شخصية",
+  "personalPhotoSubtitle": "ارفع صورة شخصية واضحة للتحقق من الهوية.",
+  "digitalSignatureTitle": "التوقيع الرقمي",
+  "digitalSignatureSubtitle": "وقّع باستخدام إصبعك أدناه.",
+  "uploadImageButton": "رفع صورة",
+  "replaceImageButton": "استبدال",
+  "removeImageButton": "إزالة",
+  "clearSignatureButton": "مسح",
+  "undoSignatureButton": "تراجع",
+  "takePhotoOption": "التقاط صورة",
+  "chooseFromGalleryOption": "اختيار من المعرض",
+  "cameraPermissionDeniedTitle": "الوصول إلى الكاميرا مطلوب",
+  "cameraPermissionDeniedMessage": "يحتاج تطبيق Grande Beach إلى الوصول إلى الكاميرا لالتقاط هذه الصورة. يرجى السماح بذلك من إعدادات جهازك.",
+  "openSettingsButton": "فتح الإعدادات",
+  "submitVerificationButton": "إرسال للمراجعة",
+  "verificationIncompleteMessage": "يرجى رفع بطاقة الهوية والصورة الشخصية والتوقيع للمتابعة.",
+  "verificationSubmittedTitle": "تم إرسال التوثيق",
+  "verificationSubmittedMessage": "شكرًا لك! تم إرسال مستنداتك بنجاح. يقوم فريقنا بمراجعتها وسنؤكد حجزك فور الموافقة عليها.",
+  "verificationErrorTitle": "فشل الإرسال",
+  "errorSubmittingVerification": "تعذر إرسال توثيقك. يرجى المحاولة مرة أخرى.",
+  "noBookingsYet": "لا توجد حجوزات بعد",
+  "noBookingsYetSubtitle": "لم تقم بأي حجز حتى الآن.",
+  "exploreChalets": "استكشف الشاليهات",
+  "errorLoadingBookings": "حدث خطأ أثناء تحميل حجوزاتك.",
+  "bookingTicketTitle": "تذكرة الحجز",
+  "bookingNumberLabel": "رقم الحجز",
+
+  "bookingDetailsTitle": "تفاصيل الحجز",
+  "bookingInformationTitle": "معلومات الحجز",
+  "customerInformationTitle": "معلومات العميل",
+  "customerNameLabel": "الاسم الكامل",
+  "customerEmailLabel": "البريد الإلكتروني",
+  "customerPhoneLabel": "رقم الهاتف",
+  "checkoutSummaryTitle": "ملخص الفاتورة",
+  "nightsLabel": "الليالي",
+  "guestCountLabel": "عدد الضيوف",
+  "baseAmountLabel": "المبلغ الاساسي (في الليلة)",
+  "taxAmountLabel": "الضريبة",
+  "addOnAmountLabel": "الإضافات",
+  "addOnsSubtotalLabel": "إجمالي الإضافات",
+  "discountAmountLabel": "الخصم",
+  "totalAmountLabel": "الإجمالي",
+  "cancelReservation": "إلغاء الحجز",
+  "close": "إغلاق",
+  "bookingNotFoundTitle": "الحجز غير موجود",
+  "bookingNotFoundSubtitle": "تعذر العثور على هذا الحجز.",
+  "errorLoadingBookingDetails": "تعذر تحميل هذا الحجز. يرجى المحاولة مرة أخرى.",
+
+  "cancelReservationSheetTitle": "إلغاء الحجز",
+  "cancelReservationReasonLabel": "سبب الإلغاء",
+  "cancelReservationReasonHint": "أخبرنا لماذا تريد إلغاء هذا الحجز...",
+  "cancelReasonRequired": "يرجى إدخال سبب الإلغاء.",
+  "confirmCancellation": "تأكيد الإلغاء",
+  "bookingPendingCancellationMessage": "طلب إلغاء الحجز الخاص بك قيد المراجعة.",
+  "errorCancelBooking": "تعذر إلغاء هذا الحجز. يرجى المحاولة مرة أخرى.",
+  "cancellationReasonTitle": "سبب الإلغاء",
+
+  "writeReviewButton": "اكتب تقييمًا",
+  "submitReviewTitle": "قيّم إقامتك",
+  "submitReviewSubtitle": "شارك تجربتك لمساعدة الضيوف الآخرين.",
+  "reviewCommentLabel": "تقييمك",
+  "reviewCommentHint": "أخبرنا عن إقامتك...",
+  "submitReviewButton": "إرسال التقييم",
+  "ratingRequiredError": "يرجى اختيار تقييم.",
+  "reviewCommentRequiredError": "يرجى كتابة تعليق.",
+  "reviewSubmittedMessage": "شكرًا لك! تم إرسال تقييمك.",
+  "errorSubmittingReview": "تعذر إرسال تقييمك. يرجى المحاولة مرة أخرى.",
+
+  "wishlistEmptyTitle": "قائمة رغباتك فارغة",
+  "wishlistEmptySubtitle": "اضغط على أيقونة القلب في أي شاليه لحفظه هنا.",
+
+  "reservationTitle": "احجز",
+  "errorLoadingAvailability": "تعذّر تحميل التوفر لهذا الشهر. يرجى المحاولة مرة أخرى.",
+  "selectedRangeUnavailable": "هذه التواريخ غير متاحة. يرجى اختيار فترة متاحة.",
+  "reservationStep1Title": "اختر التواريخ",
+  "reservationStep2Title": "اختر الإضافات",
+  "reservationStep3Title": "معاينة السعر",
+  "guestCountMaxError": "الحد الأقصى المسموح به للضيوف هو {max}.",
+  "@guestCountMaxError": {
+    "description": "Shown when the guest count exceeds a chalet's maxGuests",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "addOnPerNightBadge": "{price}/الليلة",
+  "@addOnPerNightBadge": {
+    "description": "Price badge for an add-on billed per night",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "addOnFlatPriceBadge": "{price}",
+  "@addOnFlatPriceBadge": {
+    "description": "Price badge for a one-time add-on",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "weekendPricingNote": "قد تختلف أسعار ليالي نهاية الأسبوع عن أيام الأسبوع.",
+  "basePriceNoteTitle": "السعر الأساسي • ",
+  "basePriceNote": " تُطبَّق أسعار نهاية الأسبوع/المواسم",
+
+  "addOnsListSubtitle": "أضف لمسة مميزة على إقامتك مع هذه الإضافات الاختيارية.",
+  "noAddOnsTitle": "لا توجد إضافات متاحة",
+  "noAddOnsSubtitle": "لا توجد إضافات اختيارية متاحة لهذا الشاليه.",
+  "errorLoadingAddOns": "تعذر تحميل الإضافات. يرجى المحاولة مرة أخرى.",
+  "errorLoadingPricePreview": "تعذر تحميل معاينة السعر. يرجى المحاولة مرة أخرى.",
+  "priceBreakdownTitle": "تفاصيل السعر",
+  "backToHomeButton": "العودة إلى الرئيسية",
+  "nextButton": "التالي",
+  "backButton": "رجوع",
+
+  "bookingSuccessTitle": "تم إرسال الحجز",
+  "bookingSuccessMessage": "نحن ننظر في حجزك. سيتواصل معك فريق خدمة العملاء بمجرد تأكيد الحجز.",
+  "bookingErrorTitle": "فشل الحجز",
+  "errorSubmittingBooking": "تعذر إرسال حجزك. يرجى المحاولة مرة أخرى.",
+  "tryAgainButton": "حاول مرة أخرى",
+
+  "whatsappSupportMessage": "مرحبًا، أحتاج إلى مساعدة بخصوص GrandeBeach Khairan.",
+  "whatsappChaletInquiryMessage": "مرحبًا،\nأود الاستفسار عن سياسة الالغاء الخاصة  بهذا الشاليه .\n\nالشاليه:\n{chaletName}\n\nشكرًا لكم.",
+  "whatsappChaletCancelationPolicyInquiryMessage": "مرحبًا،\nأود الاستفسار عن تفاصيل هذا الشاليه .\n\nالشاليه:\n{chaletName}\n\nشكرًا لكم.",
+  "whatsappBookingSupportMessage": "مرحبًا،\nأحتاج إلى مساعدة بخصوص حجزي في GrandeBeach Khairan.\n\nشكرًا لكم.",
+  "whatsappBookingSupportMessageWithNumber": "مرحبًا،\nأحتاج إلى مساعدة بخصوص حجزي في GrandeBeach Khairan.\n\nرقم الحجز:\n{bookingNumber}\n\nشكرًا لكم.",
+
+  "specialRequestLabel": "طلب خاص (اختياري)",
+  "specialRequestHint": "هل تريد إخبارنا بأي شيء؟ (مثال: تسجيل وصول مبكر)",
+
+  "cancellationPolicyTitle": "سياسة الإلغاء",
+  "cancellationPolicyContactMessage": "إذا كنت تريد الاستفسار عن سياسة الإلغاء لهذا الشاليه، يرجى التواصل معنا عبر واتساب.",
+  "contactUsOnWhatsapp": "تواصل معنا عبر واتساب"
 }

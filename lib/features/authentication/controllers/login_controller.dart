@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/localization/generated/app_localizations.dart';
 import '../../../core/providers/locale_provider.dart';
+import '../../booking/controllers/verification_providers.dart';
 import 'auth_providers.dart';
 
 /// Drives the login screen. State is [AsyncLoading] while signing in,
@@ -27,7 +28,17 @@ class LoginController extends AsyncNotifier<void> {
 
     state = result.fold(
       (failure) => AsyncError(failure, StackTrace.current),
-      (_) => const AsyncData(null),
+      (_) {
+        // Set sync flag first so the router redirect sees the new session state
+        // on the very next frame, before any async re-read completes.
+        ref.read(sessionActiveProvider.notifier).state = true;
+        ref.invalidate(currentUserProvider);
+        // Populates the verification status cache once for this session;
+        // `getStatus()` inside its build() will hit the network only because
+        // the cache was cleared on the previous logout.
+        ref.invalidate(verificationStatusProvider);
+        return const AsyncData(null);
+      },
     );
   }
 

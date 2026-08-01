@@ -46,6 +46,7 @@ dependencies:
   # Network
   dio: ^5.7.0
   connectivity_plus: ^6.1.0
+  internet_connection_checker_plus: ^2.5.2
 
   # Local storage
   hive: ^2.2.3
@@ -62,6 +63,16 @@ dependencies:
   # Utilities
   intl: any
   path_provider: ^2.1.5
+  lucide_icons: ^0.257.0
+
+  # Media capture
+  image_picker: ^1.1.2
+  signature: ^5.5.0
+  permission_handler: ^12.0.3
+
+  # External app links
+  url_launcher: ^6.3.2
+  font_awesome_flutter: ^10.8.0
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +92,14 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo_icon.jpg"
+  min_sdk_android: 21
+
+
 flutter:
 
   generate: true
