@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:grande_beach/core/localization/generated/app_localizations.dart';
 import 'package:grande_beach/core/theme/app_colors.dart';
 import 'package:grande_beach/features/authentication/models/user_model.dart';
 
 class ProfileAvatarSection extends StatelessWidget {
-  const ProfileAvatarSection({super.key, required this.user, required this.avatarHeight});
+  const ProfileAvatarSection({
+    super.key,
+    required this.user,
+    required this.avatarHeight,
+  });
 
   final UserModel? user;
   final double avatarHeight;
@@ -12,10 +17,15 @@ class ProfileAvatarSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final firstName = user?.firstName ?? '';
     final lastName = user?.lastName ?? '';
-    final fullName = [firstName, lastName].where((s) => s.isNotEmpty).join(' ');
-    final avatarLetter =
-        firstName.isNotEmpty ? firstName[0].toUpperCase() : '?';
-    final theme = Theme.of(context);    
+    // No user means a guest (no authenticated session).
+    final isGuest = user == null;
+    final fullName = isGuest
+        ? AppLocalizations.of(context).guestUser
+        : [firstName, lastName].where((s) => s.isNotEmpty).join(' ');
+    final avatarLetter = firstName.isNotEmpty
+        ? firstName[0].toUpperCase()
+        : '?';
+    final theme = Theme.of(context);
 
     return SizedBox(
       height: avatarHeight,
@@ -30,20 +40,26 @@ class ProfileAvatarSection extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
-            child: Text(
-              avatarLetter,
-              style:  TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+            child: isGuest
+                ? const Icon(
+                    Icons.person_outline,
+                    color: Colors.white,
+                    size: 36,
+                  )
+                : Text(
+                    avatarLetter,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
           ),
           const SizedBox(height: 10),
           if (fullName.isNotEmpty)
             Text(
               fullName,
-              style:  TextStyle(
+              style: TextStyle(
                 color: theme.colorScheme.onSurface,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

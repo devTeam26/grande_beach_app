@@ -40,12 +40,20 @@
   "registrationSuccess": "تم إنشاء الحساب بنجاح. يرجى تسجيل الدخول.",
 
   "forgotPasswordTitle": "إعادة تعيين كلمة المرور",
-  "forgotPasswordSubtitle": "أدخل بريدك الإلكتروني واختر كلمة مرور جديدة.",
+  "forgotPasswordSubtitle": "أدخل البريد الإلكتروني المرتبط بحسابك في Grande Beach، وسنرسل إليك رابطًا لإعادة تعيين كلمة المرور.",
   "newPassword": "كلمة المرور الجديدة",
   "newPasswordHint": "أدخل كلمة المرور الجديدة",
   "confirm": "تأكيد",
   "resetPasswordSuccess": "تم إعادة تعيين كلمة المرور بنجاح. يرجى تسجيل الدخول.",
   "errorTokenInvalid": "رمز إعادة التعيين غير صالح أو منتهي الصلاحية.",
+  "forgotPasswordCheckEmailHint": "بعد التأكيد، تحقق من بريدك الوارد للعثور على رسالة إعادة التعيين. إذا لم تجدها، فتحقق من مجلد الرسائل غير المرغوب فيها.",
+  "resetEmailSent": "تم إرسال رسالة إعادة تعيين كلمة المرور.",
+  "checkInboxAndSpam": "يرجى التحقق من بريدك الوارد ومجلد الرسائل غير المرغوب فيها.",
+  "orLabel": "أو",
+  "continueWithGoogle": "المتابعة باستخدام Google",
+  "googleSignInCancelled": "تم إلغاء تسجيل الدخول باستخدام Google.",
+  "googleSignInFailed": "فشل تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى.",
+  "googleSignInUnavailable": "تعذّر تسجيل الدخول باستخدام Google. يرجى المحاولة لاحقًا.",
 
   "greeting": "مرحبًا، {firstName}👋",
   "@greeting": {
@@ -81,6 +89,7 @@
   "errorLastNameRequired": "اسم العائلة مطلوب.",
   "errorPhoneRequired": "رقم الهاتف مطلوب.",
   "errorPhoneInvalid": "يرجى إدخال رقم هاتف صحيح.",
+  "errorKuwaitPhoneInvalid": "يرجى إدخال رقم هاتف كويتي صحيح مكون من 8 أرقام.",
   "errorConfirmPasswordRequired": "يرجى تأكيد كلمة المرور.",
   "errorPasswordMismatch": "كلمتا المرور غير متطابقتين.",
   "errorInvalidCredentials": "بيانات تسجيل الدخول غير صحيحة.",
@@ -117,6 +126,11 @@
   "logoutConfirmTitle": "تسجيل الخروج",
   "logoutConfirmMessage": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   "logoutConfirm": "تسجيل الخروج",
+  "deleteAccount": "حذف الحساب",
+  "deleteAccountConfirmTitle": "هل تريد حذف حسابك؟",
+  "deleteAccountConfirmMessage": "هذا الإجراء نهائي ولا يمكن التراجع عنه. إذا تابعت، فسيتم حذف حسابك وجميع بياناتك نهائيًا.",
+  "deleteAccountConfirm": "حذف",
+  "accountDeletedSuccess": "تم حذف حسابك.",
   "cancel": "إلغاء",
 
   "edit": "تعديل",
@@ -341,5 +355,11 @@
 
   "cancellationPolicyTitle": "سياسة الإلغاء",
   "cancellationPolicyContactMessage": "إذا كنت تريد الاستفسار عن سياسة الإلغاء لهذا الشاليه، يرجى التواصل معنا عبر واتساب.",
-  "contactUsOnWhatsapp": "تواصل معنا عبر واتساب"
+  "contactUsOnWhatsapp": "تواصل معنا عبر واتساب",
+  "guestUser": "مستخدم زائر",
+  "login": "تسجيل الدخول",
+  "loginRequiredTitle": "تسجيل الدخول مطلوب",
+  "signInToViewBookings": "يجب عليك تسجيل الدخول لعرض حجوزاتك.",
+  "signInToCompleteReservation": "يجب عليك تسجيل الدخول لإتمام حجزك.",
+  "guest": "زائر"
 }

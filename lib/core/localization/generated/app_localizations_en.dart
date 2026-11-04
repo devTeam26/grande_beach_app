@@ -120,7 +120,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get forgotPasswordSubtitle =>
-      'Enter your email and choose a new password.';
+      'Enter the email address associated with your Grande Beach account and we\'ll send you a link to reset your password.';
 
   @override
   String get newPassword => 'New Password';
@@ -137,6 +137,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorTokenInvalid => 'The reset token is invalid or has expired.';
+
+  @override
+  String get forgotPasswordCheckEmailHint =>
+      'After confirming, check your inbox for the reset email. If you can\'t find it, check your spam folder.';
+
+  @override
+  String get resetEmailSent => 'A password reset email has been sent.';
+
+  @override
+  String get checkInboxAndSpam => 'Please check your inbox and spam folder.';
+
+  @override
+  String get orLabel => 'OR';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get googleSignInCancelled => 'Google sign-in was cancelled.';
+
+  @override
+  String get googleSignInFailed => 'Google sign-in failed. Please try again.';
+
+  @override
+  String get googleSignInUnavailable =>
+      'Unable to sign in with Google. Please try again later.';
 
   @override
   String greeting(String firstName) {
@@ -212,6 +238,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorPhoneInvalid => 'Please enter a valid phone number.';
+
+  @override
+  String get errorKuwaitPhoneInvalid =>
+      'Please enter a valid 8-digit Kuwaiti phone number.';
 
   @override
   String get errorConfirmPasswordRequired => 'Please confirm your password.';
@@ -295,6 +325,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logoutConfirm => 'Logout';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get deleteAccountConfirmTitle => 'Delete your account?';
+
+  @override
+  String get deleteAccountConfirmMessage =>
+      'This action is permanent and cannot be undone. If you continue, your account and all of your data will be permanently removed.';
+
+  @override
+  String get deleteAccountConfirm => 'Delete';
+
+  @override
+  String get accountDeletedSuccess => 'Your account has been deleted.';
 
   @override
   String get cancel => 'Cancel';
@@ -889,4 +935,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactUsOnWhatsapp => 'Contact us on WhatsApp';
+
+  @override
+  String get guestUser => 'Guest User';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get loginRequiredTitle => 'Login Required';
+
+  @override
+  String get signInToViewBookings =>
+      'You need to sign in to view your bookings.';
+
+  @override
+  String get signInToCompleteReservation =>
+      'You need to sign in to complete your reservation.';
+
+  @override
+  String get guest => 'Guest';
 }

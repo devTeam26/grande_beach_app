@@ -7,7 +7,10 @@ abstract class ApiStrings {
   static const String register = '/api/Auth/register';
   static const String refresh = '/api/Auth/refresh';
   static const String resetPassword = '/api/Auth/reset-password';
+  static const String forgotPassword = '/api/Auth/forgot-password';
+  static const String googleLogin = '/api/Auth/google-login';
   static const String logout = '/api/Auth/logout';
+  static const String account = '/api/Auth/account';
   static const String profile = '/api/Auth/profile';
   static const String changePassword = '/api/Auth/change-password';
 

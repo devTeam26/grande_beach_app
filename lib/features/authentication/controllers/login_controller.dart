@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/localization/generated/app_localizations.dart';
 import '../../../core/providers/locale_provider.dart';
+import '../../../core/utils/result.dart';
 import '../../booking/controllers/verification_providers.dart';
+import '../models/user_model.dart';
 import 'auth_providers.dart';
 
 /// Drives the login screen. State is [AsyncLoading] while signing in,
@@ -21,25 +23,39 @@ class LoginController extends AsyncNotifier<void> {
     }
 
     state = const AsyncLoading();
-    final result = await ref.read(authRepositoryProvider).login(
-          email: email.trim(),
-          password: password,
-        );
+    final result = await ref
+        .read(authRepositoryProvider)
+        .login(email: email.trim(), password: password);
+    _onSignInResult(result);
+  }
 
-    state = result.fold(
-      (failure) => AsyncError(failure, StackTrace.current),
-      (_) {
-        // Set sync flag first so the router redirect sees the new session state
-        // on the very next frame, before any async re-read completes.
-        ref.read(sessionActiveProvider.notifier).state = true;
-        ref.invalidate(currentUserProvider);
-        // Populates the verification status cache once for this session;
-        // `getStatus()` inside its build() will hit the network only because
-        // the cache was cleared on the previous logout.
-        ref.invalidate(verificationStatusProvider);
-        return const AsyncData(null);
-      },
-    );
+  /// Signs in with Google. Ends in exactly the same authenticated state as
+  /// [login]. A cancelled account picker surfaces as a [GoogleSignInFailure]
+  /// whose [GoogleSignInFailure.isCancelled] is true.
+  Future<void> loginWithGoogle() async {
+    // Ignore repeated taps while any sign-in is already in flight.
+    if (state.isLoading) return;
+
+    state = const AsyncLoading();
+    final result = await ref.read(authRepositoryProvider).loginWithGoogle();
+    _onSignInResult(result);
+  }
+
+  void _onSignInResult(Result<UserModel> result) {
+    if (result case ResultFailure(:final failure)) {
+      state = AsyncError(failure, StackTrace.current);
+      return;
+    }
+
+    // Set sync flag first so the router redirect sees the new session state
+    // on the very next frame, before any async re-read completes.
+    ref.read(sessionActiveProvider.notifier).state = true;
+    ref.invalidate(currentUserProvider);
+    // Populates the verification status cache once for this session;
+    // `getStatus()` inside its build() will hit the network only because
+    // the cache was cleared on the previous logout.
+    ref.invalidate(verificationStatusProvider);
+    state = const AsyncData(null);
   }
 
   Failure? _validate({required String email, required String password}) {
@@ -67,5 +83,6 @@ class LoginController extends AsyncNotifier<void> {
   }
 }
 
-final loginControllerProvider =
-    AsyncNotifierProvider<LoginController, void>(LoginController.new);
+final loginControllerProvider = AsyncNotifierProvider<LoginController, void>(
+  LoginController.new,
+);

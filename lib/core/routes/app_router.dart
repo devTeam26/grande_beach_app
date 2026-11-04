@@ -28,15 +28,28 @@ class _RouterRefreshNotifier extends ChangeNotifier {
   _RouterRefreshNotifier(Ref ref) {
     ref.listen(languageSelectedProvider, (_, _) => notifyListeners());
     ref.listen(onboardingProvider, (_, _) => notifyListeners());
-    // sessionActiveProvider is synchronous — reacts instantly on login/logout.
-    ref.listen(sessionActiveProvider, (_, _) => notifyListeners());
+    // sessionActiveProvider is synchronous — reacts instantly on logout so
+    // protected routes are guarded again. Signing in deliberately does NOT
+    // refresh the router: LoginScreen pops itself on success, and a refresh
+    // scheduled at the same moment would re-parse the stale location (which
+    // still contains /login) on the next frame and push Login back on top of
+    // the reservation wizard. No redirect depends on a session starting.
+    ref.listen(sessionActiveProvider, (previous, next) {
+      if (previous == true && !next) notifyListeners();
+    });
     // Re-run the redirect once the launch-time token refresh resolves.
     ref.listen(appBootstrapDoneProvider, (_, _) => notifyListeners());
   }
 }
 
-/// Auth-gated paths that should redirect to /home when a session is active.
-const _authPaths = {'/login', '/register', '/forgot-password'};
+/// Paths that need an authenticated account. Everything else (Home,
+/// Discover, chalet details, the reservation wizard, auth screens) is open to
+/// guests; the final Reserve action is gated inside the wizard itself.
+const _protectedPaths = {'/account-info', '/change-password'};
+const _protectedPrefixes = {'/booking-details/', '/booking-verification/'};
+
+bool _requiresSession(String path) =>
+    _protectedPaths.contains(path) || _protectedPrefixes.any(path.startsWith);
 
 final routerProvider = Provider<GoRouter>((ref) {
   final refreshNotifier = _RouterRefreshNotifier(ref);
@@ -61,18 +74,23 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
       // Language + onboarding done: hold on the splash until the launch-time
       // token refresh has resolved, so we route to the correct destination.
+      // An explicit request for /login (the onboarding "Login to your account"
+      // button) is carried through the hold so it isn't lost.
       if (!bootstrapDone) {
-        return path == '/' ? null : '/';
+        if (path == '/') return null;
+        return path == '/login' ? '/?from=/login' : '/';
       }
+      // Guests enter the app at /home too; login is only shown on request.
       if (path == '/' || path == '/onboarding') {
-        return hasSession ? '/home' : '/login';
+        if (hasSession) return '/home';
+        return state.uri.queryParameters['from'] == '/login'
+            ? '/login'
+            : '/home';
       }
-      // After login succeeds, bounce auth screens to /home.
-      if (_authPaths.contains(path) && hasSession) {
-        return '/home';
-      }
-      // Guard /home and any sub-paths from unauthenticated access.
-      if (!hasSession && !_authPaths.contains(path) && path != '/') {
+      // Auth screens are NOT bounced to /home on login here: LoginScreen
+      // handles its own success navigation so that a login pushed over the
+      // reservation wizard can pop straight back to it with state intact.
+      if (!hasSession && _requiresSession(path)) {
         return '/login';
       }
       return null;

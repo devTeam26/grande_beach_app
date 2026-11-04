@@ -51,6 +51,7 @@ class WishlistScreen extends ConsumerWidget {
                             subtitle: l10n.wishlistEmptySubtitle,
                             icon: Icons.favorite_border_rounded,
                           ),
+                          SizedBox(height: 20,),
                           AppButton(
                             label: l10n.exploreChalets,
                             onPressed: () {

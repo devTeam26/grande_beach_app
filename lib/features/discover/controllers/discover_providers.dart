@@ -82,9 +82,13 @@ class DiscoverChaletsNotifier extends AsyncNotifier<DiscoverState> {
       },
       (page) {
         _page = nextPage;
+        final loadedIds = current.chalets.map((c) => c.id).toSet();
         state = AsyncData(
           current.copyWith(
-            chalets: [...current.chalets, ...page.chalets],
+            chalets: [
+              ...current.chalets,
+              ...page.chalets.where((c) => !loadedIds.contains(c.id)),
+            ],
             hasMore: page.hasMore,
             isLoadingMore: false,
           ),

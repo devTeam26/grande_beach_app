@@ -13,6 +13,7 @@ class OnboardingContentCard extends StatelessWidget {
     required this.isLastPage,
     required this.onNext,
     required this.onSkip,
+    required this.onLogin,
   });
 
   final OnboardingPageData page;
@@ -21,6 +22,10 @@ class OnboardingContentCard extends StatelessWidget {
   final bool isLastPage;
   final VoidCallback onNext;
   final VoidCallback onSkip;
+
+  /// Shown under "Get Started" on the last page; opens the existing Login
+  /// screen. Optional — guests can enter the app without it.
+  final VoidCallback onLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,7 @@ class OnboardingContentCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-       //borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+        //borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -67,9 +72,11 @@ class OnboardingContentCard extends StatelessWidget {
             ),
           ),
           if (!isLastPage)
+            TextButton(onPressed: onSkip, child: Text(l10n.skip))
+          else
             TextButton(
-              onPressed: onSkip,
-              child: Text(l10n.skip),
+              onPressed: onLogin,
+              child: Text(l10n.loginToYourAccount),
             ),
         ],
       ),

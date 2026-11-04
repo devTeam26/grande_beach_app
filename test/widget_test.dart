@@ -12,8 +12,12 @@ void main() {
   testWidgets('App boots to the language selection sheet on first launch', (
     WidgetTester tester,
   ) async {
-    await setUpTestHive();
-    final box = await Hive.openBox(LocalStorageService.boxName);
+    // Real Hive file I/O must run outside the test's fake-async zone,
+    // otherwise these futures never complete and the test hangs.
+    final box = (await tester.runAsync(() async {
+      await setUpTestHive();
+      return Hive.openBox(LocalStorageService.boxName);
+    }))!;
 
     await tester.pumpWidget(
       ProviderScope(

@@ -17,12 +17,18 @@ class NetworkOrAssetImage extends StatelessWidget {
     this.width,
     this.height,
     this.fit = BoxFit.cover,
+    this.filterQuality = FilterQuality.high,
   });
 
   final String url;
   final double? width;
   final double? height;
   final BoxFit fit;
+
+  /// Source images are large (~1800x2400), so they're heavily downscaled
+  /// into cards and the gallery. `CachedNetworkImage` defaults to
+  /// [FilterQuality.low], which makes that downscale look soft and blurry.
+  final FilterQuality filterQuality;
 
   static bool _isUnreachableHost(String url) {
     final host = Uri.tryParse(url)?.host ?? '';
@@ -32,7 +38,13 @@ class NetworkOrAssetImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (url.startsWith('assets/')) {
-      return Image.asset(url, width: width, height: height, fit: fit);
+      return Image.asset(
+        url,
+        width: width,
+        height: height,
+        fit: fit,
+        filterQuality: filterQuality,
+      );
     }
     if (_isUnreachableHost(url)) {
       return Image.asset(
@@ -40,6 +52,7 @@ class NetworkOrAssetImage extends StatelessWidget {
         width: width,
         height: height,
         fit: fit,
+        filterQuality: filterQuality,
       );
     }
     return CachedNetworkImage(
@@ -47,6 +60,7 @@ class NetworkOrAssetImage extends StatelessWidget {
       width: width,
       height: height,
       fit: fit,
+      filterQuality: filterQuality,
       placeholder: (context, url) => ColoredBox(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
       ),
@@ -55,6 +69,7 @@ class NetworkOrAssetImage extends StatelessWidget {
         width: width,
         height: height,
         fit: fit,
+        filterQuality: filterQuality,
       ),
     );
   }

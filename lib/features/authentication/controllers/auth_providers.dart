@@ -1,19 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../core/config/google_auth_config.dart';
 import '../../../core/providers/core_providers.dart';
 import '../models/user_model.dart';
 import '../repositories/auth_repository.dart';
 import '../repositories/auth_repository_impl.dart';
 import '../services/auth_service.dart';
 import '../services/auth_service_impl.dart';
+import '../services/google_sign_in_service.dart';
+import '../services/google_sign_in_service_impl.dart';
 
 final authServiceProvider = Provider<AuthService>((ref) {
   return AuthServiceImpl(ref.watch(apiClientProvider).dio);
 });
 
+final googleSignInServiceProvider = Provider<GoogleSignInService>((ref) {
+  return GoogleSignInServiceImpl(
+    GoogleSignIn.instance,
+    serverClientId: GoogleAuthConfig.serverClientId,
+  );
+});
+
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepositoryImpl(
     authService: ref.watch(authServiceProvider),
+    googleSignInService: ref.watch(googleSignInServiceProvider),
     networkInfo: ref.watch(networkInfoProvider),
     secureStorage: ref.watch(secureStorageServiceProvider),
     localStorage: ref.watch(localStorageServiceProvider),

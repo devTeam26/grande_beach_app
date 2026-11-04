@@ -40,12 +40,20 @@
   "registrationSuccess": "Account created successfully. Please sign in.",
 
   "forgotPasswordTitle": "Reset Your Password",
-  "forgotPasswordSubtitle": "Enter your email and choose a new password.",
+  "forgotPasswordSubtitle": "Enter the email address associated with your Grande Beach account and we'll send you a link to reset your password.",
   "newPassword": "New Password",
   "newPasswordHint": "Enter new password",
   "confirm": "Confirm",
   "resetPasswordSuccess": "Password reset successfully. Please sign in.",
   "errorTokenInvalid": "The reset token is invalid or has expired.",
+  "forgotPasswordCheckEmailHint": "After confirming, check your inbox for the reset email. If you can't find it, check your spam folder.",
+  "resetEmailSent": "A password reset email has been sent.",
+  "checkInboxAndSpam": "Please check your inbox and spam folder.",
+  "orLabel": "OR",
+  "continueWithGoogle": "Continue with Google",
+  "googleSignInCancelled": "Google sign-in was cancelled.",
+  "googleSignInFailed": "Google sign-in failed. Please try again.",
+  "googleSignInUnavailable": "Unable to sign in with Google. Please try again later.",
 
   "greeting": "Hey, {firstName}👋",
   "@greeting": {
@@ -81,6 +89,7 @@
   "errorLastNameRequired": "Last name is required.",
   "errorPhoneRequired": "Phone number is required.",
   "errorPhoneInvalid": "Please enter a valid phone number.",
+  "errorKuwaitPhoneInvalid": "Please enter a valid 8-digit Kuwaiti phone number.",
   "errorConfirmPasswordRequired": "Please confirm your password.",
   "errorPasswordMismatch": "Passwords do not match.",
   "errorInvalidCredentials": "Invalid credentials.",
@@ -117,6 +126,11 @@
   "logoutConfirmTitle": "Logout",
   "logoutConfirmMessage": "Are you sure you want to logout?",
   "logoutConfirm": "Logout",
+  "deleteAccount": "Delete Account",
+  "deleteAccountConfirmTitle": "Delete your account?",
+  "deleteAccountConfirmMessage": "This action is permanent and cannot be undone. If you continue, your account and all of your data will be permanently removed.",
+  "deleteAccountConfirm": "Delete",
+  "accountDeletedSuccess": "Your account has been deleted.",
   "cancel": "Cancel",
 
   "edit": "Edit",
@@ -373,5 +387,11 @@
 
   "cancellationPolicyTitle": "Cancellation Policy",
   "cancellationPolicyContactMessage": "If you'd like to ask about the cancellation policy for this chalet, please contact us on WhatsApp.",
-  "contactUsOnWhatsapp": "Contact us on WhatsApp"
+  "contactUsOnWhatsapp": "Contact us on WhatsApp",
+  "guestUser": "Guest User",
+  "login": "Login",
+  "loginRequiredTitle": "Login Required",
+  "signInToViewBookings": "You need to sign in to view your bookings.",
+  "signInToCompleteReservation": "You need to sign in to complete your reservation.",
+  "guest": "Guest"
 }

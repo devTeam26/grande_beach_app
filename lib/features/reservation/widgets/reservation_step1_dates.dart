@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/errors/failure.dart';
 import '../../../core/localization/generated/app_localizations.dart';
+import '../../../core/utils/kuwait_phone.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../discover/widgets/date_range_picker.dart';
 import '../controllers/reservation_providers.dart';
 import '../models/reservation_draft.dart';
 import 'guest_count_stepper.dart';
+import '../../../core/widgets/phone_country_code_prefix.dart';
 
-/// Step 1: check-in/check-out dates, guest count, and an optional special
-/// request note.
+/// Step 1: check-in/check-out dates, guest count, contact phone number, and
+/// an optional special request note.
 class ReservationStep1Dates extends ConsumerStatefulWidget {
   const ReservationStep1Dates({
     super.key,
@@ -29,10 +32,13 @@ class ReservationStep1Dates extends ConsumerStatefulWidget {
 class _ReservationStep1DatesState extends ConsumerState<ReservationStep1Dates> {
   late final _specialRequestController =
       TextEditingController(text: widget.draft.specialRequest);
+  late final _phoneController =
+      TextEditingController(text: widget.draft.phoneNumber);
 
   @override
   void dispose() {
     _specialRequestController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
@@ -119,6 +125,32 @@ class _ReservationStep1DatesState extends ConsumerState<ReservationStep1Dates> {
             value: widget.draft.guestCount,
             maxGuests: widget.maxGuests,
             onChanged: controller.updateGuestCount,
+          ),
+          const SizedBox(height: 24),
+          Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: AppTextField(
+              controller: _phoneController,
+              label: l10n.phoneNumber,
+              hint: l10n.phoneNumberHint,
+              keyboardType: TextInputType.phone,
+              prefixIcon: const PhoneCountryCodePrefix(
+                countryCode: KuwaitPhone.countryCode,
+              ),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(KuwaitPhone.localLength),
+              ],
+              onChanged: controller.updatePhoneNumber,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return l10n.errorPhoneRequired;
+                }
+                return KuwaitPhone.isValidLocal(value)
+                    ? null
+                    : l10n.errorKuwaitPhoneInvalid;
+              },
+            ),
           ),
           const SizedBox(height: 24),
           AppTextField(

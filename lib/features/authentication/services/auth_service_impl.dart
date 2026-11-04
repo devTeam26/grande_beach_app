@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 
 import '../../../core/config/api_strings.dart';
 import '../models/auth_session_model.dart';
+import '../models/forgot_password_request_model.dart';
+import '../models/google_login_request_model.dart';
 import '../models/login_request_model.dart';
 import '../models/register_request_model.dart';
 import '../models/reset_password_request_model.dart';
@@ -69,10 +71,7 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<AuthSessionModel> refresh({required String refreshToken}) async {
-    debugPrint(
-      '[AUTH] POST ${ApiStrings.refresh} '
-      '(refreshToken=${_truncate(refreshToken)})',
-    );
+    debugPrint('[AUTH] POST ${ApiStrings.refresh}');
     final response = await _dio.post<Map<String, dynamic>>(
       ApiStrings.refresh,
       data: {'refreshToken': refreshToken},
@@ -91,13 +90,6 @@ class AuthServiceImpl implements AuthService {
     }
 
     return AuthSessionModel.fromJson(body['data'] as Map<String, dynamic>);
-  }
-
-  /// Shows only the first/last few characters so tokens never appear in full
-  /// in terminal/log output.
-  String _truncate(String token) {
-    if (token.length <= 12) return '***';
-    return '${token.substring(0, 6)}…${token.substring(token.length - 4)}';
   }
 
   @override
@@ -125,12 +117,72 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
+  Future<AuthSessionModel> googleLogin({required String idToken}) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      ApiStrings.googleLogin,
+      data: GoogleLoginRequestModel(idToken: idToken).toJson(),
+    );
+
+    final body = response.data!;
+    if (body['success'] as bool? ?? false) {
+      return AuthSessionModel.fromJson(body['data'] as Map<String, dynamic>);
+    }
+    throw _envelopeException(body);
+  }
+
+  @override
+  Future<String> forgotPassword({required String email}) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      ApiStrings.forgotPassword,
+      data: ForgotPasswordRequestModel(email: email).toJson(),
+    );
+
+    final body = response.data!;
+    if (body['success'] as bool? ?? false) {
+      return body['message'] as String? ?? '';
+    }
+    throw _envelopeException(body);
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    final response = await _dio.delete<Map<String, dynamic>>(
+      ApiStrings.account,
+    );
+
+    // Some backends answer 204 No Content; only an explicit
+    // `success: false` envelope counts as a failure.
+    final body = response.data;
+    if (body != null && body['success'] == false) {
+      throw _envelopeException(body);
+    }
+  }
+
+  /// Builds an [AuthApiException] from a `success: false` envelope. The
+  /// message falls back to the first `errors` entry, then to empty (the
+  /// repository substitutes the standard localized fallback).
+  AuthApiException _envelopeException(Map<String, dynamic> body) {
+    final rawErrors = body['errors'];
+    final errors = rawErrors is List
+        ? rawErrors
+              .map((e) => e.toString())
+              .where((e) => e.trim().isNotEmpty)
+              .toList()
+        : const <String>[];
+    final message = body['message'];
+    return AuthApiException(
+      message is String && message.trim().isNotEmpty
+          ? message
+          : (errors.isNotEmpty ? errors.first : ''),
+      errors: errors.isEmpty ? null : errors,
+    );
+  }
+
+  @override
   Future<void> logout({required String accessToken}) async {
     await _dio.post<void>(
       ApiStrings.logout,
-      options: Options(
-        headers: {'Authorization': 'Bearer $accessToken'},
-      ),
+      options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
     );
   }
 }

@@ -21,7 +21,7 @@ class ReviewsServiceImpl implements ReviewsService {
     final response = await _dio.get<Map<String, dynamic>>(
       ApiStrings.reviewsByChalet(chaletId),
       queryParameters: {
-        'pageNumber': pageNumber,
+        'page': pageNumber,
         'pageSize': pageSize,
         'rating': ?rating,
       },

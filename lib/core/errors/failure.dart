@@ -34,3 +34,25 @@ class ValidationFailure extends Failure {
 class UnknownFailure extends Failure {
   const UnknownFailure(super.message);
 }
+
+/// Why a Google Sign-In attempt ended before reaching the backend.
+enum GoogleSignInFailureReason {
+  /// The user dismissed the account picker — not an error.
+  cancelled,
+
+  /// Google authentication failed or returned no ID token.
+  failed,
+
+  /// Google Sign-In is unavailable or misconfigured on this device.
+  unavailable,
+}
+
+/// The native Google Sign-In step failed (backend errors use the other
+/// [Failure] types).
+class GoogleSignInFailure extends Failure {
+  const GoogleSignInFailure(super.message, {required this.reason});
+
+  final GoogleSignInFailureReason reason;
+
+  bool get isCancelled => reason == GoogleSignInFailureReason.cancelled;
+}

@@ -26,9 +26,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     super.dispose();
   }
 
-  void _finishOnboarding() {
-    ref.read(onboardingProvider.notifier).complete();
-    context.go('/login');
+  /// Completes onboarding and continues to [destination]. Guests go straight
+  /// to /home; logging in is optional. Completion is awaited so the router
+  /// redirect already sees onboarding as done when [destination] is resolved.
+  Future<void> _finishOnboarding({String destination = '/home'}) async {
+    await ref.read(onboardingProvider.notifier).complete();
+    if (!mounted) return;
+    context.go(destination);
   }
 
   void _goToNext(int pageCount) {
@@ -89,6 +93,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             isLastPage: currentIndex == pages.length - 1,
             onNext: () => _goToNext(pages.length),
             onSkip: _finishOnboarding,
+            onLogin: () => _finishOnboarding(destination: '/login'),
           ),
         ],
       ),

@@ -13,8 +13,8 @@ abstract class HomeMockData {
           badgeAr: 'غراند بيتش',
           headline: 'Moments that stay with you forever',
           headlineAr: 'لحظات تبقى معك إلى الأبد',
-          description: 'Discover exclusive chalets with breathtaking ocean views',
-          descriptionAr: 'اكتشف شاليهات حصرية مع إطلالات خلابة على المحيط',
+          description: 'Discover exclusive chalets with breathtaking sea views',
+          descriptionAr: 'اكتشف شاليهات حصرية مع إطلالات خلابة على البحر',
         ),
       ];
 }

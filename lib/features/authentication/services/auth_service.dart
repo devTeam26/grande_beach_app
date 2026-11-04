@@ -28,6 +28,19 @@ abstract class AuthService {
     required String newPassword,
   });
 
+  /// Signs in with a Google [idToken]; the backend verifies it and returns
+  /// the same session payload as [login].
+  Future<AuthSessionModel> googleLogin({required String idToken});
+
+  /// Asks the backend to email a password-reset link to [email].
+  /// Returns the backend's (generic) confirmation message.
+  Future<String> forgotPassword({required String email});
+
+  /// Permanently deletes the signed-in user's account (bearer token is
+  /// attached by the auth interceptor). Throws [AuthApiException] when the
+  /// backend responds with `success: false`.
+  Future<void> deleteAccount();
+
   /// Invalidates the current session on the server side.
   /// The caller must clear local tokens regardless of the result.
   Future<void> logout({required String accessToken});

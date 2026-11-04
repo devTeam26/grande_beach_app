@@ -3,51 +3,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/localization/generated/app_localizations.dart';
 import '../../../core/providers/locale_provider.dart';
-import '../utils/password_policy.dart';
 import 'auth_providers.dart';
 
-class ForgotPasswordController extends AsyncNotifier<void> {
+/// Drives the forgot-password screen. State is [AsyncLoading] while the
+/// request is in flight, [AsyncError] holding a [Failure] on
+/// validation/network/server errors, and [AsyncData] holding the backend's
+/// confirmation message (possibly empty) once the reset email is requested.
+/// The initial state is `AsyncData(null)`.
+class ForgotPasswordController extends AsyncNotifier<String?> {
   @override
-  Future<void> build() async {}
+  Future<String?> build() async => null;
 
-  Future<void> resetPassword({
-    required String email,
-    required String newPassword,
-    required String confirmPassword,
-  }) async {
-    final validationFailure = _validate(
-      email: email,
-      newPassword: newPassword,
-      confirmPassword: confirmPassword,
-    );
+  Future<void> sendResetEmail({required String email}) async {
+    final validationFailure = _validate(email: email);
     if (validationFailure != null) {
       state = AsyncError(validationFailure, StackTrace.current);
       return;
     }
 
     state = const AsyncLoading();
-
-    // Token is simulated with an empty string until the backend provides
-    // the complete email-based reset flow (OTP / magic link).
-    const simulatedToken = '';
-
-    final result = await ref.read(authRepositoryProvider).resetPassword(
-          email: email.trim(),
-          token: simulatedToken,
-          newPassword: newPassword,
-        );
+    final result = await ref
+        .read(authRepositoryProvider)
+        .forgotPassword(email: email.trim());
 
     state = result.fold(
       (failure) => AsyncError(failure, StackTrace.current),
-      (_) => const AsyncData(null),
+      AsyncData.new,
     );
   }
 
-  Failure? _validate({
-    required String email,
-    required String newPassword,
-    required String confirmPassword,
-  }) {
+  Failure? _validate({required String email}) {
     final l10n = lookupAppLocalizations(ref.read(localeProvider));
     final fieldErrors = <String, List<String>>{};
 
@@ -56,18 +41,6 @@ class ForgotPasswordController extends AsyncNotifier<void> {
       fieldErrors['email'] = [l10n.errorEmailRequired];
     } else if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(trimmedEmail)) {
       fieldErrors['email'] = [l10n.errorEmailInvalid];
-    }
-
-    if (newPassword.isEmpty) {
-      fieldErrors['newPassword'] = [l10n.errorPasswordRequired];
-    } else if (!PasswordPolicy.isValid(newPassword)) {
-      fieldErrors['newPassword'] = [l10n.errorPasswordRequirementsNotMet];
-    }
-
-    if (confirmPassword.isEmpty) {
-      fieldErrors['confirmPassword'] = [l10n.errorConfirmPasswordRequired];
-    } else if (confirmPassword != newPassword) {
-      fieldErrors['confirmPassword'] = [l10n.errorPasswordMismatch];
     }
 
     if (fieldErrors.isEmpty) return null;
@@ -79,6 +52,6 @@ class ForgotPasswordController extends AsyncNotifier<void> {
 }
 
 final forgotPasswordControllerProvider =
-    AsyncNotifierProvider<ForgotPasswordController, void>(
-  ForgotPasswordController.new,
-);
+    AsyncNotifierProvider<ForgotPasswordController, String?>(
+      ForgotPasswordController.new,
+    );

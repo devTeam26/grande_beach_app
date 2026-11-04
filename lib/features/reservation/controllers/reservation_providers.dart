@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/providers/core_providers.dart';
@@ -47,8 +49,19 @@ class AvailabilityController
   static String _monthKey(DateTime month) =>
       '${month.year}-${month.month.toString().padLeft(2, '0')}';
 
+  /// Riverpod keeps the same notifier instance across rebuilds, so the cache
+  /// is reset here: the wizard invalidates this provider when it closes, and
+  /// a fresh booking flow must not reuse months fetched by a previous one.
+  ///
+  /// Returns synchronously on purpose. An async build would resolve after
+  /// the calendar's first [showMonth] call and overwrite its result with
+  /// `AsyncData(null)`, leaving the calendar stuck on its loading skeleton.
   @override
-  Future<ChaletAvailability?> build(String chaletId) async => null;
+  FutureOr<ChaletAvailability?> build(String chaletId) {
+    _cache.clear();
+    _month = _monthOf(DateTime.now());
+    return null;
+  }
 
   /// Shows availability for [month]. Reuses the cache when present; otherwise
   /// loads only that month from the backend. Guards against out-of-order
@@ -108,6 +121,8 @@ final availabilityControllerProvider = AsyncNotifierProvider.family<
 /// step-by-step as the user moves through the wizard.
 class ReservationWizardController
     extends FamilyAsyncNotifier<ReservationDraft, String> {
+  /// The contact phone number starts empty: the user types it in Step 1
+  /// rather than it being prefilled from their profile.
   @override
   Future<ReservationDraft> build(String chaletId) async {
     return ReservationDraft(chaletId: chaletId);
@@ -139,6 +154,12 @@ class ReservationWizardController
     final current = state.valueOrNull;
     if (current == null) return;
     state = AsyncData(current.copyWith(specialRequest: specialRequest));
+  }
+
+  void updatePhoneNumber(String phoneNumber) {
+    final current = state.valueOrNull;
+    if (current == null) return;
+    state = AsyncData(current.copyWith(phoneNumber: phoneNumber.trim()));
   }
 
   /// Increases the chosen quantity for [addOn] by one, adding it to the draft
@@ -208,21 +229,24 @@ class PricePreviewController
   @override
   Future<PricePreviewResult?> build(String chaletId) async => null;
 
+  /// Works for guests too: the price-preview endpoint is public, so without
+  /// a session the guest contact fields are sent empty. Called again after a
+  /// guest signs in so the final price reflects the authenticated account.
   Future<void> fetch(ReservationDraft draft) async {
-    final user = ref.read(currentUserProvider);
-    if (draft.checkIn == null || draft.checkOut == null || user == null) {
-      return;
-    }
+    if (draft.checkIn == null || draft.checkOut == null) return;
+    final user = ref.read(sessionActiveProvider)
+        ? ref.read(currentUserProvider)
+        : null;
 
     state = const AsyncLoading();
 
     final result =
         await ref.read(reservationRepositoryProvider).fetchPricePreview(
               chaletId: draft.chaletId,
-              guestFirstName: user.firstName,
-              guestLastName: user.lastName,
-              guestEmail: user.email,
-              guestPhone: user.phoneNumber ?? '',
+              guestFirstName: user?.firstName ?? '',
+              guestLastName: user?.lastName ?? '',
+              guestEmail: user?.email ?? '',
+              guestPhone: draft.fullPhoneNumber ?? user?.phoneNumber ?? '',
               checkInDate: draft.checkIn!,
               checkOutDate: draft.checkOut!,
               guestCount: draft.guestCount ?? 1,
@@ -255,6 +279,9 @@ class BookingSubmitController extends AsyncNotifier<bool> {
 
   Future<void> submit(ReservationDraft draft) async {
     if (state.isLoading) return;
+    // Booking creation is authenticated-only; guests are asked to sign in by
+    // the wizard before this is ever called.
+    if (!ref.read(sessionActiveProvider)) return;
 
     final user = ref.read(currentUserProvider);
     if (user == null || draft.checkIn == null || draft.checkOut == null) {
@@ -268,7 +295,7 @@ class BookingSubmitController extends AsyncNotifier<bool> {
           guestFirstName: user.firstName,
           guestLastName: user.lastName,
           guestEmail: user.email,
-          guestPhone: user.phoneNumber ?? '',
+          guestPhone: draft.fullPhoneNumber ?? user.phoneNumber ?? '',
           checkInDate: draft.checkIn!,
           checkOutDate: draft.checkOut!,
           guestCount: draft.guestCount ?? 1,

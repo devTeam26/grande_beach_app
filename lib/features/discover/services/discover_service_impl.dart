@@ -21,7 +21,7 @@ class DiscoverServiceImpl implements DiscoverService {
     final response = await _dio.get<Map<String, dynamic>>(
       ApiStrings.chalets,
       queryParameters: {
-        'pageNumber': pageNumber,
+        'page': pageNumber,
         'pageSize': pageSize,
         ...filters.toQueryParameters(),
       },

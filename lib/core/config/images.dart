@@ -8,7 +8,7 @@ abstract class AppImages {
   static const String onboarding2 = '$_base/onboarding_2.jpeg';
   static const String onboarding3 = '$_base/onboarding_3.jpeg';
   // static const String onboarding4 = '$_base/onboarding_4.jpeg';
-  static const String banner = '$_base/banner.jpg';
+  static const String banner = '$_base/banner.png';
   static const String chaletPlaceholder = '$_base/chalets_placeholder.jpg';
 
   static const String _icon = 'assets/icons';

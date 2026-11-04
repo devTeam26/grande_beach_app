@@ -311,7 +311,7 @@ abstract class AppLocalizations {
   /// No description provided for @forgotPasswordSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enter your email and choose a new password.'**
+  /// **'Enter the email address associated with your Grande Beach account and we\'ll send you a link to reset your password.'**
   String get forgotPasswordSubtitle;
 
   /// No description provided for @newPassword.
@@ -343,6 +343,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The reset token is invalid or has expired.'**
   String get errorTokenInvalid;
+
+  /// No description provided for @forgotPasswordCheckEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'After confirming, check your inbox for the reset email. If you can\'t find it, check your spam folder.'**
+  String get forgotPasswordCheckEmailHint;
+
+  /// No description provided for @resetEmailSent.
+  ///
+  /// In en, this message translates to:
+  /// **'A password reset email has been sent.'**
+  String get resetEmailSent;
+
+  /// No description provided for @checkInboxAndSpam.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your inbox and spam folder.'**
+  String get checkInboxAndSpam;
+
+  /// No description provided for @orLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'OR'**
+  String get orLabel;
+
+  /// No description provided for @continueWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
+
+  /// No description provided for @googleSignInCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in was cancelled.'**
+  String get googleSignInCancelled;
+
+  /// No description provided for @googleSignInFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in failed. Please try again.'**
+  String get googleSignInFailed;
+
+  /// No description provided for @googleSignInUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to sign in with Google. Please try again later.'**
+  String get googleSignInUnavailable;
 
   /// Greeting shown on the home screen using the user first name
   ///
@@ -487,6 +535,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a valid phone number.'**
   String get errorPhoneInvalid;
+
+  /// No description provided for @errorKuwaitPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid 8-digit Kuwaiti phone number.'**
+  String get errorKuwaitPhoneInvalid;
 
   /// No description provided for @errorConfirmPasswordRequired.
   ///
@@ -643,6 +697,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logout'**
   String get logoutConfirm;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account?'**
+  String get deleteAccountConfirmTitle;
+
+  /// No description provided for @deleteAccountConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This action is permanent and cannot be undone. If you continue, your account and all of your data will be permanently removed.'**
+  String get deleteAccountConfirmMessage;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @accountDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted.'**
+  String get accountDeletedSuccess;
 
   /// No description provided for @cancel.
   ///
@@ -1729,6 +1813,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Contact us on WhatsApp'**
   String get contactUsOnWhatsapp;
+
+  /// No description provided for @guestUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest User'**
+  String get guestUser;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @loginRequiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Required'**
+  String get loginRequiredTitle;
+
+  /// No description provided for @signInToViewBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'You need to sign in to view your bookings.'**
+  String get signInToViewBookings;
+
+  /// No description provided for @signInToCompleteReservation.
+  ///
+  /// In en, this message translates to:
+  /// **'You need to sign in to complete your reservation.'**
+  String get signInToCompleteReservation;
+
+  /// No description provided for @guest.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get guest;
 }
 
 class _AppLocalizationsDelegate

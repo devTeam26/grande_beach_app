@@ -118,7 +118,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get forgotPasswordSubtitle =>
-      'أدخل بريدك الإلكتروني واختر كلمة مرور جديدة.';
+      'أدخل البريد الإلكتروني المرتبط بحسابك في Grande Beach، وسنرسل إليك رابطًا لإعادة تعيين كلمة المرور.';
 
   @override
   String get newPassword => 'كلمة المرور الجديدة';
@@ -136,6 +136,34 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get errorTokenInvalid =>
       'رمز إعادة التعيين غير صالح أو منتهي الصلاحية.';
+
+  @override
+  String get forgotPasswordCheckEmailHint =>
+      'بعد التأكيد، تحقق من بريدك الوارد للعثور على رسالة إعادة التعيين. إذا لم تجدها، فتحقق من مجلد الرسائل غير المرغوب فيها.';
+
+  @override
+  String get resetEmailSent => 'تم إرسال رسالة إعادة تعيين كلمة المرور.';
+
+  @override
+  String get checkInboxAndSpam =>
+      'يرجى التحقق من بريدك الوارد ومجلد الرسائل غير المرغوب فيها.';
+
+  @override
+  String get orLabel => 'أو';
+
+  @override
+  String get continueWithGoogle => 'المتابعة باستخدام Google';
+
+  @override
+  String get googleSignInCancelled => 'تم إلغاء تسجيل الدخول باستخدام Google.';
+
+  @override
+  String get googleSignInFailed =>
+      'فشل تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get googleSignInUnavailable =>
+      'تعذّر تسجيل الدخول باستخدام Google. يرجى المحاولة لاحقًا.';
 
   @override
   String greeting(String firstName) {
@@ -212,6 +240,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get errorPhoneInvalid => 'يرجى إدخال رقم هاتف صحيح.';
+
+  @override
+  String get errorKuwaitPhoneInvalid =>
+      'يرجى إدخال رقم هاتف كويتي صحيح مكون من 8 أرقام.';
 
   @override
   String get errorConfirmPasswordRequired => 'يرجى تأكيد كلمة المرور.';
@@ -294,6 +326,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get logoutConfirm => 'تسجيل الخروج';
+
+  @override
+  String get deleteAccount => 'حذف الحساب';
+
+  @override
+  String get deleteAccountConfirmTitle => 'هل تريد حذف حسابك؟';
+
+  @override
+  String get deleteAccountConfirmMessage =>
+      'هذا الإجراء نهائي ولا يمكن التراجع عنه. إذا تابعت، فسيتم حذف حسابك وجميع بياناتك نهائيًا.';
+
+  @override
+  String get deleteAccountConfirm => 'حذف';
+
+  @override
+  String get accountDeletedSuccess => 'تم حذف حسابك.';
 
   @override
   String get cancel => 'إلغاء';
@@ -880,4 +928,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get contactUsOnWhatsapp => 'تواصل معنا عبر واتساب';
+
+  @override
+  String get guestUser => 'مستخدم زائر';
+
+  @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get loginRequiredTitle => 'تسجيل الدخول مطلوب';
+
+  @override
+  String get signInToViewBookings => 'يجب عليك تسجيل الدخول لعرض حجوزاتك.';
+
+  @override
+  String get signInToCompleteReservation =>
+      'يجب عليك تسجيل الدخول لإتمام حجزك.';
+
+  @override
+  String get guest => 'زائر';
 }

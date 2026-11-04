@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/errors/failure.dart';
 import '../../../core/extensions/failure_localization_extension.dart';
 import '../../../core/localization/generated/app_localizations.dart';
+import '../../../core/utils/kuwait_phone.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/phone_country_code_prefix.dart'; 
 import '../controllers/register_controller.dart';
 import '../widgets/auth_password_field.dart';
 import '../widgets/auth_text_field.dart';
@@ -128,6 +131,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   label: l10n.phoneNumber,
                   hint: l10n.phoneNumberHint,
                   keyboardType: TextInputType.phone,
+                  prefixIcon: const PhoneCountryCodePrefix(
+                    countryCode: KuwaitPhone.countryCode,
+                  ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(KuwaitPhone.localLength),
+                  ],
                   errorText: fieldErrors?['phoneNumber']?.first,
                 ),
                 const SizedBox(height: 16),

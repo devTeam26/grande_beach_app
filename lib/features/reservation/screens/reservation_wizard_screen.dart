@@ -6,6 +6,8 @@ import '../../../core/config/images.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/localization/generated/app_localizations.dart';
 import '../../../core/widgets/error_state.dart';
+import '../../authentication/controllers/auth_providers.dart';
+import '../../authentication/widgets/login_required_dialog.dart';
 import '../../chalet_details/controllers/chalet_details_providers.dart';
 import '../../shared/models/result_screen_args.dart';
 import '../controllers/reservation_providers.dart';
@@ -51,6 +53,41 @@ class _ReservationWizardScreenState
       ref
           .read(pricePreviewControllerProvider(widget.chaletId).notifier)
           .fetch(draft);
+    }
+  }
+
+  /// Final Reserve action. Authenticated users submit exactly as before.
+  /// Guests are asked to sign in first; Login is pushed on top of this
+  /// still-mounted screen, so the draft (dates, guests, add-ons, special
+  /// request, price preview) and the current step all stay in memory. The
+  /// awaited push result is the pending intent: it resolves once, here, and
+  /// nothing else needs clearing afterwards. The booking is never submitted
+  /// automatically — the user taps Reserve again, avoiding duplicates.
+  Future<void> _reserve(ReservationDraft draft) async {
+    if (ref.read(sessionActiveProvider)) {
+      ref.read(bookingSubmitControllerProvider.notifier).submit(draft);
+      return;
+    }
+
+    final l10n = AppLocalizations.of(context);
+    final wantsLogin = await LoginRequiredDialog.show(
+      context,
+      message: l10n.signInToCompleteReservation,
+    );
+    if (!wantsLogin || !mounted) return;
+
+    final signedIn = await context.push<bool>('/login');
+    if (signedIn != true || !mounted) return;
+
+    // Back on the Price Preview step with the draft intact; refresh the
+    // backend price for the now-authenticated account.
+    final current = ref
+        .read(reservationWizardControllerProvider(widget.chaletId))
+        .valueOrNull;
+    if (current != null) {
+      ref
+          .read(pricePreviewControllerProvider(widget.chaletId).notifier)
+          .fetch(current);
     }
   }
 
@@ -191,9 +228,7 @@ class _ReservationWizardScreenState
                     label: _currentStep == 2 ? l10n.reserve : null,
                     onNext: () {
                       if (_currentStep == 2) {
-                        ref
-                            .read(bookingSubmitControllerProvider.notifier)
-                            .submit(draft);
+                        _reserve(draft);
                         return;
                       }
                       _advance(_currentStep + 1, draft);

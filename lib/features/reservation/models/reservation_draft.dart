@@ -1,3 +1,4 @@
+import '../../../core/utils/kuwait_phone.dart';
 import 'price_preview_result.dart';
 import 'selected_add_on.dart';
 
@@ -5,6 +6,7 @@ import 'selected_add_on.dart';
 /// to [maxGuests] guests.
 bool isValidGuestCount(int? count, int maxGuests) =>
     count != null && count >= 1 && count <= maxGuests;
+
 
 /// The in-progress booking, built up across the reservation wizard's steps.
 /// Each step only mutates the fields it owns; submission to a real booking
@@ -18,6 +20,7 @@ class ReservationDraft {
     this.selectedAddOns = const [],
     this.pricePreview,
     this.specialRequest,
+    this.phoneNumber,
   });
 
   final String chaletId;
@@ -31,11 +34,22 @@ class ReservationDraft {
   /// unit request). Sent as-is with the booking; never required.
   final String? specialRequest;
 
+  /// Local 8-digit Kuwaiti contact number for this booking, without the
+  /// country code. Prefilled from the signed-in user's profile when
+  /// available, editable by the guest, and required.
+  final String? phoneNumber;
+
+  /// [phoneNumber] with the `+965` country code, as sent to the backend.
+  String? get fullPhoneNumber => KuwaitPhone.isValidLocal(phoneNumber)
+      ? KuwaitPhone.withCountryCode(phoneNumber!)
+      : null;
+
   bool isStep1Valid(int maxGuests) =>
       checkIn != null &&
       checkOut != null &&
       checkOut!.isAfter(checkIn!) &&
-      isValidGuestCount(guestCount, maxGuests);
+      isValidGuestCount(guestCount, maxGuests) &&
+      KuwaitPhone.isValidLocal(phoneNumber);
 
   ReservationDraft copyWith({
     DateTime? checkIn,
@@ -46,6 +60,7 @@ class ReservationDraft {
     List<SelectedAddOn>? selectedAddOns,
     PricePreviewResult? pricePreview,
     String? specialRequest,
+    String? phoneNumber,
   }) {
     return ReservationDraft(
       chaletId: chaletId,
@@ -55,6 +70,7 @@ class ReservationDraft {
       selectedAddOns: selectedAddOns ?? this.selectedAddOns,
       pricePreview: pricePreview ?? this.pricePreview,
       specialRequest: specialRequest ?? this.specialRequest,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
     );
   }
 }

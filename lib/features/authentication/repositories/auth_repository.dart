@@ -16,6 +16,17 @@ abstract class AuthRepository {
     required String preferredLanguage,
   });
 
+  /// Signs in with Google: obtains a Google ID token, exchanges it with the
+  /// backend and persists the session exactly like [login].
+  ///
+  /// Fails with [GoogleSignInFailure] when the Google step itself fails
+  /// (including user cancellation).
+  Future<Result<UserModel>> loginWithGoogle();
+
+  /// Requests a password-reset email for [email]. On success returns the
+  /// backend's confirmation message (may be empty).
+  Future<Result<String>> forgotPassword({required String email});
+
   /// Resets the user's password. The [token] is a one-time backend token;
   /// pass an empty string until the full reset flow is available.
   Future<Result<void>> resetPassword({
@@ -36,6 +47,11 @@ abstract class AuthRepository {
   /// left intact and [Success] is returned — the user is not forced into a
   /// login they cannot complete.
   Future<Result<void>> refreshSession();
+
+  /// Permanently deletes the user's account, then clears local tokens,
+  /// cached profile and the Google session. On failure nothing local is
+  /// cleared, so the user stays signed in and can retry.
+  Future<Result<void>> deleteAccount();
 
   /// Logs the user out: invalidates the server session and clears local
   /// tokens + cached profile. Always succeeds locally even if the API call

@@ -9,7 +9,7 @@ import '../providers/onboarding_provider.dart';
 /// Root route / splash. On first launch it presents the language-selection
 /// bottom sheet; once language and onboarding are done it runs the launch-time
 /// session bootstrap (refreshes the stored token) before the router redirect
-/// moves the user on to /home or /login.
+/// moves the user on to /home (as an authenticated user or a guest).
 class StartupScreen extends ConsumerStatefulWidget {
   const StartupScreen({super.key});
 
@@ -44,8 +44,8 @@ class _StartupScreenState extends ConsumerState<StartupScreen> {
     if (_bootstrapStarted) return;
 
     // The bootstrap only runs once the first-time flow (language + onboarding)
-    // is complete — new users have no token to refresh and go straight to
-    // login through the router redirect.
+    // is complete — new users have no token to refresh and continue to /home
+    // as guests through the router redirect.
     final languageSelected = ref.read(languageSelectedProvider);
     final onboardingDone = ref.read(onboardingProvider);
     final bootstrapDone = ref.read(appBootstrapDoneProvider);
@@ -78,7 +78,7 @@ class _StartupScreenState extends ConsumerState<StartupScreen> {
         await ref.read(secureStorageServiceProvider).hasValidSession();
     debugPrint(
       '[AUTH] StartupScreen: bootstrap complete, hasValidSession=$active -> '
-      'routing to ${active ? '/home' : '/login'}',
+      'routing to /home as ${active ? 'authenticated user' : 'guest'}',
     );
 
     if (!mounted) return;

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/localization/generated/app_localizations.dart';
 import '../../../core/providers/locale_provider.dart';
+import '../../../core/utils/kuwait_phone.dart';
 import '../utils/password_policy.dart';
 import 'auth_providers.dart';
 
@@ -40,7 +41,7 @@ class RegisterController extends AsyncNotifier<void> {
           firstName: firstName.trim(),
           lastName: lastName.trim(),
           email: email.trim(),
-          phoneNumber: phoneNumber.trim(),
+          phoneNumber: KuwaitPhone.withCountryCode(phoneNumber),
           password: password,
           preferredLanguage: preferredLanguage,
         );
@@ -79,8 +80,8 @@ class RegisterController extends AsyncNotifier<void> {
     final trimmedPhone = phoneNumber.trim();
     if (trimmedPhone.isEmpty) {
       fieldErrors['phoneNumber'] = [l10n.errorPhoneRequired];
-    } else if (!RegExp(r'^\+?[0-9]{7,15}$').hasMatch(trimmedPhone)) {
-      fieldErrors['phoneNumber'] = [l10n.errorPhoneInvalid];
+    } else if (!KuwaitPhone.isValidLocal(trimmedPhone)) {
+      fieldErrors['phoneNumber'] = [l10n.errorKuwaitPhoneInvalid];
     }
 
     if (password.isEmpty) {

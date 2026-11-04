@@ -68,6 +68,17 @@ class Chalet {
         .imageUrl;
   }
 
+  /// All image URLs for galleries, with the primary image first and the
+  /// rest kept in their original order.
+  List<String> get galleryImageUrls {
+    final primary = primaryImageUrl;
+    if (primary == null) return const [];
+    return [
+      primary,
+      ...images.map((e) => e.imageUrl).where((url) => url != primary),
+    ];
+  }
+
   factory Chalet.fromJson(Map<String, dynamic> json) => Chalet(
         id: json['id'] as String,
         name: json['name'] as String,

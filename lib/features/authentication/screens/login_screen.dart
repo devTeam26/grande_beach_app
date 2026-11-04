@@ -27,6 +27,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _submitted = false;
 
+  // Which sign-in method is in flight, so only its button shows a spinner.
+  // Updated right before the provider changes state, which triggers the
+  // rebuild — no setState needed.
+  bool _googleSubmitted = false;
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -36,10 +41,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _submit() {
     _submitted = true;
-    ref.read(loginControllerProvider.notifier).login(
+    _googleSubmitted = false;
+    ref
+        .read(loginControllerProvider.notifier)
+        .login(
           email: _emailController.text,
           password: _passwordController.text,
         );
+  }
+
+  void _signInWithGoogle() {
+    _submitted = true;
+    _googleSubmitted = true;
+    ref.read(loginControllerProvider.notifier).loginWithGoogle();
   }
 
   Future<void> _goToRegister() async {
@@ -52,14 +66,37 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future<void> _goToForgotPassword() async {
-    final resetEmail = await context.push<String>('/forgot-password');
-    if (!mounted || resetEmail == null) return;
-    _emailController.text = resetEmail;
+    // Pops with the backend's confirmation message once the email is sent.
+    final message = await context.push<String>('/forgot-password');
+    if (!mounted || message == null) return;
+    final l10n = AppLocalizations.of(context);
+    final sentMessage = message.trim().isEmpty ? l10n.resetEmailSent : message;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(AppLocalizations.of(context).resetPasswordSuccess),
-      ),
+      SnackBar(content: Text('$sentMessage\n${l10n.checkInboxAndSpam}')),
     );
+  }
+
+  /// Shared by email/password and Google sign-in. When the screen was pushed
+  /// (a guest tapped Login on Bookings, Profile or the reservation Reserve
+  /// dialog) it pops back with `true`, so the caller — e.g. the reservation
+  /// wizard with its draft still in memory — resumes exactly where it was.
+  /// Otherwise it is the root route and continues to /home as before.
+  void _onSignedIn() {
+    if (context.canPop()) {
+      context.pop(true);
+    } else {
+      context.go('/home');
+    }
+  }
+
+  /// Leaving without signing in keeps the user a guest: pop back to the
+  /// caller when pushed, or continue to /home when this is the root route.
+  void _leaveAsGuest() {
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.go('/home');
+    }
   }
 
   @override
@@ -70,17 +107,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     ref.listen<AsyncValue<void>>(loginControllerProvider, (previous, next) {
       if (_submitted && next is AsyncData && previous?.isLoading == true) {
         _submitted = false;
-        context.go('/home');
+        _onSignedIn();
       }
       if (next.hasError) {
         _submitted = false;
         final error = next.error;
         final message = error is Failure
-            ? error.localizedMessage(context)
-            : error.toString();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message)),
-        );
+            ? error.localizedMessageWithErrors(context)
+            : AppLocalizations.of(context).errorUnknown;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(message)));
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _formKey.currentState?.validate();
         });
@@ -90,51 +127,75 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final fieldErrors = state.error is ValidationFailure
         ? (state.error as ValidationFailure).fieldErrors
         : null;
+    final isGoogleLoading = state.isLoading && _googleSubmitted;
 
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-          child: Form(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const LoginHeader(),
-                AuthTextField(
-                  controller: _emailController,
-                  label: l10n.email,
-                  hint: l10n.emailHint,
-                  keyboardType: TextInputType.emailAddress,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(14),
-                    child: Icon(AppIcons.email, color: Theme.of(context).colorScheme.onSurface),
+    final canPop = context.canPop();
+
+    return PopScope(
+      canPop: canPop,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _leaveAsGuest();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          forceMaterialTransparency: true,
+          leading: canPop
+              ? BackButton(onPressed: _leaveAsGuest)
+              : CloseButton(onPressed: _leaveAsGuest),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 48),
+            child: Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const LoginHeader(),
+                  AuthTextField(
+                    controller: _emailController,
+                    label: l10n.email,
+                    hint: l10n.emailHint,
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: Icon(
+                        AppIcons.email,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    errorText: fieldErrors?['email']?.first,
                   ),
-                  errorText: fieldErrors?['email']?.first,
-                ),
-                const SizedBox(height: 16),
-                AuthPasswordField(
-                  controller: _passwordController,
-                  label: l10n.password,
-                  hint: l10n.passwordHint,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(14),
-                    child: Icon(AppIcons.lock, color: Theme.of(context).colorScheme.onSurface),
+                  const SizedBox(height: 16),
+                  AuthPasswordField(
+                    controller: _passwordController,
+                    label: l10n.password,
+                    hint: l10n.passwordHint,
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: Icon(
+                        AppIcons.lock,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    errorText: fieldErrors?['password']?.first,
+                    onSubmitted: _submit,
                   ),
-                  errorText: fieldErrors?['password']?.first,
-                  onSubmitted: _submit,
-                ),
-                // LoginForgotPasswordLink(onPressed: _goToForgotPassword),
-                const SizedBox(height: 48),
-                AppButton(
-                  label: l10n.signIn,
-                  isLoading: state.isLoading,
-                  onPressed: _submit,
-                ),
-                const SizedBox(height: 8),
-                LoginFooterLinks(onSignUp: _goToRegister),
-              ],
+                  LoginForgotPasswordLink(onPressed: _goToForgotPassword),
+                  const SizedBox(height: 48),
+                  AppButton(
+                    label: l10n.signIn,
+                    isLoading: state.isLoading && !_googleSubmitted,
+                    onPressed: isGoogleLoading ? null : _submit,
+                  ),
+                  LoginFooterLinks(
+                    onSignUp: _goToRegister,
+                    onGoogleSignIn: state.isLoading ? null : _signInWithGoogle,
+                    isGoogleLoading: isGoogleLoading,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

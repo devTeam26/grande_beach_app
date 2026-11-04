@@ -18,8 +18,11 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final user = ref.watch(currentUserProvider);
-    final firstName = user?.firstName ?? '';
+    final hasSession = ref.watch(sessionActiveProvider);
+    // Guests (no session) are greeted as "Guest", never by a cached name.
+    final greetingName = hasSession
+        ? ref.watch(currentUserProvider)?.firstName ?? ''
+        : l10n.guest;
     final isArabic = ref.watch(localeProvider).languageCode == 'ar';
 
     return Scaffold(
@@ -32,7 +35,7 @@ class HomeScreen extends ConsumerWidget {
                 const Icon(AppIcons.home, size: 22, color: Colors.white),
                 const SizedBox(width: 8),
                 Text(
-                  l10n.greeting(firstName),
+                  l10n.greeting(greetingName),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 22,

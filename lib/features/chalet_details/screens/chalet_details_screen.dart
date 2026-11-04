@@ -122,7 +122,7 @@ class _ChaletDetailsContent extends ConsumerWidget {
         children: [
           ChaletImageGallery(
             chaletId: chalet.id,
-            imageUrls: chalet.images.map((e) => e.imageUrl).toList(),
+            imageUrls: chalet.galleryImageUrls,
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
